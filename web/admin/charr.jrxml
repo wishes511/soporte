@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" languaje="java" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7eb8e5f9-5c3f-4783-b7d0-d4e23dc16a28">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     factura.`ID_FACTURA` AS factura_ID_FACTURA,
+     factura.`cantidad` AS factura_cantidad,
+     factura.`fecha` AS factura_fecha
+FROM
+     `factura` factura]]>
+	</queryString>
+	<field name="factura_ID_FACTURA" class="java.lang.Integer"/>
+	<field name="factura_cantidad" class="java.lang.Integer"/>
+	<field name="factura_fecha" class="java.sql.Date"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="34" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="210" splitType="Stretch">
+			<pieChart>
+				<chart>
+					<reportElement x="95" y="0" width="398" height="210" uuid="0451cd68-7b80-4daa-be8e-de8f67ea82c9"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{factura_fecha}]]></keyExpression>
+					<valueExpression><![CDATA[$F{factura_cantidad}]]></valueExpression>
+				</pieDataset>
+				<piePlot>
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

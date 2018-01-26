@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreportc" language="java" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d9a0f9e6-762b-44fa-9664-19152ebba3d7">
+	<property name="ireport.zoom" value="1.948717100000004"/>
+	<property name="ireport.x" value="118"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="f1" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="f2" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select distinct cast(sum(f.total)as decimal(20,2) ) as 'Importes',f.status
+        from factura f join usuario u on f.ID_USUARIOC=u.ID_USUARIO 
+        where f.fecha between $P{f1} and $P{f2}
+group by status
+        order by Importes]]>
+	</queryString>
+	<field name="Importes" class="java.math.BigDecimal"/>
+	<field name="status" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="Importes_1" class="java.math.BigDecimal" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{Importes}]]></variableExpression>
+	</variable>
+	<detail>
+		<band height="25">
+			<textField>
+				<reportElement x="256" y="1" width="100" height="20" uuid="1022fda2-5875-4eac-969a-23df724a4b1a"/>
+				<textFieldExpression><![CDATA[$V{Importes_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="217" y="1" width="100" height="20" uuid="0e90898d-f626-4a8b-bfd8-40c3d80bfb6d"/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>
