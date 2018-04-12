@@ -98,8 +98,6 @@
             alert("telefono invalido!.Coloca tu telefono sin espacios y 10 digitos");
             return false;
             }
-
-
             });
             });
         </script>

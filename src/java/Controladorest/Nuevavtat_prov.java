@@ -6,12 +6,7 @@
 package Controladorest;
 
 
-import Modelo.Cliente;
-import Modelo.Producto_compra;import Modelo.Producto_comprat;
-import Modelo.Usuario;
-import Modelo.factura;
-import Modelo.venta;
-
+import Modelo.entrada_prov;
 import Persistencia.DBt;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -28,20 +23,13 @@ import javax.servlet.http.HttpSession;
  *
  * @author mich
  */
-@WebServlet(name = "Nuevavtat2", urlPatterns = {"/Nuevavtat2"})
-public class Nuevavtat2 extends HttpServlet {
-         ArrayList<Object> lista;
+@WebServlet(name = "Nuevavtat_prov", urlPatterns = {"/Nuevavtat_prov"})
+public class Nuevavtat_prov extends HttpServlet {
+        // ArrayList<Object> lista;
     float total=0;
     int totalprod=0;
-    Calendar fecha = Calendar.getInstance();
-        int año = fecha.get(Calendar.YEAR);
-        int mes = fecha.get(Calendar.MONTH) + 1;
-        int dia = fecha.get(Calendar.DAY_OF_MONTH);
-        int hora = fecha.get(Calendar.HOUR_OF_DAY);
-        int minuto = fecha.get(Calendar.MINUTE);
-        int segundo = fecha.get(Calendar.SECOND);
-        String fechac =año+"-"+mes+"-"+dia;
-        String horas =hora+":"+minuto;
+    
+        
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -56,7 +44,7 @@ public class Nuevavtat2 extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
    
-              HttpSession objSesion = request.getSession(false);
+              HttpSession objSesion = request.getSession(true);
 //i_d
     String usuario = (String) objSesion.getAttribute("usuario");
     String tipos = (String) objSesion.getAttribute("tipo");
@@ -70,14 +58,16 @@ public class Nuevavtat2 extends HttpServlet {
     }
     try {
             String usuarioc = request.getParameter("idu").toUpperCase();
-            Producto_comprat pc =new Producto_comprat();
-            lista=pc.getProd();
+            String ref = request.getParameter("ref").toUpperCase();
+            
+             ArrayList<Object> lista;
+            lista = (ArrayList<Object>) objSesion.getAttribute("carro");
             if(lista.isEmpty()){            
                 System.out.print("No hay articulos");
             PrintWriter out = response.getWriter();
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('No hay Productos el carro !!');");
-                out.println("location='admin/Utilidades_Donacionest.jsp';");
+                out.println("location='admin/Eprovedor.jsp';");
                 out.println("</script>");
             
             }else{
@@ -85,58 +75,69 @@ public class Nuevavtat2 extends HttpServlet {
             
                 for(int i =0;i<lista.size();i++){
         if (cont == 3) {
-            System.out.println("i: "+i+"/"+lista.get(i).toString());
            total = total+ Float.parseFloat(lista.get(i).toString());
            totalprod=totalprod+Integer.parseInt((lista.get(i-1).toString()));
-          System.out.println("total: "+total+" /"+totalprod);
           cont =0;
              } else {
               cont++;
              }
         }
-                
-               System.out.println("total: "+total+" /"+totalprod); 
-           DBt db = new DBt();
-           
-           factura fac = new factura();
-
-         
-            System.out.print("Insertado hecho , total:"+total+" /"+totalprod+"/"+fechac);
-            fac.setID_USUARIO_(Integer.parseInt(ids));
-            fac.setID_USUARIOC(Integer.parseInt(usuarioc));
+        Calendar fecha = Calendar.getInstance();
+        int año = fecha.get(Calendar.YEAR);
+        int mes = fecha.get(Calendar.MONTH) + 1;
+        int dia = fecha.get(Calendar.DAY_OF_MONTH);
+        int hora = fecha.get(Calendar.HOUR_OF_DAY);
+        int minuto = fecha.get(Calendar.MINUTE);
+        String fechac =año+"-"+mes+"-"+dia;
+            DBt db = new DBt();
+            entrada_prov fac = new entrada_prov();
             fac.setCantidad(totalprod);
             fac.setFecha(fechac);
             fac.setTotal(total);
-            fac.setStatus("PENDIENTE");
-            fac.setTipo("INTERNO");
+            fac.setUsuario(usuario);
+            fac.setReferencia(ref);
+            fac.setHora(tiempo(hora,minuto));
+            fac.setID_PROVEEDOR(Integer.parseInt(usuarioc));
             db.agregarfacturat(fac);
+            db.agregardetallefact_prov(db.buscarfacturat_prov(),lista);
+//            db.modificarstock_prov(lista);
+            lista.clear();
+            objSesion.setAttribute("carro", lista);
 
-            db.agregardetallefact(db.buscarfacturat(),lista);
-            db.modificarstock(lista);
-           
-           
-            pc.vaciar_carro();
             total=0;
             totalprod=0;
             PrintWriter out = response.getWriter();
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Venta interna realizada !!');");
-                out.println("location='admin/Utilidades_Donacionest.jsp';");
+                out.println("location='admin/Eprovedor.jsp';");
                 out.println("</script>");
            // response.sendRedirect("productos.jsp");
             }
         }catch(Exception e){
             System.out.println(e);
             PrintWriter out = response.getWriter();
-          
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('No se completo el envio verifique los campos a llenar');");
-                out.println("location='admin/Utilidades_Donacionest.jsp';");
+                out.println("location='admin/Eprovedor.jsp';");
                 out.println("</script>");
            // response.sendRedirect("productos.jsp");
         }
     }
 
+    private String tiempo(int hora,int minuto){
+    String horas="";
+        if(hora >9 ){
+            horas =hora+":";
+        }if(hora<10){
+            horas="0"+hora+":";
+        }if(minuto <10){
+            horas=horas+"0"+minuto;
+        }
+        if(minuto >9){
+            horas+=minuto;
+        }
+        return horas;
+    }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

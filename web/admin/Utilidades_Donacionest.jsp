@@ -141,7 +141,16 @@ boolean estado;
     <ul class="nav navbar-nav nav-pills">
       <li ><a href="home_admin.jsp">Usuarios</a></li>
       <li ><a href="productos_admint.jsp">Productos</a></li>
-      <li class=""><a href="">Proveedores</a></li>
+      <li class="dropdown">
+                        <a  class="dropdown-toggle" data-toggle="dropdown" href="#80">
+                            Proveedores<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" id="#90" role="menu">
+
+                            <li><a href="proveedores.jsp">Proveedores</a></li>
+                            <li class=""><a href="Eprovedor.jsp">Entrada Proveedor</a></li>
+                        </ul>
+                    </li>
 <li class="active"><a href="">Nueva Compra Interna</a></li>
       <li class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#80">

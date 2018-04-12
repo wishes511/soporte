@@ -20,8 +20,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author gateway1
  */
-@WebServlet(name = "Getregs", urlPatterns = {"/Getregs"})
-public class Getregs extends HttpServlet {
+@WebServlet(name = "Getregs_catalogo", urlPatterns = {"/Getregs_catalogo"})
+public class Getregs_catalogo extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -52,32 +52,7 @@ public class Getregs extends HttpServlet {
         String produ =request.getParameter("p");
         String uso =request.getParameter("uso");
         // ver ventas general
-        if(uso.equals("catalogo")){
-        DBt db = new DBt();
-        int cont =0;
-        ArrayList<Object> lista;
-        lista=db.ver_catalogo_prov(produ);
-        if(!lista.isEmpty()){
-            for(int i =0;i<lista.size();i++){
-                if(cont ==4){
-                    out.println("<div class=col-md-4>");
-                    out.println("<div class=>");
-                    out.println("<div class=thumbnail azul style=width:70% height:70% >");
-                    out.println("<h4 class=h4 align=center>" +lista.get(i-3)+ "</h4>");
-                    out.println("<h4 class=h4 align=center>" +lista.get(i-2)+ "</h4>");
-                    out.println("<a class=btn name=id value=" +lista.get(i-4)+ " onclick= mostrarVentanas("+lista.get(i-3)+ ")><img width=60% height=60% class=img-responsive  src="+lista.get(i)+ "></a>");
-                    out.println("<div align=center>");
-                    out.println("<h4 class=h4 align=cente>stock</h4>");
-                    out.println("<input type=text name=prec class=form-control input-sm chat-input placeholder=$  value=" +lista.get(i-1)+ " disabled=disabled> ");
-                    out.println(" </div></div></div></div>");
-                    cont=0;
-                }else cont++;
-            
-            }
-        }
-        
-        }
-        else if(uso.equals("buscarp")){
+        if(uso.equals("buscarp")){
          
         ArrayList<Object> lista;    
         DBt db = new DBt();
