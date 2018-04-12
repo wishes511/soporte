@@ -1,6 +1,6 @@
 <%-- 
     Document   : Realizar_ventas
-    Created on : 16/11/2016, 11:17:46 AM
+    Created on : 16/05/2017, 11:17:46 AM
     Author     : mich
 --%>
 
@@ -159,25 +159,19 @@ boolean estado;
         } else{
         out.println("<a href=tareas.jsp>Tareas</a></li>");
         }
-        
         %>
       <li><a href="../Cierrasesion">Salir</a></li>
     </ul>
-
 </nav>
-            
             <hr> <br>
             <div class="row" >
                 <div class="espacio1">
                     <div class="col-lg-8 espas">
-
                         <%
                             try {
                                 String nom="";
-                                char arr[];
                                 DBt uDB = new DBt();
                                 Connection c;
-
                                 uDB.abrir();
                                 Statement smt;
                                 ResultSet rs;
@@ -186,12 +180,8 @@ boolean estado;
                                 System.out.println(sentenciaSQL);
                                 smt = c.createStatement();
                                 rs = smt.executeQuery(sentenciaSQL);
-
-                                //AQUI ME QUEDE!!!!!! :3
                                     while(rs.next()){
-                                        
-                                         out.println("<div class=col-md-4>");
-                                         
+                                    out.println("<div class=col-md-4>");
                                     out.println("<div class=>");
                                     out.println("<div class=thumbnail azul style=width:70% height:70% >");
                                     out.println("<h4 class=h4 align=center>" + rs.getObject("nombre")+ "</h4>");
@@ -199,35 +189,18 @@ boolean estado;
                                     out.println("<a class=btn name=id value=" + rs.getObject("id_producto") + " onclick= mostrarVentanas(" + rs.getObject("ID_PRODUCTO") + ")><img width=60% height=60% class=img-responsive  src=" + rs.getObject("imagen") + "></a>");
                                     out.println("<div align=center>");
                                     out.println("<h4 class=h4 align=cente>stock</h4>");
-                                    out.println("<input type=text name=prec class=form-control input-sm chat-input placeholder=$  value=" + rs.getObject("stock") + " disabled=disabled> ");
-                                   
+                                    out.println("<input type=text name=prec class=form-control input-sm chat-input placeholder=$  value=" + rs.getObject("stock") + " disabled=disabled> ");  
                                     out.println(" </div></div></div></div>");
                                    // out.println("<input type=submit class=form-control name=id value=" + rs.getObject("id_producto") + " onclick= mostrarVentana(" + rs.getObject("id_producto") + ")></div></div></div></div>");
                                     nom="";
                                     } 
-                                }
-                               
+                                }           
                             catch (Exception e) {
                                 e.printStackTrace();
                             }
                         %>
-                        <!--                       
-                        <div class="col-md-4 ">
-                              <div class="thumbnail azul">
-                                  <img src="images/drawing3.png" alt="">
-                                  <div align="center">
-                                      <br>
-                                  <input type="text" name="" class="form-control input-sm chat-input" placeholder="Cantidad">
-                                  <br>
-                                  <input type="submit" class="form-control" name="2" value="Enviar consulta">
-                              </div> 
-                              </div>      
-                          </div>-->
-
-                        </
                     </div> 
                 </div>
-
                 <div class="espacio" ><div class="col-md-offset-8 espascompra "  style="overflow: auto">
                         <h1 class="h1" align="center">Compra Interna</h1><hr>
                         <table class="table table-responsive form-login ">
@@ -240,12 +213,10 @@ boolean estado;
                             <%
                                 ArrayList<Object> lista;
                                 float total = 0;
-                                // Venta v = new Venta();
                                 int cont = 0;
                                 int aux = 1;
                                 Producto_comprat pc = new Producto_comprat();
                                 lista = pc.getProd();
-
                                 if (lista.isEmpty()) {
                                     System.out.print("no hay datos" + lista.size());
                                 } else {
@@ -265,33 +236,24 @@ boolean estado;
                                         } else {
                                             cont++;
                                         }
-
                                     }
                                 }
                             %>
                         </table>
-
                     </div>
                     <div class="row ">
                         <div class="col-sm-offset-8 espascompra">
                             <h3 class="h3" style="padding-left: 30px">Total:  <%=total%></h3>
                         </div>
                         <div class="row ">
-                            <div class="col-sm-offset-8 " align="center">
-                                
+                            <div class="col-sm-offset-8 " align="center">      
                                     <input type="submit" name="aceptar" class="btn btn-danger" onclick="mostrar()" value="Realizar Utilidad">
                             </div>
                         </div>
                     </div>
-
                 </div>
-
-
             </div>
-
         </div>
-
-
         <script>
             function erase(id)
             {
@@ -331,8 +293,7 @@ boolean estado;
             {
                 var ventana = document.getElementById("miVentana");
                 ventana.style.display = "none";
-            }
-           
+            }      
             function mostrar()
             {  
                 var ventana = document.getElementById("miVen");
@@ -346,7 +307,6 @@ boolean estado;
                 var vent=document.getElementById("miVen");
                 vent.style.display="none";
     }
-            
             function resultado(total)
             {
                var pago = $("#cobro").val();
@@ -356,10 +316,8 @@ boolean estado;
                }
                document.getElementById("cambio").value = totaltotal;
             }
-           
                 function ru() {
                 var pro = $('#tipos').val();
-                
                 $.ajax({
                     type: 'post',
                     data: {id: pro},
@@ -370,10 +328,7 @@ boolean estado;
                     }
                 });
             }
-            function salto_carro(){
-                
-            }              
-                        
+            function salto_carro(){}              
         </script>
         <div id="miVentana" style="position: fixed; width: 25%; height: 30%; top: 0; left: 0; font-family:Verdana, Arial, Helvetica, sans-serif; font-size: 12px; font-weight: normal; background-color: #FAFAFA; color: white; display:none;">
             <div class="row " style="background-color: #616185;padding-left: 2%;padding-right: 2%;border-radius: 10px;">

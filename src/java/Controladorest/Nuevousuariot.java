@@ -72,7 +72,7 @@ public class Nuevousuariot extends HttpServlet {
             DBt udb = new DBt();  
             persistencia_virtual pv = new persistencia_virtual();
            
-            if(udb.buscarusuariorepe(usuarios) || pv.Checkip(Integer.parseInt(ips))){
+            if(udb.buscarusuariorepe(usuarios,"nuevo") || pv.Checkip(Integer.parseInt(ips),"nuevo")){
               
             out.println("<script type=\"text/javascript\">");
             out.println("alert('Ese nombre de usuario o IP ya existe!, porfavor ingrese otro.');");

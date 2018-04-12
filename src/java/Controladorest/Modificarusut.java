@@ -77,8 +77,8 @@ public class Modificarusut extends HttpServlet {
        PrintWriter out = response.getWriter(); 
            DBt bd = new DBt();
            persistencia_virtual pv = new persistencia_virtual();
-           System.out.println(bd.buscarusuariorepe(usu)+"*"+pv.Checkip(Integer.parseInt(ip)));
-           if(bd.buscarusuariorepe(usu) || pv.Checkip(Integer.parseInt(ip))){
+           //System.out.println(bd.buscarusuariorepe(usu)+"*"+pv.Checkip(Integer.parseInt(ip)));
+           if(bd.buscarusuariorepe(usu,"mod") || pv.Checkip(Integer.parseInt(ip),"mod")){
             out.println("<script type=\"text/javascript\">");
             out.println("alert('No se puedo modificar el usuario verifique sus datos');");
             out.println("location='admin/home_admin.jsp';");

@@ -1,6 +1,6 @@
 <%-- 
     Document   : home_admin
-    Created on : 16-oct-2016, 16:50:08
+    Created on : 16-jun-2017, 16:50:08
     Author     : mich
 --%>
 
@@ -16,9 +16,7 @@
 //i_d
     boolean estado;
     String usuario = (String) objSesion.getAttribute("usuario");
-    String usuario1 = (String) objSesion.getAttribute("usuario1");
     String tipos = (String) objSesion.getAttribute("tipo");
-    String ids = String.valueOf(objSesion.getAttribute("i_d"));
     ArrayList<Object> carrito;
     carrito = (ArrayList<Object>) objSesion.getAttribute("carro");
     //out.print(carrito.size());
@@ -124,6 +122,7 @@
 
                      <li class="active"><a href="">Usuarios</a></li>
                     <li><a href="virtuales.jsp">Vista de direcciones IP</a></li>
+                    <li><a href="reporteusuarios.jsp">Reporte de usuarios</a></li>
                         </ul>
                     </li>
                     
@@ -239,7 +238,7 @@
                                     Statement smt;
                                     ResultSet rs;
                                     c = uDB.getConexion();
-                                    String sentenciaSQL = "SELECT * FROM usuario where activo= 'Y' ORDER BY nombre";
+                                    String sentenciaSQL = "SELECT * FROM usuario where activo= 'Y' ORDER BY usuario";
                                     smt = c.createStatement();
                                     rs = smt.executeQuery(sentenciaSQL);
 

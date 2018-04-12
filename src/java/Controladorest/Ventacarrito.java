@@ -61,7 +61,7 @@ productot p = new productot();
             
             id = request.getParameter("ids").toUpperCase();
             cant = request.getParameter("cant").toUpperCase();
-                    System.out.println("si llega");
+                   // System.out.println("si llega");
         
         DBt bd = new DBt();
 
@@ -77,10 +77,6 @@ productot p = new productot();
         lista.add(p.getCosto());
        
         //pc.setprods(Integer.parseInt(id), Integer.parseInt(cant),p.getCostomay(),p.getNombre())
-        System.out.println("li "+p.getNombre()); 
-        
-        System.out.println(lista.size()+"/"+lista.get(0));
-        System.out.println("llega");
             objSesion.setAttribute("carro", lista);
             response.sendRedirect("admin/Proveedort.jsp");
                      

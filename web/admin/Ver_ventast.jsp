@@ -13,7 +13,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Calendar"%>
 <% HttpSession objSesion = request.getSession(false);
-//i_d
+//select p.modelo,SUM(d.cantidad),MONTH(f.fecha) from factura f join detalle_fact d on d.ID_FACTURA = f.ID_FACTURA join producto p on d.ID_PRODUCTO = p.ID_PRODUCTO where f.fecha > '2017-10-1' group by MONTH(f.fecha),p.modelo order by MONTH(f.fecha)
     boolean estado;
     String usuario = (String) objSesion.getAttribute("usuario");
     String tipos = (String) objSesion.getAttribute("tipo");

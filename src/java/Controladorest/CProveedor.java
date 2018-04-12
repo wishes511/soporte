@@ -83,11 +83,7 @@ productot p = new productot();
           //efectuar compra    
           }else if(uso.equals("COMPRA")){
           
-          }
-       
-        
-        }catch (Exception ex) {
-//            
+          }}catch (Exception ex) {   
             System.err.println(ex);
         }
         

@@ -94,7 +94,7 @@ public class Virtuales extends HttpServlet {
             String nombre = request.getParameter("nombre");
             int ip = Integer.parseInt( request.getParameter("ip"));
             int user =Integer.parseInt(request.getParameter("usuario"));
-            if(pv.Checkip(ip)){
+            if(pv.Checkip(ip,"nuevo")){
            out.println("<script type=\"text/javascript\">");
             out.println("alert('Esa direccion IP ya existe!, porfavor ingrese otro.');");
             out.println("</script>");
@@ -109,8 +109,8 @@ public class Virtuales extends HttpServlet {
                 int ip = Integer.parseInt( request.getParameter("ip"));
                 int user =Integer.parseInt(request.getParameter("usuario"));
                 int id =Integer.parseInt(request.getParameter("id"));
-                System.out.println(pv.Checkip(ip));
-                if(pv.Checkip(ip)){
+                //System.out.println(pv.Checkip(ip));
+                if(pv.Checkip(ip,"mod")){
                     System.out.println("ok");
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Esa direccion IP ya existe!, porfavor ingrese otro.');");

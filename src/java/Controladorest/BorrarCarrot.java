@@ -40,14 +40,14 @@ public class BorrarCarrot extends HttpServlet {
        String ideliminar = request.getParameter("eliminar").toUpperCase();
             Producto_comprat pc1 =new Producto_comprat();
             
-            System.out.println("borraritem");
+           // System.out.println("borraritem");
             pc1.delprod(Integer.parseInt(ideliminar));
-            System.out.println("item borrado");
+            //System.out.println("item borrado");
             response.sendRedirect("admin/Utilidades_Donacionest.jsp");
        
        
        }catch(Exception e){
-       System.out.println("borraritem no men ;[ "+e);
+       //System.out.println("borraritem no men ;[ "+e);
        }
     }
 

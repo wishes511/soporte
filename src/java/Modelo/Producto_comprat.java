@@ -26,8 +26,6 @@ static public ArrayList<Object> getProd(){
 
    public void setprods(int id, int cant, double costo, String n) {
     try {
-       
-        
           //Producto p = new Producto();
 //        Producto p2= new Producto();
         //p=bd.buscarproducto(id);
@@ -36,17 +34,7 @@ static public ArrayList<Object> getProd(){
         lista.add(n);
         lista.add(cant);
         lista.add(sub);
-        
-        //lista.add(sub);
-////        p2.setId(p.getId());
-////        p2.setNombre(p.getNombre());
-////        p2.setCostomay(p.getCostomay());
-////        p2.setCantidad(cant);
-        
-        System.out.println("li "+n); 
-        
-        System.out.println(lista.size()+"/"+lista.get(0)+"/"+lista.get(1)+"/"+lista.get(2)+"/"+lista.get(3)+"/"+sub);
-    } catch (Exception ex) {
+     } catch (Exception ex) {
         Logger.getLogger(Venta.class.getName()).log(Level.SEVERE, null, ex);
     } 
         this.lista = lista;
@@ -56,15 +44,15 @@ public void delprod(int id){
     ArrayList<Object> listas = new ArrayList<Object>();
        int lol = 4* id;
        int lala= lol-4;
-       System.out.println("PRIMERA ENTRADA/lala="+lala+"/lol ="+lol+"/size"+lista.size()+"!"+lista.get(lala));
+      // System.out.println("PRIMERA ENTRADA/lala="+lala+"/lol ="+lol+"/size"+lista.size()+"!"+lista.get(lala));
        
        if(lala!=0 || lol != lista.size()){
            for(int i =0; i<lala;i++){
-             System.out.println("$$$"+lista.get(i));
+       //      System.out.println("$$$"+lista.get(i));
              listas.add(lista.get(i));        
        }
             for(int i =lol; i<lista.size();i++){
-             System.out.println("$$$"+lista.get(i));
+     //        System.out.println("$$$"+lista.get(i));
              listas.add(lista.get(i));        
        }
        }
@@ -87,7 +75,7 @@ lista.clear();
         carro.add(n);
         carro.add(cant);
         carro.add((float)sub);
-        System.out.println("li "+n); 
+        //System.out.println("li "+n); 
         
         System.out.println(carro.size()+"/"+carro.get(0)+"/"+carro.get(1)+"/"+carro.get(2)+"/"+carro.get(3)+"/"+sub);
     } catch (Exception ex) {
@@ -99,24 +87,24 @@ lista.clear();
     ArrayList<Object> listas = new ArrayList<>();
        int lol = 4* id;
        int lala= lol-4;
-       System.out.println("PRIMERA ENTRADA/lala="+lala+"/lol ="+lol+"/size"+carro.size()+"!"+carro.get(lala));
+       //System.out.println("PRIMERA ENTRADA/lala="+lala+"/lol ="+lol+"/size"+carro.size()+"!"+carro.get(lala));
        
        if(lala!=0 || lol != carro.size()){
            for(int i =0; i<lala;i++){
-             System.out.println("$$$"+carro.get(i));
+         //    System.out.println("$$$"+carro.get(i));
              listas.add(carro.get(i));        
        }
             for(int i =lol; i<carro.size();i++){
-             System.out.println("$$"+carro.get(i));
+           //  System.out.println("$$"+carro.get(i));
              listas.add(carro.get(i));        
        }
             
        }
        carro.clear();
-       System.out.println("size"+carro.size());
+      // System.out.println("size"+carro.size());
        
        carro=listas;
-      System.out.println("size2"+carro.size());
+     // System.out.println("size2"+carro.size());
        return carro;
    }
    }

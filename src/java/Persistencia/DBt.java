@@ -99,7 +99,7 @@ public class DBt {
         uDB.abrir();
         c = uDB.getConexion();
         String query = "select c.id_compraprod,p.nombre from producto p JOIN compra_producto c ON p.id_producto =c.id_producto  where fecha BETWEEN '" + f1 + "' AND '" + f2 + "' ORDER BY p.nombre";
-        System.out.println(query);
+        
         smt = c.createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
@@ -122,7 +122,7 @@ public class DBt {
         uDB.abrir();
         c = uDB.getConexion();
         String query = "SELECT id_venta from venta where fecha BETWEEN '" + f1 + "' AND '" + f2 + "' ORDER BY id_venta";
-        System.out.println(query);
+        
         smt = c.createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
@@ -147,7 +147,7 @@ public class DBt {
         String query = "select f.ID_FACTURA,u.usuario,f.cantidad,f.total,f.fecha\n"
                 + "from factura f join usuario u on f.ID_USUARIOC=u.ID_USUARIO\n"
                 + "where f.fecha between '" + f1 + "' and '" + f2 + "'";
-        System.out.println(query);
+        
         smt = conexion.createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
@@ -174,7 +174,7 @@ public class DBt {
                 + "from factura f join usuario u on f.ID_USUARIOC=u.ID_USUARIO "
                 + "join detalle_fact df on df.id_factura=f.id_factura join producto pr on pr.id_producto = df.id_producto join departamento dep on dep.ID_DEP=u.ID_DEP\n"
                 + "where f.fecha between '" + f1 + "' and '" + f2 + "' and (pr.nombre like '" + prod + "%' or pr.modelo like '" + prod + "%' or dep.nombre like '" + prod + "%') order by f.id_factura";
-        System.out.println(query);
+        
         smt = conexion.createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
@@ -205,7 +205,7 @@ public class DBt {
                 + "where f.fecha between '" + f1 + "' and '" + f2 + "' \n"
                 + "group by d.Nombre "
                 + "order by Importe";
-        System.out.println(query);
+        
         smt = conexion.createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
@@ -235,7 +235,7 @@ public class DBt {
                 + "where f.fecha between '" + f1 + "' and '" + f2 + "' and ( pr.modelo like '" + depa + "%' ) \n"
                 + "group by d.Nombre "
                 + "order by Importe DESC";
-        System.out.println(query);
+        
         smt = conexion.createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
@@ -267,7 +267,7 @@ public class DBt {
                 + "join detalle_fact d on d.ID_FACTURA=f.ID_FACTURA\n"
                 + "join producto p on p.ID_PRODUCTO=d.ID_PRODUCTO\n"
                 + "where d.ID_FACTURA=" + ids;
-        System.out.println(query);
+        
         smt = conexion.createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
@@ -300,7 +300,7 @@ public class DBt {
         uDB.abrir();
         c = uDB.getConexion();
         String query = "select MAX(id_ingreso),monto from ingresos where fecha='" + fecha + "'";
-        System.out.println(query);
+        
         smt = c.createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
@@ -308,87 +308,86 @@ public class DBt {
             total = total + Float.parseFloat(rs.getString("monto"));
         }
         lista.add(total);
-        System.out.println("total: " + total);
         total = 0;
 
         query = "select sum(monto) as monto from gastos where fecha='" + fecha + "'";
-        System.out.println(query);
+        
         smt = c.createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
             total = total + Float.parseFloat(rs.getString("monto"));
         }
         lista.add(total);
-        System.out.println("total: " + total);
+        //System.out.println("total: " + total);
         total = 0;
 
         query = "select SUM(cantidad) as cantidad from venta where fecha='" + fecha + "'";
-        System.out.println(query);
+        
         smt = c.createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
             contables = contables + Integer.parseInt(rs.getString("cantidad"));
         }
         lista.add(contables);
-        System.out.println("total: " + contables);
+        //System.out.println("total: " + contables);
         contables = 0;
 
         query = "select SUM(cantidad) as cantidad from compra_producto where fecha='" + fecha + "'";
-        System.out.println(query);
+        
         smt = c.createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
 
             if (rs == null) {
-                System.out.println("nulo ");
+               // System.out.println("nulo ");
                 contables = contables + Integer.parseInt(rs.getString("cantidad"));
             } else {
-                System.out.println("o.o");
+               // System.out.println("o.o");
             }
             //contables=contables+ Integer.parseInt(rs.getString("cantidad"));
         }
         lista.add(contables);
-        System.out.println("total: " + contables);
+        //System.out.println("total: " + contables);
         contables = 0;
 
         int conta = 0;
         query = "select id_venta from venta where fecha='" + fecha + "'";
-        System.out.println(query);
+        
         smt = c.createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
             conta++;
         }
         lista.add(conta);
-        System.out.println("total: " + conta);
+        //System.out.println("total: " + conta);
         contables = 0;
 
         query = "select SUM(producido) as producido from production where fecha='" + fecha + "'";
-        System.out.println(query);
+        
         smt = c.createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
             if (rs == null) {
-                System.out.println("nulo ");
+                //System.out.println("nulo ");
                 contables = contables + Integer.parseInt(rs.getString("producido"));
             } else {
-                System.out.println("o.o");
+               // System.out.println("o.o");
             }
             // contables=contables+ Integer.parseInt(rs.getString("producido"));
         }
         lista.add(contables);
-        System.out.println("total: " + contables);
+        //System.out.println("total: " + contables);
         contables = 0;
 
         query = "select SUM(stock) as stock from producto ";
-        System.out.println(query);
+        
         smt = c.createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
             contables = contables + Integer.parseInt(rs.getString("stock"));
         }
         lista.add(contables);
-        System.out.println("total: " + contables);
+        //System.out.println("total: " + contables);
 
         smt.close();
         rs.close();
@@ -411,7 +410,7 @@ public class DBt {
         uDB.abrir();
         c = uDB.getConexion();
         String query = "select * from ingresos where fecha BETWEEN '" + fi + "' AND '" + ff + "' ORDER BY id_ingreso";
-        System.out.println(query);
+        
         smt = c.createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
@@ -421,7 +420,7 @@ public class DBt {
             lista.add(rs.getString("fecha").toString());
         }
         lista.add(total);
-        System.out.println(lista.get(0) + "/" + lista.get(1) + "/" + lista.get(2) + "/" + lista.get(3));
+        //System.out.println(lista.get(0) + "/" + lista.get(1) + "/" + lista.get(2) + "/" + lista.get(3));
 
         return lista;
     }
@@ -442,7 +441,7 @@ public class DBt {
         uDB.abrir();
         c = uDB.getConexion();
         String query = "select * from gastos where fecha BETWEEN '" + fi + "' AND '" + ff + "' ORDER BY id_gasto";
-        System.out.println(query);
+        
         smt = c.createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
@@ -452,7 +451,7 @@ public class DBt {
             lista.add(rs.getString("fecha").toString());
         }
         lista.add(total);
-        System.out.println(lista.get(0) + "/" + lista.get(1) + "/" + lista.get(2) + "/" + lista.get(3));
+        //System.out.println(lista.get(0) + "/" + lista.get(1) + "/" + lista.get(2) + "/" + lista.get(3));
 
         return lista;
     }
@@ -473,65 +472,65 @@ public class DBt {
         uDB.abrir();
         c = uDB.getConexion();
         String query = "SELECT SUM(total) as total FROM venta where fecha='" + fecha + "'";
-        System.out.println(query);
+        
         smt = c.createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
             total = total + Float.parseFloat(rs.getString("total"));
         }
         if (rs == null) {
-            System.out.println("ENtro al nulo de ventas ");
+           // System.out.println("ENtro al nulo de ventas ");
             total = 0;
         }
-        System.out.println("total: " + total);
+        //System.out.println("total: " + total);
         query = "insert into ingresos values(" + id + ",'VENTAS'," + total + ",'" + fecha + "')";
-        System.out.println(query);
+        
         smt = c.createStatement();
         smt.executeUpdate(query);
-        System.out.println("insercion ingreso");
+        //System.out.println("insercion ingreso");
         total = 0;
 
         query = "SELECT SUM(ganancia) as ganancia FROM production where fecha='" + fecha + "'";
-        System.out.println(query);
+        
         smt = c.createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
             if (rs == null) {
-                System.out.println("nulo ");
+               // System.out.println("nulo ");
                 total = total + Float.parseFloat(rs.getString("ganancia"));
             } else {
-                System.out.println("o.o");
+                //System.out.println("o.o");
             }
 
         }
 
-        System.out.println("total: " + total);
+        //System.out.println("total: " + total);
         query = "insert into Gastos values(" + id + ",'SUELDOS DE PRODUCCIÓN'," + total + ",'" + fecha + "')";
-        System.out.println(query);
+        
         smt = c.createStatement();
         smt.executeUpdate(query);
-        System.out.println("insercion gasto");
+        //System.out.println("insercion gasto");
         total = 0;
 
         query = "SELECT SUM(costo) as costo FROM compra_producto where fecha='" + fecha + "'";
-        System.out.println(query);
+        
         smt = c.createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
             if (rs == null) {
-                System.out.println("nulo ");
+                //System.out.println("nulo ");
                 total = total + Float.parseFloat(rs.getString("costo"));
             } else {
-                System.out.println("o.o");
+                //System.out.println("o.o");
             }
         }
 
-        System.out.println("total: " + total);
+        //System.out.println("total: " + total);
         query = "insert into Gastos values(" + id + ",'COMPRA PROVEEDOR'," + total + ",'" + fecha + "')";
-        System.out.println(query);
+        
         smt = c.createStatement();
         smt.executeUpdate(query);
-        System.out.println("insercion gasto proveedor");
+        //System.out.println("insercion gasto proveedor");
         smt.close();
         rs.close();
     }
@@ -552,7 +551,7 @@ public class DBt {
         String apellido = u.getApellido();
 
         String sentenciaSQL = "select ID_DEP from departamento where Nombre='" + depa + "'";
-        System.out.println(sentenciaSQL);
+        
         smt = conexion.createStatement();
         rs = smt.executeQuery(sentenciaSQL);
         while (rs.next()) {
@@ -784,7 +783,7 @@ public class DBt {
         for (int i = 0; i < lista.size(); i++) {
             if (cont == 3) {
                 sentenciaSQL = "insert into detalle_venta values(" + ids + "," + lista.get(i - 3) + "," + idv + "," + lista.get(i - 1) + ")";
-                System.out.println(lista.get(i - 3) + "," + idv + "," + lista.get(i - 1));
+                //System.out.println(lista.get(i - 3) + "," + idv + "," + lista.get(i - 1));
                 smt = conexion.createStatement();
                 smt.executeUpdate(sentenciaSQL);
                 // uDB.cerrar();
@@ -817,7 +816,7 @@ public class DBt {
         for (int i = 0; i < lista.size(); i++) {
             if (cont == 3) {
                 sentenciaSQL = "insert into detalle_fact values(" + ids + "," + idv + "," + lista.get(i - 3) + "," + lista.get(i - 1) + ")";
-                System.out.println(lista.get(i - 3) + "," + idv + "," + lista.get(i - 1));
+                //System.out.println(lista.get(i - 3) + "," + idv + "," + lista.get(i - 1));
                 smt = conexion.createStatement();
                 smt.executeUpdate(sentenciaSQL);
                 // uDB.cerrar();
@@ -838,12 +837,12 @@ public class DBt {
 
         Statement smt;
         String sentenciaSQL = "insert into detalle_baja values(" + id + "," + idp + "," + ids + "," + cant + ",'" + fecha + "','SI')";
-        System.out.println(sentenciaSQL);
+        
         smt = c.createStatement();
         smt.executeUpdate(sentenciaSQL);
 
         sentenciaSQL = "update producto set stock=stock-" + cant + " where id_producto=" + idp;
-        System.out.println(sentenciaSQL);
+        
         smt = c.createStatement();
         smt.executeUpdate(sentenciaSQL);
 
@@ -925,17 +924,17 @@ public class DBt {
         }
         return p;
     }
-    
-        public String buscarid_depa(String p) throws ClassNotFoundException, SQLException {
-        
+
+    public String buscarid_depa(String p) throws ClassNotFoundException, SQLException {
+
         Statement smt;
         ResultSet rs;
         abrir();
-        String query = "SELECT ID_DEP from departamento where nombre ='"+p+"'";
+        String query = "SELECT ID_DEP from departamento where nombre ='" + p + "'";
         smt = conexion.createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
-        p=rs.getString("ID_DEP");
+            p = rs.getString("ID_DEP");
         }
         return p;
     }
@@ -968,7 +967,7 @@ public class DBt {
         abrir();
         //--Ejecutar la busqueda
         sentenciaSQL = "SELECT Nombre FROM departamento";
-        System.out.println(sentenciaSQL);
+        
         smt = conexion.createStatement();
         rs = smt.executeQuery(sentenciaSQL);
         // Crear el objeto
@@ -1001,7 +1000,7 @@ public class DBt {
         //--Ejecutar la busqueda
         String sentenciaSQL = "SELECT * FROM usuario WHERE usuario=" + "'" + nombre + "'"
                 + " AND contrasena = " + "'" + contrasena + "'";
-        System.out.println(sentenciaSQL);
+        
         smt = c.createStatement();
         rs = smt.executeQuery(sentenciaSQL);
 
@@ -1013,7 +1012,7 @@ public class DBt {
             u.setContrasena(rs.getString("CONTRASENA"));
             u.setTipo(rs.getString("TIPO"));
             u.setActivo("ACTIVO");
-            System.out.println("/" + u.getTipo() + "/");
+           // System.out.println("/" + u.getTipo() + "/");
         }
 
         uDB.cerrar();
@@ -1027,7 +1026,7 @@ public class DBt {
         productot u = null;
         abrir();
         String sentenciaSQL = "SELECT * FROM producto WHERE id_producto=" + p;
-        System.out.println(sentenciaSQL);
+        
         smt = conexion.createStatement();
         rs = smt.executeQuery(sentenciaSQL);
         // Crear el objeto
@@ -1041,20 +1040,20 @@ public class DBt {
             u.setCosto(Double.parseDouble(rs.getString("costo")));
             u.setTipo(rs.getString("TIPO_PRODUCTO"));
             u.setDescripcion(rs.getString("DESCRIPCION"));
-            System.out.println("/" + u.getTipo() + "/");
+            //System.out.println("/" + u.getTipo() + "/");
         }
         cerrar();
         return u;
     }
 
-    public boolean buscarusuariorepe(String ut) throws ClassNotFoundException, SQLException {
+    public boolean buscarusuariorepe(String ut, String uso) throws ClassNotFoundException, SQLException {
         boolean regreso = false;
         int usuario = 0;
         Statement smt;
         ResultSet rs;
         abrir();
         String sentenciaSQL = "SELECT usuario FROM usuario WHERE usuario='" + ut + "'";
-        //System.out.println(sentenciaSQL);
+        //
         smt = conexion.createStatement();
         rs = smt.executeQuery(sentenciaSQL);
         // Crear el objeto
@@ -1064,9 +1063,12 @@ public class DBt {
         }
         smt.close();
         rs.close();
-        if (usuario == 1) {
-            regreso = false;
+        if (uso.equals("mod")) {
+            if (usuario == 1) {
+                regreso = false;
+            }
         }
+
         return regreso;
     }
 
@@ -1088,7 +1090,7 @@ public class DBt {
             usuario = (Integer.parseInt(rs.getString("ID_USUARIO")));
         }
         cerrar();
-        System.out.println(sentenciaSQL + "/" + usuario);
+       // System.out.println(sentenciaSQL + "/" + usuario);
         return usuario;
     }
 
@@ -1106,9 +1108,9 @@ public class DBt {
         uDB.abrir();
         c = uDB.getConexion();
         //--Ejecutar la busqueda
-        String sentenciaSQL = "select u.ID_USUARIO,u.nombre,u.contrasena,u.usuario,u.apellido,u.ip,d.Nombre from usuario u join departamento d on d.ID_DEP=u.ID_DEP\n" +
-"where u.ID_USUARIO=" + id;
-        System.out.println(sentenciaSQL);
+        String sentenciaSQL = "select u.ID_USUARIO,u.nombre,u.contrasena,u.usuario,u.apellido,u.ip,d.Nombre from usuario u join departamento d on d.ID_DEP=u.ID_DEP\n"
+                + "where u.ID_USUARIO=" + id;
+        
         smt = c.createStatement();
         rs = smt.executeQuery(sentenciaSQL);
 
@@ -1185,7 +1187,7 @@ public class DBt {
         uDB.abrir();
         c = uDB.getConexion();
         String query = "SELECT id_producto,cantidad from detalle_venta where id_venta=" + id;
-        System.out.println(query);
+        
         smt = c.createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
@@ -1285,7 +1287,7 @@ public class DBt {
         String sentenciaSQL = "update usuario set usuario='" + p.getUsuario()
                 + "', nombre='" + p.getNombre()
                 + "',apellido='" + p.getApellido()
-                + "',tipo='" + p.getTipo() + "',contrasena='" + p.getContrasena() + "',ip='" + p.getIp() + "', ID_DEP="+Integer.parseInt(p.getActivo())+" where id_usuario=" + p.getID_USUARIO();
+                + "',tipo='" + p.getTipo() + "',contrasena='" + p.getContrasena() + "',ip='" + p.getIp() + "', ID_DEP=" + Integer.parseInt(p.getActivo()) + " where id_usuario=" + p.getID_USUARIO();
 
         System.out.print(sentenciaSQL);
 
@@ -1339,10 +1341,10 @@ public class DBt {
                 p = new productot();
                 p = buscarproducto(Integer.parseInt(lista.get(i - 3).toString()));
                 stock = p.getStock() - Integer.parseInt(lista.get(i - 1).toString());
-                System.out.println("stok:" + stock + "/stock p:" + p.getStock() + "/" + lista.get(i - 1));
+                //System.out.println("stok:" + stock + "/stock p:" + p.getStock() + "/" + lista.get(i - 1));
                 // uDB.abrir();
                 sentenciaSQL = "update producto set stock=" + stock + " where id_producto =" + lista.get(i - 3);
-                System.out.println(lista.get(i - 3) + "*" + lista.get(i - 1));
+                //System.out.println(lista.get(i - 3) + "*" + lista.get(i - 1));
                 smt = conexion.createStatement();
                 smt.executeUpdate(sentenciaSQL);
                 // uDB.cerrar();
@@ -1375,10 +1377,10 @@ public class DBt {
                 p = new productot();
                 p = buscarproducto(Integer.parseInt(lista.get(i - 3).toString()));
                 stock = p.getStock() - Integer.parseInt(lista.get(i - 1).toString());
-                System.out.println("stok:" + stock + "/stock p:" + p.getStock() + "/" + lista.get(i - 1));
+                //System.out.println("stok:" + stock + "/stock p:" + p.getStock() + "/" + lista.get(i - 1));
                 // uDB.abrir();
                 sentenciaSQL = "update producto set stock=" + stock + " where id_producto =" + lista.get(i - 3);
-                System.out.println(lista.get(i - 3) + "*" + lista.get(i - 1));
+                //System.out.println(lista.get(i - 3) + "*" + lista.get(i - 1));
                 smt = conexion.createStatement();
                 smt.executeUpdate(sentenciaSQL);
                 // uDB.cerrar();
@@ -1407,7 +1409,7 @@ public class DBt {
         uDB.abrir();
         c = uDB.getConexion();
         String query = "SELECT id_cliente FROM CLIENTE";
-        System.out.println(query);
+        
         smt = c.createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
@@ -1430,12 +1432,12 @@ public class DBt {
         uDB.abrir();
         c = uDB.getConexion();
         String query = "SELECT p.nombre,u.nombre,prod.ganancia,prod.producido,prod.fecha FROM producto p JOIN production prod ON p.id_producto =prod.id_producto JOIN usuario u ON u.id_usuario=prod.id_usuario WHERE fecha BETWEEN '" + fi + "' AND '" + ff + "' ORDER BY u.nombre";
-        System.out.println(query);
+        
         smt = c.createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
             pr.setproducion(rs.getObject("u.nombre").toString(), rs.getObject("p.nombre").toString(), Integer.parseInt(rs.getObject("prod.producido").toString()), Float.parseFloat(rs.getObject("prod.ganancia").toString()), rs.getObject("prod.fecha").toString());
-            System.out.println("BD " + rs.getObject("u.nombre") + "/" + rs.getObject("p.nombre") + "/" + rs.getObject("prod.producido") + "/" + rs.getObject("prod.ganancia") + "/" + rs.getObject("prod.fecha"));
+            //System.out.println("BD " + rs.getObject("u.nombre") + "/" + rs.getObject("p.nombre") + "/" + rs.getObject("prod.producido") + "/" + rs.getObject("prod.ganancia") + "/" + rs.getObject("prod.fecha"));
         }
         smt.close();
         lista = pr.getProd();
@@ -1457,7 +1459,7 @@ public class DBt {
         uDB.abrir();
         c = uDB.getConexion();
         String query = " select * from venta where fecha BETWEEN '" + fi + "' AND '" + ff + "' ORDER BY id_venta ";
-        System.out.println(query);
+        
         smt = c.createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
@@ -1482,7 +1484,7 @@ public class DBt {
 
         //--Ejecutar la busqueda
         String sentenciaSQL = "SELECT * FROM usuario WHERE tipo='ADMIN'";
-        System.out.println(sentenciaSQL);
+        
         smt = c.createStatement();
         rs = smt.executeQuery(sentenciaSQL);
 
@@ -1491,7 +1493,7 @@ public class DBt {
 
             u = new Usuario();
             u.setId(Integer.parseInt(rs.getString("ID_USUARIO")));
-            System.out.println("/" + u.getId() + "/");
+            //System.out.println("/" + u.getId() + "/");
         }
 
         uDB.cerrar();
@@ -1576,7 +1578,7 @@ public class DBt {
 //                "UPDATE CLIENTES SET ID_CLIENTE=" + id + ""
 //                + ",NOMBRE='" + nombre + "',DIRECCION='" + calle + "',TELEFONO='" + col + ""
 //                + "',RFC='" + tel + "' where ID_CLIENTE =" + id;
-        System.out.println(sentenciaSQL);
+        
         smt = c.createStatement();
         smt.executeUpdate(sentenciaSQL);
     }
@@ -1588,17 +1590,17 @@ public class DBt {
         ResultSet rs;
         String query = "SELECT max(id_venta) as lol FROM venta";
         //Connection c1 = uDB.getConexion();
-        System.out.println(query);
+        
         //Statement smt1;
         smt = conexion.createStatement();
         rs = smt.executeQuery(query);
 
-        System.out.println("entre smt");
+        //System.out.println("entre smt");
         while (rs.next()) {
-            System.out.println("entre rs");
+          //  System.out.println("entre rs");
             id = rs.getInt("lol");
         }
-        System.out.println(id);
+        //System.out.println(id);
         return id;
     }
 
@@ -1609,17 +1611,17 @@ public class DBt {
         ResultSet rs;
         String query = "SELECT max(ID_FACTURA) as lol FROM factura";
         //Connection c1 = uDB.getConexion();
-        System.out.println(query);
+        
         //Statement smt1;
         smt = conexion.createStatement();
         rs = smt.executeQuery(query);
 
-        System.out.println("entre smt");
+        //System.out.println("entre smt");
         while (rs.next()) {
-            System.out.println("entre rs");
+          //  System.out.println("entre rs");
             id = rs.getInt("lol");
         }
-        System.out.println(id);
+        //System.out.println(id);
         return id;
     }
 
@@ -1742,7 +1744,7 @@ public class DBt {
         abrir();
         c = getConexion();        //--Ejecutar la busqueda
         String sentenciaSQL = "SELECT * FROM producto WHERE id_producto=" + id;
-        System.out.println(sentenciaSQL);
+        
         smt = c.createStatement();
         rs = smt.executeQuery(sentenciaSQL);
         // Crear el objeto
@@ -1753,7 +1755,7 @@ public class DBt {
             u.setCosto(Double.parseDouble(rs.getString("costo")));
             u.setStock(Integer.parseInt(rs.getString("stock")));
             u.setModelo(rs.getString("modelo"));
-            System.out.println("producto " + u.getNombre());
+           // System.out.println("producto " + u.getNombre());
         }
         rs.close();
         return u;
@@ -1772,7 +1774,7 @@ public class DBt {
         abrir();
         c = getConexion();        //--Ejecutar la busqueda
         String sentenciaSQL = "SELECT * FROM producto WHERE ID_PRODUCTO=" + id;
-        System.out.println(sentenciaSQL);
+        
         smt = c.createStatement();
         rs = smt.executeQuery(sentenciaSQL);
         // Crear el objeto
@@ -1783,7 +1785,7 @@ public class DBt {
             u.setCosto(Double.parseDouble(rs.getString("costo")));
             u.setStock(Integer.parseInt(rs.getString("stock")));
             u.setModelo(rs.getString("modelo"));
-            System.out.println("producto " + u.getNombre());
+            //System.out.println("producto " + u.getNombre());
         }
         rs.close();
         return u;
@@ -1805,7 +1807,7 @@ public class DBt {
 
             //--Ejecutar la busqueda
             String sentenciaSQL = "SELECT * FROM PRODUCTO";
-            System.out.println(sentenciaSQL);
+            
             smt = c.createStatement();
             rs = smt.executeQuery(sentenciaSQL);
 
@@ -1846,7 +1848,7 @@ public class DBt {
 
         //--Ejecutar la busqueda
         String sentenciaSQL = "SELECT * FROM CLIENTES WHERE ID_CLIENTE=" + id;
-        System.out.println(sentenciaSQL);
+        
         smt = c.createStatement();
         rs = smt.executeQuery(sentenciaSQL);
 
@@ -1884,7 +1886,7 @@ public class DBt {
 
         //--Ejecutar la busqueda
         String sentenciaSQL = "SELECT * FROM PROVEEDOR WHERE ID=" + id;
-        System.out.println(sentenciaSQL);
+        
         smt = c.createStatement();
         rs = smt.executeQuery(sentenciaSQL);
 

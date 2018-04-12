@@ -48,8 +48,21 @@ public class persistencia_virtual {
         conexion.close();
 
     }
-
-    public boolean Checkip(int ip) throws ClassNotFoundException, SQLException {
+/*/select u.usuario,u.nombre,u.ip,d.nombre from usuario u join departamento d on u.ID_DEP= d.ID_DEP where activo = 'Y'
+group by d.Nombre, u.usuario,u.ip
+order by d.nombre
+SELECT
+     usuario.`usuario` AS usuario_usuario,
+     usuario.`nombre` AS usuario_nombre,
+     usuario.`ip` AS usuario_ip,
+     departamento.`Nombre` AS departamento_Nombre
+FROM
+     `departamento` departamento INNER JOIN `usuario` usuario ON departamento.`ID_DEP` = usuario.`ID_DEP`
+WHERE
+     activo = 'Y'        /*/
+    
+    
+    public boolean Checkip(int ip,String uso) throws ClassNotFoundException, SQLException {
         boolean estado = false;
         abrir();
         Statement smt;
@@ -73,9 +86,12 @@ public class persistencia_virtual {
             estado = true;
             p2++;
         }
+        if(uso.equals("mod")){
         if(ip1==1 || p2==1){
             estado=false;
+        }    
         }
+        
         }else estado=true;
         
         return estado;

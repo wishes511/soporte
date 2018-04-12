@@ -31,8 +31,9 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "Bajausut", urlPatterns = {"/Bajausut"})
 public class Bajausut extends HttpServlet {
-     char[] arr;
-          String calles="";
+
+    char[] arr;
+    String calles = "";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -47,58 +48,53 @@ public class Bajausut extends HttpServlet {
             throws ServletException, IOException {
         HttpSession objSesion = request.getSession(false);
 //i_d
-    String usuario = (String) objSesion.getAttribute("usuario");
-    String tiposs = (String) objSesion.getAttribute("tipo");
-    String ids = String.valueOf(objSesion.getAttribute("i_d"));
+        String usuario = (String) objSesion.getAttribute("usuario");
+        String tiposs = (String) objSesion.getAttribute("tipo");
+        String ids = String.valueOf(objSesion.getAttribute("i_d"));
+        int idprodu = 0;
+        int idprodu1 = 0;
+        String tipo = "";
+        int stoc = 0;
 
-    out.println("" + tiposs+"/"+ids);
-    int idprodu=0;
-    int idprodu1=0;
-    String tipo="";
-    int stoc=0;
+        if (usuario != null && tiposs != null && tiposs.equals("ADMIN")) {
 
-    if (usuario != null && tiposs != null && tiposs.equals("ADMIN")) {
-       
-    } else {
-        response.sendRedirect("../index.jsp");
-    }
+        } else {
+            response.sendRedirect("../index.jsp");
+        }
         try {
             PrintWriter out = response.getWriter();
             response.setContentType("text/html;charset=UTF-8");
-            
             int usuarios = Integer.parseInt(request.getParameter("baji"));
-            String uso= request.getParameter("uso");
+            String uso = request.getParameter("uso");
             System.out.println(uso);
-            DBt udb = new DBt();  String omg ="";
-            if(uso.equals("baja")){
-            udb.modibajausut(usuarios);
-            }else{
-            udb.modialtausut(usuarios);
+            DBt udb = new DBt();
+            String omg = "";
+            if (uso.equals("baja")) {
+                udb.modibajausut(usuarios);
+            } else {
+                udb.modialtausut(usuarios);
             }
-            
-            
 //    request.setAttribute("oka","Producto guardado exitosamente" );
 //    RequestDispatcher rd = getServletContext().getRequestDispatcher("/admin/home_admin.jsp");               
 //    rd.include(request,response);
 
-            
-           // response.sendRedirect("admin/home_admin.jsp");
-           response.sendRedirect("admin/home_admin.jsp");
+            // response.sendRedirect("admin/home_admin.jsp");
+            response.sendRedirect("admin/home_admin.jsp");
 //            out.println("<script type=\"text/javascript\">");
 //            out.println("alert('Usuario ingresado correctamente.');");
 //            out.println("location='admin/home_admin.jsp';");
 //            out.println("</script>");
-            
-        }catch (Exception ex) {
-            
-                PrintWriter out = response.getWriter();
+
+        } catch (Exception ex) {
+
+            PrintWriter out = response.getWriter();
             out.println("<script type=\"text/javascript\">");
             out.println("alert('Problemas al ingresar un campo verifique sus datos.');");
             out.println("location='admin/home_admin.jsp';");
             out.println("</script>");
-            
-            request.setAttribute("error","Problemas al ingresar un campo" );
-           // response.sendRedirect("admin/home_admin.jsp");
+
+            request.setAttribute("error", "Problemas al ingresar un campo");
+            // response.sendRedirect("admin/home_admin.jsp");
 //    request.setAttribute("error","Problemas al ingresar un campo" );
 //    RequestDispatcher rd = getServletContext().getRequestDispatcher("/admin/productos_admin.jsp");               
 //    rd.include(request,response);
