@@ -9,11 +9,11 @@
     String tipos = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
 
-   // out.println("" + tipos+"/"+ids);
-    int idprodu=0;
-    int idprodu1=0;
-    String tipo="";
-    int stoc=0; 
+    // out.println("" + tipos+"/"+ids);
+    int idprodu = 0;
+    int idprodu1 = 0;
+    String tipo = "";
+    int stoc = 0;
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -27,23 +27,20 @@
         <link rel="stylesheet" type="text/css" href="css/loginn.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="css/opcional.css">
-
-
-        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-           <script type="text/javascript">
-            function valida_envia(){
-                valor=document.form.nombrelog.value;
-                if(!(/^([A-Z\a-z]+)$/i.test(valor)) ) {
-                alert("nombre invalido! ");
-                document.form.nombrelog.focus();
-                return 0;
+        <script type="text/javascript">
+            function valida_envia() {
+                valor = document.form.nombrelog.value;
+                if (!(/^([A-Z\a-z]+)$/i.test(valor))) {
+                    alert("nombre invalido! ");
+                    document.form.nombrelog.focus();
+                    return 0;
                 }
-                
-                valor=document.form.contrasenalog.value;
-                if(!(/^([A-Z\a-z]+)$/i.test(valor)) ) {
-                alert("Contraseña invalida! ");
-                document.form.contrasenalog.focus();
-                return 0;
+
+                valor = document.form.contrasenalog.value;
+                if (!(/^([A-Z\a-z]+)$/i.test(valor))) {
+                    alert("Contraseña invalida! ");
+                    document.form.contrasenalog.focus();
+                    return 0;
                 }
             }
         </script>
@@ -53,71 +50,63 @@
         <br>
 
         <div align="center">
-             <%
-                            if (usuario != null && tipos != null && tipos.equals("ADMIN")) {
-                            out.println("<div class=container-fluid align=left> ");
-                                
-                                out.println("<div class=row>");
-                                out.println("<form action=admin/home_admin.jsp> ");
-                                out.println("<label>Conectado como:</label>"); 
-                                out.println("<input type=submit value="+usuario+" class=btn btn-default>");
-                                out.println("</form>");
-                                out.println("</div>");
-                            
-                            out.println("</div>");
-                            
-                            } else {
-                                
-                            }
+            <%
+                if (usuario != null && tipos != null && tipos.equals("ADMIN")) {
+                    out.println("<div class=container-fluid align=left> ");
+
+                    out.println("<div class=row>");
+                    out.println("<form action=admin/home_admin.jsp> ");
+                    out.println("<label>Conectado como:</label>");
+                    out.println("<input type=submit value=" + usuario + " class=btn btn-default>");
+                    out.println("</form>");
+                    out.println("</div>");
+
+                    out.println("</div>");
+
+                } else {
+
+                }
             %>
             <div class="container-fluid" align="center">
                 <div class="container" style="padding-bottom: 50px">
-                <div class="row" >
-                    <div class="col-lg-offset-4 col-lg-4" >
-                        <div style="padding-top: 20%">
-                            
-                            
-                            <div class="form-login" >
-                            
-                                <h3 class="h3" >Login</h3>
-                           
-                            <form name="logiing" action="Validart" method="POST" class="form-login " onsubmit="valida_envia()">
-                                <input  type="text" id="nombrelog" class="form-control input-sm chat-input" name="nombrelog" placeholder="username" onsubmit="valida_envia()" required/>
-                                <br>
-                                <input type="password" id="contrasenalog" class="form-control input-sm chat-input" name="contrasenalog" placeholder="password" onsubmit="valida_envia()" required/>
-                                <br>
-                                <div class="wrapper">
-                                    <span class="group-btn">     
-                                        <input type="submit" value="Entrar" class="btn btn-default navbar-btn" />
-                                        
-                                    </span>
-                                    <br>
-                                    <label style="font-size:50; font-family: monospace;">
-                        ${error}                      
-                    </label>
+                    <div class="row" >
+                        <div class="col-lg-offset-4 col-lg-4" >
+                            <div style="padding-top: 20%">
 
-                        </div> </form>
-                    </div>
-                            
+
+                                <div class="form-login" >
+
+                                    <h3 class="h3" >Login</h3>
+
+                                    <form name="logiing" action="Validart" method="POST" class="form-login " onsubmit="valida_envia()">
+                                        <input  type="text" id="nombrelog" class="form-control input-sm chat-input" name="nombrelog" placeholder="username" onsubmit="valida_envia()" required/>
+                                        <br>
+                                        <input type="password" id="contrasenalog" class="form-control input-sm chat-input" name="contrasenalog" placeholder="password" onsubmit="valida_envia()" required/>
+                                        <br>
+                                        <div class="wrapper">
+                                            <span class="group-btn">     
+                                                <input type="submit" value="Entrar" class="btn btn-default navbar-btn" />
+                                            </span>
+                                            <br>
+                                            <label style="font-size:50; font-family: monospace;">
+                                                ${error}                      
+                                            </label>
+                                        </div> </form>
+                                </div>
+                            </div>
                         </div>
-
-
-                </div>
-            </div>    
+                    </div>    
                 </div>   
-                    <div class="row">
-                      <div style="background-color:#F0F0F0;" >
-                         <ul class="nav navbar-nav" style="background-color:#F0F0F0;" >
-      <li class="active"><a href="cotizacion.htm">Cotizacion Etiq</a></li>
-      <li ><a href="Vigilante/EntradaSalidaP.jsp">Entrada / Salidas</a></li>
-      <li ><a href="Pistola/">Pistola</a></li>
-      
-    </ul>
-                          
+                <div class="row">
+                    <div style="background-color:#F0F0F0;" >
+                        <ul class="nav navbar-nav" style="background-color:#F0F0F0;" >
+                            <li class="active"><a href="cotizacion.htm">Cotizacion Etiq</a></li>
+                            <li ><a href="Vigilante/EntradaSalidaP.jsp">Entrada / Salidas</a></li>
+                            <li ><a href="Pistola/">Pistola</a></li>
+                        </ul>
                     </div>  
-                    </div>
-                    
-         </div>
-    </div>
-</body>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>

@@ -48,24 +48,12 @@
         <script type="text/javascript" src="../js/bootstrap.js"></script>
         <script type="text/javascript" src="../js/bootstrap.min.js"></script>        
         <script type="text/javascript" src="../js/jquery-3.1.1.min.js"></script> 
-        <script type="text/javascript" src="http://librosweb.es/ejemplos/bootstrap_3/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.9.1/jquery.tablesorter.min.js"></script>
+        <script type="text/javascript" src="../js/bootstrap.min.js"></script>
         <script type="text/javascript" src="../js/dhtmlgoodies_calendar.js?random=20171118"></script>
         <link type="text/css" rel="stylesheet" href="../css/dhtmlgoodies_calendar.css?random=20171118" media="screen"></link>
 
     </head>
     <body class="body1">
-        <script type="text/javascript">
-            // /^[a-zAZ0-9_\.\-]+@[a-zA-Z0-9\-]+
-
-            $(document).ready(function ()
-            {
-                $("#tablesorter-demo").tablesorter({widgets: ['zebra']});
-                $("#tablesorter-demo").tablesorterPager({container: $("#pager")});
-            });
-
-
-        </script>
         <div class="container-fluid">
             <nav class="navbar navbar-default">
                 <div class="navbar-header">
@@ -102,22 +90,22 @@
                 <a><input type="submit" target="costodep.jsp" style="position:relative;float: right" onclick="costo()"  class="btn btn-primary" value="Costo por departamento"></a>
                 <div class="col-md-12 " >
                     <div class="col-md-offset-3">
-                   
-                            <form >
-                                     <div class="col-md-2" >
+
+                        <form >
+                            <div class="col-md-2" >
                                 fecha de inicio<input class="form-control input-sm chat-input" type="text" name="f1" id="f1" value="<%=fechaca%>"  />
-                        </div>
-                        <div class="col-md-3">
-                            <br>
-                            <input type="button" class="btn btn-toolbar alert-success" value="Cal" onclick="displayCalendar(document.forms[0].f1, 'yyyy-mm-dd', this)"/>
-                        </div>
-                        <div class="col-md-2">
-                            fecha final<input class="form-control input-sm chat-input" type="text" name="f2" id="f2" value="<%=fechac%>"  />
-                        </div>
-                        <div class="col-md-3">
-                            <br>
-                            <input type="button" value="Cal" class="btn btn-toolbar alert-success" onclick="displayCalendar(document.forms[0].f2, 'yyyy-mm-dd', this)"/>
-                        </div>
+                            </div>
+                            <div class="col-md-3">
+                                <br>
+                                <input type="button" class="btn btn-toolbar alert-success" value="Cal" onclick="displayCalendar(document.forms[0].f1, 'yyyy-mm-dd', this)"/>
+                            </div>
+                            <div class="col-md-2">
+                                fecha final<input class="form-control input-sm chat-input" type="text" name="f2" id="f2" value="<%=fechac%>"  />
+                            </div>
+                            <div class="col-md-3">
+                                <br>
+                                <input type="button" value="Cal" class="btn btn-toolbar alert-success" onclick="displayCalendar(document.forms[0].f2, 'yyyy-mm-dd', this)"/>
+                            </div>
 
                         </form>
                     </div>
@@ -128,15 +116,15 @@
                     <br><input type="submit" name="envio" class="btn btn-success" id="envio" onclick="okas()"/>
                 </div>
             </div>
-                        
-                        <div class="row">
-                            <div class="container">
-                                <div class="col-sm-3">
-                                    Buscar Producto
-                                <input type="text" name="buscaprodd" id="buscaprodd" class=" form-control input-sm chat-input" Onkeypress="buscaprod()">
-                                </div>
-                                </div>
-                        </div>
+
+            <div class="row">
+                <div class="container">
+                    <div class="col-sm-3">
+                        Buscar Producto
+                        <input type="text" name="buscaprodd" id="buscaprodd" class=" form-control input-sm chat-input" Onkeypress="buscaprod()">
+                    </div>
+                </div>
+            </div>
             <div class="row esp" style="overflow: auto">
                 <table  id="tablesorter-demo" class="table table-hover table-responsive table-condensed table-bordered" >
                     <thead class="redondeado" style="background-color:white">
@@ -152,17 +140,15 @@
                     </tbody> 
                 </table>
             </div>
-           
-
         </div>
         <script type="text/javascript">
             function okas() {
                 var pro = $('#f1').val();
                 var pro1 = $('#f2').val();
-                var uso="fechas";
+                var uso = "fechas";
                 $.ajax({
                     type: 'post',
-                    data: {f1: pro, f2: pro1,uso:uso},
+                    data: {f1: pro, f2: pro1, uso: uso},
                     url: '../Getregs',
                     success: function (result) {
                         $('#llenado').html(result);
@@ -171,14 +157,14 @@
             }
 
             function buscaprod() {
-             
+
                 var pro = $('#f1').val();
                 var pro1 = $('#f2').val();
                 var prod = $('#buscaprodd').val();
-                var uso="buscarp";
+                var uso = "buscarp";
                 $.ajax({
                     type: 'post',
-                    data: {f1: pro, f2: pro1,p:prod,uso:uso},
+                    data: {f1: pro, f2: pro1, p: prod, uso: uso},
                     url: '../Getregs',
                     success: function (result) {
                         $('#llenado').html(result);
@@ -189,19 +175,19 @@
         <script>
             function mostrarVentanas(id)
             {
-                
+
                 var ventana = document.getElementById("miVentana");
                 ventana.style.marginTop = "100px";
                 //ventana.style.left = ((document.body.clientWidth) / 2) +  "px";
                 ventana.style.display = "block";
                 ventana.style.left = 10 + "%";
-                
+
                 var pro = id;
                 var pro1 = "";
-                var uso="detalle";
+                var uso = "detalle";
                 $.ajax({
                     type: 'post',
-                    data: {f1: pro, f2: pro1,uso:uso},
+                    data: {f1: pro, f2: pro1, uso: uso},
                     url: '../Getregs',
                     success: function (result) {
                         $('#llenadodetalle').html(result);
@@ -213,11 +199,11 @@
                 var ventana = document.getElementById("miVentana");
                 ventana.style.display = "none";
             }
-            function costo(){
+            function costo() {
                 var f1 = $('#f1').val();
                 var f2 = $('#f2').val();
-                window.location.href = "depcosto.jsp?f1="+f1+"&f2="+f2;
-                
+                window.location.href = "depcosto.jsp?f1=" + f1 + "&f2=" + f2;
+
             }
 
         </script>
@@ -240,8 +226,8 @@
                     <tbody id="llenadodetalle">
                     </tbody> 
                 </table>
-           
+
+            </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>
