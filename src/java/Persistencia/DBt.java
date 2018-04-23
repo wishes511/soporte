@@ -190,6 +190,28 @@ public class DBt {
         smt.close();
         return lista;
     }
+    public ArrayList<Object> ver_catalogo_prod(String prod) throws ClassNotFoundException, SQLException {
+        ArrayList<Object> lista = new ArrayList<>();
+        Statement smt;
+        ResultSet rs;
+        Usuario u = null;
+        abrir();
+        String query = "select * from producto where stock !=0 and status ='Y' and ( nombre like '%" + prod + "%' or modelo like '%" + prod + "%' or marca like '%"+prod+"%') order by nombre";        
+        smt = conexion.createStatement();
+        rs = smt.executeQuery(query);
+        while (rs.next()) {
+            lista.add(rs.getString("ID_PRODUCTO"));
+            //lista.add(rs.getString("nombre"));
+            lista.add(rs.getString("modelo"));
+            lista.add(rs.getString("marca"));
+            lista.add(rs.getString("stock"));
+            lista.add(rs.getString("costo"));
+            lista.add(rs.getString("descripcion"));
+            lista.add(rs.getString("imagen"));
+        }
+        smt.close();
+        return lista;
+    }
     
     public ArrayList<Object> verventastdep(String f1, String f2) throws ClassNotFoundException, SQLException {
         ArrayList<Object> lista = new ArrayList<>();

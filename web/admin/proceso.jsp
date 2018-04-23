@@ -24,15 +24,7 @@
     }
 %>
 
-<%
-    String nombre = request.getParameter("name");
-    String modelo = request.getParameter("modelo");
-    String marca = request.getParameter("marca");
-    String costo = request.getParameter("costo");
-    String stock = request.getParameter("stock");
-    String desc = request.getParameter("descripcion");
-    String tipo = request.getParameter("tipos");
- 
+<% 
     DBt udb = new DBt();
     String omg = "";
     String valor = "";
@@ -53,15 +45,18 @@
                 //C:\Users\gateway1\Documents\NetBeansProjects\soporte
                 valor = (new Date().getTime()) + item.getName();
                 
-               ruta= application.getRealPath("imagesbd/"+valor);
+               ruta= getServletContext().getRealPath("");
                // ruta = "C:/Users/gateway1/Documents/NetBeansProjects/soporte/web/imagesbd/" + valor;
-                File archivo_server = new File(ruta);
+                
+                File archivo_server = new File(ruta+"/imagesbd/"+valor);
+               // System.out.println(rutabd);
                 item.write(archivo_server);
+                
                 rutabd = "../imagesbd/" + valor;
             }
             parametros.put(item.getFieldName().toLowerCase(), valor);
         }
-        System.out.println(arr[0]+"/"+arr[1]+"/"+arr[2]+"/"+arr[3]+"/"+arr[4]+"/"+arr[5]+"/"+arr[6]);
+        //System.out.println(arr[0]+"/"+arr[1]+"/"+arr[2]+"/"+arr[3]+"/"+arr[4]+"/"+arr[5]+"/"+arr[6]);
         p.setNombre(arr[0].toUpperCase());
         p.setModelo(arr[1].toUpperCase());
         p.setMarca(arr[2].toUpperCase());

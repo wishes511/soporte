@@ -153,7 +153,7 @@
                             }
 
                         %>
-                    <li><a href="../index.html">Salir</a></li>
+                    <li><a href="../Cierresesion">Salir</a></li>
                 </ul>
             </nav>
             <div class="row">
@@ -178,8 +178,13 @@
                 </div>
                 <div class="col-sm-8">
                     <h3 class="h3" align="center">Vista general de productos</h3>
-                    <div class="col-sm-offset-1z esp1"  style="overflow: auto">
-                        <table class="table table-responsive mapa" >
+                    <div class="row espas-search-prods">
+                    <div class="col-sm-4">
+                        <input type="text" id="catalogo" placeholder="Busqueda de productos" class="form-control" onkeypress="to_searchprod()"> 
+                    </div>                    
+                </div>
+                    <div class="col-sm-offset-1z esp1"  style="overflow: auto" >
+                        <table class="table table-responsive mapa" id="tabla-prods">
                             <tr>
                                 <td>modelo</td>
                                 <td>marca</td>
@@ -210,9 +215,9 @@
                                         out.println("<td>" + rs.getObject("stock") + "</td>");
                                         out.println("<td>" + rs.getObject("costo") + "</td>");
                                         out.println("<td>" + rs.getObject("descripcion") + "</td>");
-                                        out.println("<td><a href=" + rs.getObject("imagen") + " ><img width=40 height=40 src=" + rs.getObject("imagen") + "></a></td>");
+                                        out.println("<td><a href=" + rs.getObject("imagen") + " ><img class=\"imagen_cata\" src=" + rs.getObject("imagen") + "></a></td>");
                             %>
-                            <form action="../Borrarproducto"> 
+                            <form action="../Borrarproductot"> 
                                 <%
                                     out.println("<td><a name=borrar  value=" + rs.getObject("id_producto") + " onclick=eliminar(" + rs.getObject("id_producto") + ") class=btn><img src=../images/delete.png  width=30 height=30></a></td>");
 
@@ -233,6 +238,18 @@
                 </div>
             </div>
             <script>
+                function to_searchprod() {
+                var catalogo = $('#catalogo').val();
+                var uso = "catalago_general";
+                $.ajax({
+                    type: 'post',
+                    data: {p: catalogo, uso: uso},
+                    url: '../Getregs',
+                    success: function (result) {
+                        $('#tabla-prods').html(result);
+                    }
+                });
+            }
                 function mostrarVentana1(id, n, cmay, cmin, st, cprod)
                 {
                     document.getElementById("cprod").value = cprod;

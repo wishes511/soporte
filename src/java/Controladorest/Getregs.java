@@ -52,7 +52,37 @@ public class Getregs extends HttpServlet {
         String produ =request.getParameter("p");
         String uso =request.getParameter("uso");
         // ver ventas general
-        if(uso.equals("catalogo")){
+        System.out.println(uso);
+        if(uso.equals("catalago_general")){
+        DBt db = new DBt();
+        int cont =0;
+        ArrayList<Object> lista;
+        lista=db.ver_catalogo_prod(produ);
+        out.print("<table class=\"table table-responsive mapa\" id=\"tabla-prods\">\n" +
+"                            <tr>\n" +
+"                                <td>modelo</td>\n" +
+"                                <td>marca</td>\n" +
+"                                <td>stock</td>\n" +
+"                                <td>costo</td>\n" +
+"                                <td>descripcion</td>\n" +
+"                                <td>Vista</td>\n" +
+"                                <td>Borrar</td>\n" +
+"                                <td>Modificar</td>\n" +
+"                            </tr>");
+        if(!lista.isEmpty()){
+            for(int i =0;i<lista.size();i++){
+                if(cont ==6){
+                    out.print("<tr><td>"+lista.get(i-5)+"</td><td>"+lista.get(i-4)+"</td><td>"+lista.get(i-3)+"</td><td>"+lista.get(i-2)+"</td>"
+                            + "<td>"+lista.get(i-1)+"</td><td><a href="+lista.get(i)+" ><img class=\"imagen_cata\" src="+lista.get(i)+"></a></td>"
+                            + "<td><a name=borrar  value="+lista.get(i-6)+"  onclick=eliminar("+lista.get(i-6)+") class=btn><img src=../images/delete.png  width=30 height=30></a></td>"
+                            + "<td><a name=mod value="+lista.get(i-6)+" class=\"btn\" onclick=modi("+lista.get(i-6)+")><img src=\"../images/modificar.png\" width=30 height=30></a></td></tr>");
+                    cont=0;
+                }else cont++;
+            
+            }
+        }
+        out.print("</table>");
+        } else if(uso.equals("catalogo")){
         DBt db = new DBt();
         int cont =0;
         ArrayList<Object> lista;
