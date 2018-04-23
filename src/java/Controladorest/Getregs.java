@@ -52,7 +52,7 @@ public class Getregs extends HttpServlet {
         String produ =request.getParameter("p");
         String uso =request.getParameter("uso");
         // ver ventas general
-        System.out.println(uso);
+        //System.out.println(uso);
         if(uso.equals("catalago_general")){
         DBt db = new DBt();
         int cont =0;

@@ -11,7 +11,7 @@ and open the template in the editor.
 @media ( max-width:1024px) {
 
 label{
-    font-size: 2em;
+    font-size: 1em;
     
 }
 .textoboton{
@@ -22,12 +22,12 @@ input{
     size: 50em
 }
 li{
-    font-size: 2em
+    font-size: 1em
 }
 td{
-    font-size: 2em
+    font-size: 1em
 }
 select{
-    font-size: 2em
+    font-size: 1em
 }
 }

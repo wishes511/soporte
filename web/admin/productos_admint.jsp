@@ -41,6 +41,9 @@
         <script type="text/javascript" src="../js/bootstrap.min.js"></script>
         <script>
             // /^[a-zAZ0-9_\.\-]+@[a-zA-Z0-9\-]+
+            $(document).ready(function(){
+                document.getElementById('catalogo').focus();
+            });
             $(document).ready(function () {
                 $("#benviar").click(function () {
                     var nombres = $("#name").val();
@@ -203,7 +206,7 @@
                                     ResultSet rs;
                                     c = uDB.getConexion();
                                     String sentenciaSQL = "SELECT * FROM producto ORDER BY nombre";
-                                    System.out.println(sentenciaSQL);
+                                    
                                     smt = c.createStatement();
                                     rs = smt.executeQuery(sentenciaSQL);
                                     while (rs.next()) {

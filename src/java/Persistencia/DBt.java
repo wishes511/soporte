@@ -196,7 +196,7 @@ public class DBt {
         ResultSet rs;
         Usuario u = null;
         abrir();
-        String query = "select * from producto where stock !=0 and status ='Y' and ( nombre like '%" + prod + "%' or modelo like '%" + prod + "%' or marca like '%"+prod+"%') order by nombre";        
+        String query = "select * from producto where status ='Y' and ( nombre like '%" + prod + "%' or modelo like '%" + prod + "%' or marca like '%"+prod+"%') order by nombre";        
         smt = conexion.createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
@@ -882,7 +882,6 @@ abrir();
             u.setCosto(Double.parseDouble(rs.getString("costo")));
             u.setTipo(rs.getString("TIPO_PRODUCTO"));
             u.setDescripcion(rs.getString("DESCRIPCION"));
-////            System.out.println("/" + u.getTipo() + "/");
         }
         cerrar();
         return u;
@@ -932,7 +931,6 @@ abrir();
             usuario = (Integer.parseInt(rs.getString("ID_USUARIO")));
         }
         cerrar();
-////        System.out.println(sentenciaSQL + "/" + usuario);
         return usuario;
     }
 
@@ -1117,10 +1115,8 @@ abrir();
                 p = new productot();
                 p = buscarproducto(Integer.parseInt(lista.get(i - 3).toString()));
                 stock = p.getStock() - Integer.parseInt(lista.get(i - 1).toString());
-////                System.out.println("stok:" + stock + "/stock p:" + p.getStock() + "/" + lista.get(i - 1));
                 // uDB.abrir();
                 sentenciaSQL = "update producto set stock=" + stock + " where id_producto =" + lista.get(i - 3);
-////                System.out.println(lista.get(i - 3) + "*" + lista.get(i - 1));
                 smt = conexion.createStatement();
                 smt.executeUpdate(sentenciaSQL);
                 // uDB.cerrar();
@@ -1396,7 +1392,6 @@ abrir();
         String query = "insert into fact_prov values(" + id + "," + t.getID_PROVEEDOR()+ ",'"
                 + t.getUsuario() + "','" + t.getFecha() + "','" + t.getHora() + "',"
                 + t.getCantidad() + "," + t.getTotal()+",'"+t.getReferencia()+"')";
-        System.out.print(query);
         smt = conexion.createStatement();
         smt.executeUpdate(query);
         smt.close();
@@ -1479,7 +1474,6 @@ abrir();
             u.setCosto(Double.parseDouble(rs.getString("costo")));
             u.setStock(Integer.parseInt(rs.getString("stock")));
             u.setModelo(rs.getString("modelo"));
-////            System.out.println("producto " + u.getNombre());
         }
         rs.close();
         return u;
