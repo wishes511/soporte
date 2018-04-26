@@ -29,12 +29,7 @@
         <link rel="stylesheet" type="text/css" href="css/opcional.css">
         <script type="text/javascript">
             function valida_envia() {
-                valor = document.form.nombrelog.value;
-                if (!(/^([A-Z\a-z]+)$/i.test(valor))) {
-                    alert("nombre invalido! ");
-                    document.form.nombrelog.focus();
-                    return 0;
-                }
+                
 
                 valor = document.form.contrasenalog.value;
                 if (!(/^([A-Z\a-z]+)$/i.test(valor))) {
@@ -78,7 +73,7 @@
 
                                     <h3 class="h3" >Login</h3>
 
-                                    <form name="logiing" action="Validart" method="POST" class="form-login " onsubmit="valida_envia()">
+                                    <form name="logiing" action="Validart" method="POST" class="form-login ">
                                         <input  type="text" id="nombrelog" class="form-control input-sm chat-input" name="nombrelog" placeholder="username" onsubmit="valida_envia()" required/>
                                         <br>
                                         <input type="password" id="contrasenalog" class="form-control input-sm chat-input" name="contrasenalog" placeholder="password" onsubmit="valida_envia()" required/>

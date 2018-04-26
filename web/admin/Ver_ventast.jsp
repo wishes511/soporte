@@ -19,17 +19,33 @@
     String tipos = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
 
-    if (usuario != null && tipos != null && tipos.equals("ADMIN")) {
+    if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("APLASTISOL"))) {
 
     } else {
         response.sendRedirect("../index.jsp");
     }
+    try{
     Calendar fecha = Calendar.getInstance();
     int año = fecha.get(Calendar.YEAR);
     int mes = fecha.get(Calendar.MONTH) + 1;
     int dia = fecha.get(Calendar.DAY_OF_MONTH);
-    String fechac = año + "-" + mes + "-" + dia;
-    String fechaca = año + "-" + (mes - 1) + "-" + (dia - 1);
+    String fechac;
+    String fechaca;
+    if(mes<10){
+     fechac = año + "-0" + mes;    
+     fechaca = año + "-0" + (mes - 1);
+    }else {
+        fechac = año + "-" + mes;    
+     fechaca = año + "-" + (mes - 1);
+    }
+    if(dia<10){
+         fechac = fechac+"-0" + dia;    
+         fechaca = fechaca+"-0" + (dia - 1);
+    }else{
+         fechac  = fechac  +"-"+dia;    
+         fechaca = fechaca +"-"+dia;
+    }
+    
     DBt bd = new DBt();
     estado = bd.alerta();
 %>
@@ -59,27 +75,62 @@
                 <div class="navbar-header">
                     <a class="navbar-brand" href="../index.jsp"><img src="../images/home.png" class="" width="25"></a>
                 </div>
-                <ul class="nav navbar-nav nav-pills">
-                    <li ><a href="home_admin.jsp">Usuarios</a></li>
-                    <li ><a href="productos_admint.jsp">Productos</a></li>
-                    <li ><a href="">Proveedores</a></li>
-                    <li><a href="Utilidades_Donacionest.jsp">Nueva Compra Interna</a></li>     
+                <ul class="nav navbar-nav">
+                    <%
+                    if(tipos.equals("ADMIN")){
+                    %>
                     <li class="dropdown">
+                        <a  class="dropdown-toggle" data-toggle="dropdown" href="#80">
+                            Usuarios<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" id="#90" role="menu">
+                            <li class=""><a href="home_admin.jsp">Usuarios</a></li>
+                            <li><a href="virtuales.jsp">Vista de direcciones IP</a></li>
+                            <li><a href="reporteusuarios.jsp">Reporte de usuarios</a></li>
+                        </ul>
+                    </li>
+                    <%
+                    }
+                    %>
+                    <li class=""><a href="productos_admint.jsp">Productos</a></li>
+                    <%
+                    if(tipos.equals("ADMIN")){
+                    %>
+                    <li class="dropdown">
+                        <a  class="dropdown-toggle" data-toggle="dropdown" href="#80">
+                            Proveedores<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" id="#90" role="menu">
+                            <li><a href="proveedores.jsp">Proveedores</a></li>
+                            <li class=""><a href="Eprovedor.jsp">Entrada Proveedor</a></li>
+                        </ul>
+                    </li>
+                    <%
+                    }
+                    %>
+                    <li><a href="Utilidades_Donacionest.jsp">Nueva Compra Interna</a></li>
+                    <li class="dropdown active">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#80">
                             Reportes <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" id="#80" role="menu">
-                            <li><a href="">Ver ventas</a></li>
-                            <li><a href="reporte.jsp">reporte</a></li>
+                            <li active><a href="Ver_ventast.jsp">Ver ventas</a></li>
+                            <%if(tipos.equals("ADMIN")){%>
+                            <li><a href="reporte.jsp">reporte productos</a></li>
+                            <%}%>
+                            
                         </ul>
                     </li>
-                    <li>
+                    <li class="">
                         <%
+                            if(tipos.equals("ADMIN")){
                             if (estado) {
                                 out.println("<a href=tareas.jsp STYLE=background-color:rgb(255,89,89);color:white >Tareas</a></li>");
                             } else {
                                 out.println("<a href=tareas.jsp>Tareas</a></li>");
                             }
+                            }
+                            
 
                         %>
                     <li><a href="../Cierresesion">Salir</a></li>
@@ -87,7 +138,12 @@
 
             </nav>
             <div class="row">
+                <%
+                    if(tipos.equals("ADMIN")){
+                    %>
                 <a><input type="submit" target="costodep.jsp" style="position:relative;float: right" onclick="costo()"  class="btn btn-primary" value="Costo por departamento"></a>
+                
+                <%}%>
                 <div class="col-md-12 " >
                     <div class="col-md-offset-3">
 
@@ -231,3 +287,8 @@
         </div>
     </body>
 </html>
+<%
+}catch(Exception e){
+        response.sendRedirect("../index.jsp");
+    }
+%>

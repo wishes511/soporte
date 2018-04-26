@@ -63,15 +63,15 @@ public class Nuevavtat2 extends HttpServlet {
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
 
 
-    if (usuario != null && tipos != null && tipos.equals("ADMIN")) {
+    if (usuario != null && tipos != null && (tipos.equals("ADMIN")) || tipos.equals("APLASTISOL")) {
        
     } else {
         response.sendRedirect("../index.jsp");
     }
     try {
             String usuarioc = request.getParameter("idu").toUpperCase();
-            Producto_comprat pc =new Producto_comprat();
-            lista=pc.getProd();
+            ArrayList<Object> lista;
+            lista = (ArrayList<Object>) objSesion.getAttribute("carrosalida");
             if(lista.isEmpty()){            
                 System.out.print("No hay articulos");
             PrintWriter out = response.getWriter();
@@ -85,23 +85,19 @@ public class Nuevavtat2 extends HttpServlet {
             
                 for(int i =0;i<lista.size();i++){
         if (cont == 3) {
-            System.out.println("i: "+i+"/"+lista.get(i).toString());
+//            System.out.println("i: "+i+"/"+lista.get(i).toString());
            total = total+ Float.parseFloat(lista.get(i).toString());
            totalprod=totalprod+Integer.parseInt((lista.get(i-1).toString()));
-          System.out.println("total: "+total+" /"+totalprod);
+//          System.out.println("total: "+total+" /"+totalprod);
           cont =0;
              } else {
               cont++;
              }
         }
-                
-               System.out.println("total: "+total+" /"+totalprod); 
+//         System.out.println("total: "+total+" /"+totalprod); 
            DBt db = new DBt();
-           
            factura fac = new factura();
-
-         
-            System.out.print("Insertado hecho , total:"+total+" /"+totalprod+"/"+fechac);
+//            System.out.print("Insertado hecho , total:"+total+" /"+totalprod+"/"+fechac);
             fac.setID_USUARIO_(Integer.parseInt(ids));
             fac.setID_USUARIOC(Integer.parseInt(usuarioc));
             fac.setCantidad(totalprod);
@@ -110,12 +106,10 @@ public class Nuevavtat2 extends HttpServlet {
             fac.setStatus("PENDIENTE");
             fac.setTipo("INTERNO");
             db.agregarfacturat(fac);
-
             db.agregardetallefact(db.buscarfacturat(),lista);
             db.modificarstock(lista);
-           
-           
-            pc.vaciar_carro();
+            lista.clear();
+            objSesion.setAttribute("carrosalida", lista);
             total=0;
             totalprod=0;
             PrintWriter out = response.getWriter();

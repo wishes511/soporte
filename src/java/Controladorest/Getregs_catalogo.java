@@ -40,7 +40,7 @@ public class Getregs_catalogo extends HttpServlet {
     String usuario = (String) objSesion.getAttribute("usuario");
     String tiposs = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
-    if (usuario != null && tiposs != null && tiposs.equals("ADMIN")) {
+    if (usuario != null && tiposs != null && (tiposs.equals("ADMIN")) || tiposs.equals("APLASTISOL")) {
        
     } else {
         response.sendRedirect("../index.jsp");
@@ -53,10 +53,13 @@ public class Getregs_catalogo extends HttpServlet {
         String uso =request.getParameter("uso");
         // ver ventas general
         if(uso.equals("buscarp")){
-         
+        String tipo_p="";
+        if(tiposs.equals("ADMIN")){
+            tipo_p="SISTEMAS";
+        }else tipo_p="PLASTISOL"; 
         ArrayList<Object> lista;    
         DBt db = new DBt();
-        lista=db.verventast(f1, f2,produ);
+        lista=db.verventast(f1, f2,produ,tipo_p);
         int cont =0;
         float total =0;
         int  totalp=0;
@@ -118,9 +121,13 @@ public class Getregs_catalogo extends HttpServlet {
         }
         // Acaba buscar p, ahora sigue fechas por boton
         }else if(uso.equals("fechas")){
+            String tipo_p="";
+            if(tiposs.equals("ADMIN")){
+            tipo_p="SISTEMAS";
+        }else tipo_p="PLASTISOL";
         ArrayList<Object> lista;    
         DBt db = new DBt();
-        lista=db.verventast(f1, f2);
+        lista=db.verventast(f1, f2,tipo_p,"","");
         int cont =0;
         float total =0;
         int totalp =0;

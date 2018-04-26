@@ -27,10 +27,10 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "Utilidadest", urlPatterns = {"/Utilidadest"})
 public class Utilidadest extends HttpServlet {
-    String cant ,id,tipo;
-productot p = new productot();
 
- ArrayList<Object> lista = new ArrayList<Object>();
+    String cant, id, tipo;
+    productot p = new productot();
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -43,55 +43,34 @@ productot p = new productot();
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        Producto_comprat pc =new Producto_comprat();
-                try {
+        Producto_comprat pc = new Producto_comprat();
+        try {
             PrintWriter out = response.getWriter();
             response.setContentType("text/html;charset=UTF-8");
-            HttpSession objSesion = request.getSession(false);
-            
+            HttpSession objSesion = request.getSession(true);
+            ArrayList<Object> lista;
+            lista = (ArrayList<Object>) objSesion.getAttribute("carrosalida");
             id = request.getParameter("ids").toUpperCase();
             cant = request.getParameter("cant");
-     
-                    
-
-        DBt bd = new DBt();
-
-              
-          //p.setCantidad(Integer.parseInt(cant));
-        p=bd.buscarproducto(Integer.parseInt(id));
-        
-        if(p.getStock()<(Integer.parseInt(cant))){
-         PrintWriter outer = response.getWriter();
+            DBt bd = new DBt();
+            p = bd.buscarproducto(Integer.parseInt(id));
+            if (p.getStock() < (Integer.parseInt(cant))) {
+                PrintWriter outer = response.getWriter();
                 outer.println("<script type=\"text/javascript\">");
                 outer.println("alert('No puedes pedir mas de lo que hay en stock');");
                 outer.println("location='admin/Utilidades_Donacionest.jsp';");
                 outer.println("</script>");
-      // response.sendRedirect("admin/proveedores.jsp");
-        }else{
-        lista.add(p.getModelo());
-        lista.add(cant);
-        lista.add(p.getCosto());
-       System.out.println("MENUDEO "+p.getCosto());
-        pc.setprods(Integer.parseInt(id), Integer.parseInt(cant),p.getCosto(),p.getModelo());
-          
-//  
-        
-        System.out.println("li "+p.getNombre()); 
-        
-        System.out.println(lista.size()+"/"+lista.get(0));
-    
-                    System.out.println("llega");
-
-            
-            response.sendRedirect("admin/Utilidades_Donacionest.jsp");
-//           
-        }
-        }catch (Exception ex) {
+                // response.sendRedirect("admin/proveedores.jsp");
+            } else {
+                //System.out.println("MENUDEO "+p.getCosto());
+                lista = pc.setprodssesion(Integer.parseInt(id), Integer.parseInt(cant), p.getCosto(), p.getModelo(), lista);
+                objSesion.setAttribute("carrosalida", lista);
+                response.sendRedirect("admin/Utilidades_Donacionest.jsp");
+            }
+        } catch (Exception ex) {
 //            
             System.err.println(ex);
         }
-        
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

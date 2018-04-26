@@ -124,7 +124,7 @@ public class DBt {
         return lista;
     }
 
-    public ArrayList<Object> verventast(String f1, String f2) throws ClassNotFoundException, SQLException {
+    public ArrayList<Object> verventast(String f1, String f2,String tipo_p,String extra,String extras) throws ClassNotFoundException, SQLException {
         ArrayList<Object> lista = new ArrayList<>();
         Connection c;
         Statement smt;
@@ -132,8 +132,8 @@ public class DBt {
         Usuario u = null;
         abrir();
         String query = "select f.ID_FACTURA,u.usuario,f.cantidad,f.total,f.fecha\n"
-                + "from factura f join usuario u on f.ID_USUARIOC=u.ID_USUARIO\n"
-                + "where f.fecha between '" + f1 + "' and '" + f2 + "'";
+                + "from factura f join usuario u on f.ID_USUARIOC=u.ID_USUARIO join detalle_fact df on df.ID_FACTURA=f.ID_FACTURA join PRODUCTO p ON df.ID_PRODUCTO =p.ID_PRODUCTO\n"
+                + "where f.fecha between '" + f1 + "' and '" + f2 + "' and p.tipo_producto='"+tipo_p+"' group by f.ID_FACTURA";
         smt = conexion.createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
@@ -148,7 +148,7 @@ public class DBt {
         return lista;
     }
     //consula del onkeypress para llenado de ventas por fechas
-    public ArrayList<Object> verventast(String f1, String f2, String prod) throws ClassNotFoundException, SQLException {
+    public ArrayList<Object> verventast(String f1, String f2, String prod,String tipo_p) throws ClassNotFoundException, SQLException {
         ArrayList<Object> lista = new ArrayList<>();
         Statement smt;
         ResultSet rs;
@@ -156,7 +156,7 @@ public class DBt {
         String query = "select distinct f.ID_FACTURA,u.usuario,f.cantidad,f.total,f.fecha\n"
                 + "from factura f join usuario u on f.ID_USUARIOC=u.ID_USUARIO "
                 + "join detalle_fact df on df.id_factura=f.id_factura join producto pr on pr.id_producto = df.id_producto join departamento dep on dep.ID_DEP=u.ID_DEP\n"
-                + "where f.fecha between '" + f1 + "' and '" + f2 + "' and (pr.nombre like '" + prod + "%' or pr.modelo like '" + prod + "%' or dep.nombre like '" + prod + "%') order by f.id_factura";
+                + "where f.fecha between '" + f1 + "' and '" + f2 + "' and (pr.nombre like '" + prod + "%' or pr.modelo like '" + prod + "%' or dep.nombre like '" + prod + "%') and pr.tipo_producto='"+tipo_p+"' order by f.id_factura";
         smt = conexion.createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
@@ -171,13 +171,13 @@ public class DBt {
         return lista;
     }
 
-    public ArrayList<Object> ver_catalogo_prov(String prod) throws ClassNotFoundException, SQLException {
+    public ArrayList<Object> ver_catalogo_prov(String prod, String tipo_p) throws ClassNotFoundException, SQLException {
         ArrayList<Object> lista = new ArrayList<>();
         Statement smt;
         ResultSet rs;
         Usuario u = null;
         abrir();
-        String query = "select * from producto where stock !=0 and status ='Y' and ( nombre like '%" + prod + "%' or modelo like '%" + prod + "%') order by nombre";        
+        String query = "select * from producto where stock !=0 and status ='Y' and ( nombre like '%" + prod + "%' or modelo like '%" + prod + "%') and tipo_producto='"+tipo_p+"' order by nombre";        
         smt = conexion.createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
@@ -190,13 +190,13 @@ public class DBt {
         smt.close();
         return lista;
     }
-    public ArrayList<Object> ver_catalogo_prod(String prod) throws ClassNotFoundException, SQLException {
+    public ArrayList<Object> ver_catalogo_prod(String prod,String tipo) throws ClassNotFoundException, SQLException {
         ArrayList<Object> lista = new ArrayList<>();
         Statement smt;
         ResultSet rs;
         Usuario u = null;
         abrir();
-        String query = "select * from producto where status ='Y' and ( nombre like '%" + prod + "%' or modelo like '%" + prod + "%' or marca like '%"+prod+"%') order by nombre";        
+        String query = "select * from producto where status ='Y' and  tipo_producto='"+tipo+"' and ( nombre like '%" + prod + "%' or modelo like '%" + prod + "%' or marca like '%"+prod+"%') order by nombre";        
         smt = conexion.createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
@@ -247,7 +247,7 @@ public class DBt {
                 + "from factura f join usuario u on f.ID_USUARIOC=u.ID_USUARIO \n"
                 + "join departamento d on d.ID_DEP=u.ID_DEP\n"
                 + "join detalle_fact df on df.id_factura=f.id_factura join producto pr on pr.id_producto = df.id_producto \n"
-                + "where f.fecha between '" + f1 + "' and '" + f2 + "' and ( pr.modelo like '" + depa + "%' ) \n"
+                + "where f.fecha between '" + f1 + "' and '" + f2 + "' and ( pr.modelo like '" + depa + "%' ) and (pr.tipo_producto='SISTEMAS' or pr.tipo_producto='ETIQUETAS') \n"
                 + "group by d.Nombre "
                 + "order by Importe DESC";
         smt = conexion.createStatement();

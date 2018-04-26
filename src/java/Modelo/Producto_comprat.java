@@ -101,8 +101,6 @@ lista.clear();
             
        }
        carro.clear();
-      // System.out.println("size"+carro.size());
-       
        carro=listas;
      // System.out.println("size2"+carro.size());
        return carro;

@@ -8,13 +8,13 @@ package Controladorest;
 
 import Modelo.Producto_comprat;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -36,13 +36,20 @@ public class BorrarCarrot extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
        try{
-       ArrayList<Object> lista ;
-       String ideliminar = request.getParameter("eliminar").toUpperCase();
-            Producto_comprat pc1 =new Producto_comprat();
+       String id = request.getParameter("eliminar").toUpperCase();
+       ArrayList<Object> lista;
+       HttpSession objSesion = request.getSession(true);
+        lista =(ArrayList<Object>) objSesion.getAttribute("carrosalida");
+        Producto_comprat pc =new Producto_comprat();
             
-           // System.out.println("borraritem");
-            pc1.delprod(Integer.parseInt(ideliminar));
-            //System.out.println("item borrado");
+            System.out.println("borraritem");
+            lista=pc.delprodsesion(Integer.parseInt(id), lista);
+            System.out.println("item borrado");
+            objSesion.setAttribute("carrosalida", lista);
+            
+//           // System.out.println("borraritem");
+//            pc1.delprod(Integer.parseInt(ideliminar));
+//            //System.out.println("item borrado");
             response.sendRedirect("admin/Utilidades_Donacionest.jsp");
        
        

@@ -55,28 +55,22 @@ productot p = new productot();
   //acccion del carrito
   System.out.print(uso);
           if(uso.equals("NUEVO")){
-              
             p=bd.buscarproducto(Integer.parseInt(id));
-            
-        
                 ArrayList<Object> lista;
         lista =(ArrayList<Object>) objSesion.getAttribute("carro");
   
-        System.out.println("MENUDEO "+p.getCosto());
+//        System.out.println("MENUDEO "+p.getCosto());
         lista=pc.setprodssesion(Integer.parseInt(id), Integer.parseInt(cant),p.getCosto(),p.getModelo(),lista);
         objSesion.setAttribute("carro", lista);
-        
-        System.out.println("li "+p.getNombre()); 
-        System.out.println(lista.size()+"/"+lista.get(0));
-        System.out.println("llega");
-        
-        
+//        System.out.println("li "+p.getNombre()); 
+//        System.out.println(lista.size()+"/"+lista.get(0));
+//        System.out.println("llega");
   //accion quitar producto del carro
           }else if(uso.equals("BORRAR")){
            ArrayList<Object> lista;
         lista =(ArrayList<Object>) objSesion.getAttribute("carro");
             
-            System.out.println("borraritem");
+//            System.out.println("borraritem");
             lista=pc.delprodsesion(Integer.parseInt(id), lista);
             System.out.println("item borrado");
             objSesion.setAttribute("carro", lista);

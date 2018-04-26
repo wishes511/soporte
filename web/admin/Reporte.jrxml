@@ -6,8 +6,12 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\Users\\gateway1\\Documents\\NetBeansProjects\\soporte\\web\\admin\\"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="tipo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[select p.id_producto,p.nombre,p.modelo,p.stock from producto p
+where tipo_producto=$P{tipo} AND status='Y'
 group by id_producto
 order by nombre]]>
 	</queryString>

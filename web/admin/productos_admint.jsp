@@ -16,7 +16,7 @@
     String tipos = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
 
-    if (usuario != null && tipos != null && tipos.equals("ADMIN")) {
+    if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("APLASTISOL")) ) {
 
     } else {
         response.sendRedirect("../index.jsp");
@@ -127,8 +127,26 @@
                     <a class="navbar-brand" href="../index.jsp"><img src="../images/home.png" class="" width="25"></a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li ><a href="home_admin.jsp">Usuarios</a></li>
+                    <%
+                    if(tipos.equals("ADMIN")){
+                    %>
+                    <li class="dropdown">
+                        <a  class="dropdown-toggle" data-toggle="dropdown" href="#80">
+                            Usuarios<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" id="#90" role="menu">
+                            <li class=""><a href="">Usuarios</a></li>
+                            <li><a href="virtuales.jsp">Vista de direcciones IP</a></li>
+                            <li><a href="reporteusuarios.jsp">Reporte de usuarios</a></li>
+                        </ul>
+                    </li>
+                    <%
+                    }
+                    %>
                     <li class="active"><a href="">Productos</a></li>
+                    <%
+                    if(tipos.equals("ADMIN")){
+                    %>
                     <li class="dropdown">
                         <a  class="dropdown-toggle" data-toggle="dropdown" href="#80">
                             Proveedores<span class="caret"></span>
@@ -138,6 +156,9 @@
                             <li class=""><a href="Eprovedor.jsp">Entrada Proveedor</a></li>
                         </ul>
                     </li>
+                    <%
+                    }
+                    %>
                     <li><a href="Utilidades_Donacionest.jsp">Nueva Compra Interna</a></li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#80">
@@ -145,15 +166,19 @@
                         </a>
                         <ul class="dropdown-menu" id="#80" role="menu">
                             <li><a href="Ver_ventast.jsp">Ver ventas</a></li>
+                            <li><a href="reporte.jsp">reporte productos</a></li>
                         </ul>
                     </li>
                     <li class="">
                         <%
+                            if(tipos.equals("ADMIN")){
                             if (estado) {
                                 out.println("<a href=tareas.jsp STYLE=background-color:rgb(255,89,89);color:white >Tareas</a></li>");
                             } else {
                                 out.println("<a href=tareas.jsp>Tareas</a></li>");
                             }
+                            }
+                            
 
                         %>
                     <li><a href="../Cierresesion">Salir</a></li>
@@ -170,8 +195,18 @@
                         Stock<input class="form-control input-sm chat-input" type="text" name="stock" id="stock" value=""  required/><br>   
                         Descripcion<textarea class="form-control input-sm chat-input" type="text" name="descripcion" id="descripcion" value="" required rows="7" maxlength="500" draggable=""/></textarea><br>
                         Tipo producto: <select name="tipos" >
+                        <%
+                    if(tipos.equals("ADMIN")){
+                    %>    
                             <option>ETIQUETAS</option>
                             <option>SISTEMAS</option>
+                    <%
+                    }else{
+                    %>    
+                            <option>PLASTISOL</option>
+                    <%
+                        }
+                    %>        
                         </select><br><br>
                         Archivo: <input type="file" name="imagen" /><br><br>
                         <input type="submit" class="btn btn-success" value="Aceptar" name="benviar" id="benviar" />
@@ -195,18 +230,21 @@
                                 <td>costo</td>
                                 <td>descripcion</td>
                                 <td>Vista</td>
-                                <td>Borrar</td>
+                               <!--<td>Borrar</td>--> 
                                 <td>Modificar</td>
                             </tr>
-                            <%                      try {
+                            <%       try {
                                     DBt uDB = new DBt();
                                     Connection c;
                                     uDB.abrir();
                                     Statement smt;
                                     ResultSet rs;
                                     c = uDB.getConexion();
-                                    String sentenciaSQL = "SELECT * FROM producto ORDER BY nombre";
                                     
+                                    String sentenciaSQL = "";
+                                    if(tipos.equals("ADMIN")){
+                                        sentenciaSQL="SELECT * FROM producto where tipo_producto='SISTEMAS' or tipo_producto='ETIQUETAS' ORDER BY nombre";
+                                    }else sentenciaSQL="SELECT * FROM producto where tipo_producto='PLASTISOL' ORDER BY nombre";
                                     smt = c.createStatement();
                                     rs = smt.executeQuery(sentenciaSQL);
                                     while (rs.next()) {
@@ -222,7 +260,7 @@
                             %>
                             <form action="../Borrarproductot"> 
                                 <%
-                                    out.println("<td><a name=borrar  value=" + rs.getObject("id_producto") + " onclick=eliminar(" + rs.getObject("id_producto") + ") class=btn><img src=../images/delete.png  width=30 height=30></a></td>");
+                                //    out.println("<td><a name=borrar  value=" + rs.getObject("id_producto") + " onclick=eliminar(" + rs.getObject("id_producto") + ") class=btn><img src=../images/delete.png  width=30 height=30></a></td>");
 
                                 %>   
                             </form>

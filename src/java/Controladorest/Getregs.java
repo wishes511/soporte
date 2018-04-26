@@ -40,7 +40,7 @@ public class Getregs extends HttpServlet {
     String usuario = (String) objSesion.getAttribute("usuario");
     String tiposs = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
-    if (usuario != null && tiposs != null && tiposs.equals("ADMIN")) {
+    if (usuario != null && tiposs != null && (tiposs.equals("ADMIN") || tiposs.equals("APLASTISOL"))) {
        
     } else {
         response.sendRedirect("../index.jsp");
@@ -54,10 +54,14 @@ public class Getregs extends HttpServlet {
         // ver ventas general
         //System.out.println(uso);
         if(uso.equals("catalago_general")){
+             String tipo_p="";
+            if(tiposs.equals("ADMIN")){
+            tipo_p="SISTEMAS";
+        }else tipo_p="PLASTISOL"; 
         DBt db = new DBt();
         int cont =0;
         ArrayList<Object> lista;
-        lista=db.ver_catalogo_prod(produ);
+        lista=db.ver_catalogo_prod(produ,tipo_p);
         out.print("<table class=\"table table-responsive mapa\" id=\"tabla-prods\">\n" +
 "                            <tr>\n" +
 "                                <td>modelo</td>\n" +
@@ -66,7 +70,7 @@ public class Getregs extends HttpServlet {
 "                                <td>costo</td>\n" +
 "                                <td>descripcion</td>\n" +
 "                                <td>Vista</td>\n" +
-"                                <td>Borrar</td>\n" +
+//"                                <td>Borrar</td>\n" +
 "                                <td>Modificar</td>\n" +
 "                            </tr>");
         if(!lista.isEmpty()){
@@ -74,7 +78,7 @@ public class Getregs extends HttpServlet {
                 if(cont ==6){
                     out.print("<tr><td>"+lista.get(i-5)+"</td><td>"+lista.get(i-4)+"</td><td>"+lista.get(i-3)+"</td><td>"+lista.get(i-2)+"</td>"
                             + "<td>"+lista.get(i-1)+"</td><td><a href="+lista.get(i)+" ><img class=\"imagen_cata\" src="+lista.get(i)+"></a></td>"
-                            + "<td><a name=borrar  value="+lista.get(i-6)+"  onclick=eliminar("+lista.get(i-6)+") class=btn><img src=../images/delete.png  width=30 height=30></a></td>"
+                           // + "<td><a name=borrar  value="+lista.get(i-6)+"  onclick=eliminar("+lista.get(i-6)+") class=btn><img src=../images/delete.png  width=30 height=30></a></td>"
                             + "<td><a name=mod value="+lista.get(i-6)+" class=\"btn\" onclick=modi("+lista.get(i-6)+")><img src=\"../images/modificar.png\" width=30 height=30></a></td></tr>");
                     cont=0;
                 }else cont++;
@@ -83,10 +87,14 @@ public class Getregs extends HttpServlet {
         }
         out.print("</table>");
         } else if(uso.equals("catalogo")){
+            String tipo_p="";
+            if(tiposs.equals("ADMIN")){
+            tipo_p="SISTEMAS";
+        }else tipo_p="PLASTISOL"; 
         DBt db = new DBt();
         int cont =0;
         ArrayList<Object> lista;
-        lista=db.ver_catalogo_prov(produ);
+        lista=db.ver_catalogo_prov(produ,tipo_p);
         if(!lista.isEmpty()){
             for(int i =0;i<lista.size();i++){
                 if(cont ==4){
@@ -95,7 +103,7 @@ public class Getregs extends HttpServlet {
                     out.println("<div class=thumbnail azul style=width:70% height:70% >");
                     out.println("<h4 class=h4 align=center>" +lista.get(i-3)+ "</h4>");
                     out.println("<h4 class=h4 align=center>" +lista.get(i-2)+ "</h4>");
-                    out.println("<a class=btn name=id value=" +lista.get(i-4)+ " onclick= mostrarVentanas("+lista.get(i-3)+ ")><img width=60% height=60% class=img-responsive  src="+lista.get(i)+ "></a>");
+                    out.println("<a class=btn name=id value=" +lista.get(i-4)+ " onclick= mostrarVentanas("+lista.get(i-4)+ ")><img width=60% height=60% class=img-responsive  src="+lista.get(i)+ "></a>");
                     out.println("<div align=center>");
                     out.println("<h4 class=h4 align=cente>stock</h4>");
                     out.println("<input type=text name=prec class=form-control input-sm chat-input placeholder=$  value=" +lista.get(i-1)+ " disabled=disabled> ");
@@ -108,10 +116,13 @@ public class Getregs extends HttpServlet {
         
         }
         else if(uso.equals("buscarp")){
-         
+        String tipo_p="";
+            if(tiposs.equals("ADMIN")){
+            tipo_p="SISTEMAS";
+        }else tipo_p="PLASTISOL"; 
         ArrayList<Object> lista;    
         DBt db = new DBt();
-        lista=db.verventast(f1, f2,produ);
+        lista=db.verventast(f1, f2,produ,tipo_p);
         int cont =0;
         float total =0;
         int  totalp=0;
@@ -134,6 +145,7 @@ public class Getregs extends HttpServlet {
         }
         if(lista.isEmpty()){
         }else{
+            
         out.print("<tr>");
         out.print("<td></td>");
         out.print("<td><h4>Total:</h4></td>");
@@ -145,7 +157,8 @@ public class Getregs extends HttpServlet {
         out.print("<td colspan=2 align=center><h3>Costo por departamento</h3></td>");
         out.print("</tr>");
          // llenado de vta de departamento por onkey press
-        ArrayList<Object> lista1;            
+         if(tiposs.equals("ADMIN")){
+         ArrayList<Object> lista1;            
         lista1=db.verventastdep(f1, f2,produ);
         int cont1 =0;
         float total1 =0;
@@ -170,12 +183,18 @@ public class Getregs extends HttpServlet {
         out.print("<td><h3>Total<h3></td>");
         out.print("<td><h3 class=h3>"+total1+"<h3></td>");
         out.print("</tr>");
+         }
+        
         }
         // Acaba buscar p, ahora sigue fechas por boton
         }else if(uso.equals("fechas")){
+        String tipo_p="";
+        if(tiposs.equals("ADMIN")){
+            tipo_p="SISTEMAS";
+        }else tipo_p="PLASTISOL";
         ArrayList<Object> lista;    
         DBt db = new DBt();
-        lista=db.verventast(f1, f2);
+        lista=db.verventast(f1, f2,tipo_p,"","");
         int cont =0;
         float total =0;
         int totalp =0;
@@ -206,8 +225,8 @@ public class Getregs extends HttpServlet {
         out.print("<td><h4><a href=>"+total+"</a></h4></td>");
         out.print("<td></td>");
         out.print("</tr>");
-        
-        ArrayList<Object> lista1;    
+        if(tiposs.equals("ADMIN")){
+         ArrayList<Object> lista1;    
         
         lista1=db.verventastdep(f1, f2,produ);
         int cont1 =0;
@@ -259,6 +278,8 @@ public class Getregs extends HttpServlet {
         out.print("<td><h3>Total</h3></td>");
         out.print("<td><h3><a href=>"+total+"</a></h4></td>");
         out.print("</tr>");
+        }
+       
         }
         }else{
             // detalle de la vta

@@ -26,6 +26,18 @@
     </head>
     <body>
 <% 
+    HttpSession objSesion = request.getSession(false);
+//select p.modelo,SUM(d.cantidad),MONTH(f.fecha) from factura f join detalle_fact d on d.ID_FACTURA = f.ID_FACTURA join producto p on d.ID_PRODUCTO = p.ID_PRODUCTO where f.fecha > '2017-10-1' group by MONTH(f.fecha),p.modelo order by MONTH(f.fecha)
+    boolean estado;
+    String usuario = (String) objSesion.getAttribute("usuario");
+    String tipos = (String) objSesion.getAttribute("tipo");
+    String ids = String.valueOf(objSesion.getAttribute("i_d"));
+
+    if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("APLASTISOL"))) {
+
+    } else {
+        response.sendRedirect("../index.jsp");
+    }
 DBt db = new DBt();
 db.abrir();
 try{   
@@ -34,8 +46,11 @@ try{
         
         Map<String,Object> parameter = new HashMap<String,Object>();
         
-        //String valor = request.getParameter("txtparametro");
-        //parameter.put("mar",new String(valor));
+        String valor = "";
+        if(tipos.equals("ADMIN")){
+            valor="SISTEMAS";
+        }else valor="PLASTISOL";
+        parameter.put("tipo",new String(valor));
         
         byte[] bytes = JasperRunManager.runReportToPdf(reportfile.getPath(), parameter, db.getConexion());
         

@@ -20,16 +20,17 @@
     ArrayList<Object> carrito;
     carrito = (ArrayList<Object>) objSesion.getAttribute("carro");
     //out.print(carrito.size());
-    //out.println("" + tipos+"/"+ids);
-   if (usuario != null && tipos != null && tipos.equals("ADMIN")) {
-       
+    if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("APLASTISOL"))) {
+        if (tipos.equals("APLASTISOL")) {
+            response.sendRedirect("productos_admint.jsp");
+        }
     } else {
         response.sendRedirect("../index.jsp");
     }
-    try{
-    
-    DBt bd = new DBt();
-    estado = bd.alerta();
+    try {
+
+        DBt bd = new DBt();
+        estado = bd.alerta();
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -37,7 +38,7 @@
     <head>
         <title>Usuarios</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
         <link rel="shortcut icon" type="image/x-icon" href="../supp.ico" />
         <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
         <link rel='stylesheet' type="text/css" href="../css/bootstrap.min.css">
@@ -112,20 +113,26 @@
                 </div>
 
                 <ul class="nav navbar-nav">
+                    <%
+                    if(tipos.equals("ADMIN")){
+                    %>
                     <li class="dropdown active">
                         <a  class="dropdown-toggle" data-toggle="dropdown" href="#80">
                             Usuarios<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" id="#90" role="menu">
-
-                     <li class="active"><a href="">Usuarios</a></li>
-                    <li><a href="virtuales.jsp">Vista de direcciones IP</a></li>
-                    <li><a href="reporteusuarios.jsp">Reporte de usuarios</a></li>
+                            <li class="active"><a href="">Usuarios</a></li>
+                            <li><a href="virtuales.jsp">Vista de direcciones IP</a></li>
+                            <li><a href="reporteusuarios.jsp">Reporte de usuarios</a></li>
                         </ul>
                     </li>
+                    <%
+                    }
+                    %>
                     
+
                     <li ><a href="productos_admint.jsp">Productos</a></li>
-                    
+
                     <li class="dropdown">
                         <a  class="dropdown-toggle" data-toggle="dropdown" href="#80">
                             Proveedores<span class="caret"></span>
@@ -133,12 +140,12 @@
                         <ul class="dropdown-menu" id="#90" role="menu">
 
                             <li><a href="proveedores.jsp">Proveedores</a></li>
-                    <li><a href="Eprovedor.jsp">Entrada Proveedor</a></li>
+                            <li><a href="Eprovedor.jsp">Entrada Proveedor</a></li>
                         </ul>
                     </li>
-                    
-                        
-                    
+
+
+
                     <li><a href="Utilidades_Donacionest.jsp">Nueva Compra Interna</a></li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#80">
@@ -171,40 +178,41 @@
                         ${oka}
                         ${error}<br>
                         <form  action="../Nuevousuariot" method="post" name="form2"><big>
-                            <label>Usuario</label><input class="form-control input-sm chat-input" type="text" name="uso" id="uso" value=""  required/><br>
-                            <label>Nombre</label><input class="form-control input-sm chat-input" type="text" name="names" id="names" value=""  required/><br>
-                            <label>apellido</label><input class="form-control input-sm chat-input" type="text" name="calles" id="calles" value=""  required/><br>
-                            <label>Contraseña</label><input class="form-control input-sm chat-input" type="text" name="passs" id="passs" value="" required /><br>
-                            <label>Ip</label><input class="form-control input-sm chat-input" type="text" name="ips" id="ips" value="" required /><br>                    
-                            <label>Tipo de usuario :</label> <select name="tipos" >
-                                <option>USUARIO</option>
-                                <option>ADMIN</option>
-                            </select><br><br>
-                            <label>Departamento : </label> <select name="tips" id="tips">
+                                <label>Usuario</label><input class="form-control input-sm chat-input" type="text" name="uso" id="uso" value=""  required/><br>
+                                <label>Nombre</label><input class="form-control input-sm chat-input" type="text" name="names" id="names" value=""  required/><br>
+                                <label>apellido</label><input class="form-control input-sm chat-input" type="text" name="calles" id="calles" value=""  required/><br>
+                                <label>Contraseña</label><input class="form-control input-sm chat-input" type="text" name="passs" id="passs" value="" required /><br>
+                                <label>Ip</label><input class="form-control input-sm chat-input" type="text" name="ips" id="ips" value="" required /><br>                    
+                                <label>Tipo de usuario :</label> <select name="tipos" >
+                                    <option>USUARIO</option>
+                                    <option>APLASTISOL</option>
+                                    <option>ADMIN</option>
+                                </select><br><br>
+                                <label>Departamento : </label> <select name="tips" id="tips">
 
-                                <%
-                                    try {
-                                        DBt uDB = new DBt();
-                                        Connection c;
+                                    <%
+                                        try {
+                                            DBt uDB = new DBt();
+                                            Connection c;
 
-                                        uDB.abrir();
-                                        Statement smt;
-                                        ResultSet rs;
-                                        c = uDB.getConexion();
-                                        String sentenciaSQL = "SELECT * FROM departamento ORDER BY nombre";
+                                            uDB.abrir();
+                                            Statement smt;
+                                            ResultSet rs;
+                                            c = uDB.getConexion();
+                                            String sentenciaSQL = "SELECT * FROM departamento ORDER BY nombre";
 
-                                        smt = c.createStatement();
-                                        rs = smt.executeQuery(sentenciaSQL);
+                                            smt = c.createStatement();
+                                            rs = smt.executeQuery(sentenciaSQL);
 
-                                        while (rs.next()) {
-                                            out.println("<option>" + rs.getObject("Nombre") + "</option>");
+                                            while (rs.next()) {
+                                                out.println("<option>" + rs.getObject("Nombre") + "</option>");
+                                            }
+                                        } catch (Exception a) {
                                         }
-                                    } catch (Exception a) {
-                                    }
-                                %>
-                            </select><br><br><br>
-                            <input type="submit" value="Aceptar" name="benviar" id="benviar" class="btn btn-success textoboton"/>
-                       </big> </form>
+                                    %>
+                                </select><br><br><br>
+                                <input type="submit" value="Aceptar" name="benviar" id="benviar" class="btn btn-success textoboton"/>
+                            </big> </form>
                         <br>    <input type="submit" type="submit" Onclick="mostrarVentana()" class="btn btn-primary textoboton" value="Nuevo departamento">
                         <br><br>
                     </div>
@@ -436,9 +444,9 @@
                                     <div class=" modal fade modal-content"></div>
 
                                     <h5 class="h5" align="center">Nombre del departamento</h5>
-                                    
-                                        <input type=text name="pos" id="pos" class="form-control input-sm chat-input" placeholder="Nombre del depa" Onchange="okas()"> <br>
-                                   
+
+                                    <input type=text name="pos" id="pos" class="form-control input-sm chat-input" placeholder="Nombre del depa" Onchange="okas()"> <br>
+
                                     <div align="center" >
                                         EMPRESA:<select style="color:black" name="marcas" id="marcas">
                                             <option>ATHLETIC</option>
@@ -452,8 +460,8 @@
                             </div>     
                             </body>
                             </html>
-<%
-}catch(Exception e){ 
-    System.out.println(e);
-}
-%>
+                            <%
+                                } catch (Exception e) {
+                                    System.out.println(e);
+                                }
+                            %>

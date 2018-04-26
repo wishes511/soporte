@@ -24,11 +24,13 @@ boolean estado;
     String usuario = (String) objSesion.getAttribute("usuario");
     String tipos = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
-    if (usuario != null && tipos != null && tipos.equals("ADMIN")) {
+    if (usuario != null && tipos != null && (tipos.equals("ADMIN")) || tipos.equals("APLASTISOL")) {
        
     } else {
         response.sendRedirect("../index.jsp");
     }
+    ArrayList<Object> lista;
+    lista = (ArrayList<Object>) objSesion.getAttribute("carrosalida");
     DBt bd = new DBt();
     estado=bd.alerta();
 %>
@@ -134,48 +136,81 @@ boolean estado;
     </head>
     <body>
         <div class="container-fluid">
-      <nav class="navbar navbar-default">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="../index.jsp"><img src="../images/home.png" class="" width="25"></a>
-    </div>
-    <ul class="nav navbar-nav nav-pills">
-      <li ><a href="home_admin.jsp">Usuarios</a></li>
-      <li ><a href="productos_admint.jsp">Productos</a></li>
-      <li class="dropdown">
+<nav class="navbar navbar-default">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="../index.jsp"><img src="../images/home.png" class="" width="25"></a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <%
+                    if(tipos.equals("ADMIN")){
+                    %>
+                    <li class="dropdown ">
+                        <a  class="dropdown-toggle" data-toggle="dropdown" href="#80">
+                            Usuarios<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" id="#90" role="menu">
+                            <li class=""><a href="">Usuarios</a></li>
+                            <li><a href="virtuales.jsp">Vista de direcciones IP</a></li>
+                            <li><a href="reporteusuarios.jsp">Reporte de usuarios</a></li>
+                        </ul>
+                    </li>
+                    <%
+                    }
+                    %>
+                    <li class=""><a href="productos_admint.jsp">Productos</a></li>
+                    <%
+                    if(tipos.equals("ADMIN")){
+                    %>
+                    <li class="dropdown">
                         <a  class="dropdown-toggle" data-toggle="dropdown" href="#80">
                             Proveedores<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" id="#90" role="menu">
-
                             <li><a href="proveedores.jsp">Proveedores</a></li>
                             <li class=""><a href="Eprovedor.jsp">Entrada Proveedor</a></li>
                         </ul>
                     </li>
-<li class="active"><a href="">Nueva Compra Interna</a></li>
-      <li class="dropdown">
-      <a class="dropdown-toggle" data-toggle="dropdown" href="#80">
-        Reportes <span class="caret"></span>
-      </a>
-      <ul class="dropdown-menu" id="#80" role="menu">   
-        <li><a href="Ver_ventast.jsp">Ver ventas</a></li>
-      </ul>
-    </li>
-      <li class="">
-          <%
-        
-        if(estado){
-        out.println("<a href=tareas.jsp STYLE=background-color:rgb(255,89,89);color:white >Tareas</a></li>");
-        } else{
-        out.println("<a href=tareas.jsp>Tareas</a></li>");
-        }
-        %>
-      <li><a href="../Cierrasesion">Salir</a></li>
-    </ul>
-</nav>
+                    <%
+                    }
+                    %>
+                    <li class="active"><a href="Utilidades_Donacionest.jsp">Nueva Compra Interna</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#80">
+                            Reportes <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" id="#80" role="menu">
+                            <li ><a href="Ver_ventast.jsp">Ver ventas</a></li>
+                            <%if(tipos.equals("ADMIN")){%>
+                            <li><a href="reporte.jsp">reporte productos</a></li>
+                            <%}%>
+                            
+                        </ul>
+                    </li>
+                    <li class="">
+                        <%
+                            if(tipos.equals("ADMIN")){
+                            if (estado) {
+                                out.println("<a href=tareas.jsp STYLE=background-color:rgb(255,89,89);color:white >Tareas</a></li>");
+                            } else {
+                                out.println("<a href=tareas.jsp>Tareas</a></li>");
+                            }
+                            }
+                            
+
+                        %>
+                    <li><a href="../Cierresesion">Salir</a></li>
+                </ul>
+
+            </nav>
             <hr> <br>
             <div class="row" >
+                <div class="row espas-search-prods">
+                    <div class="col-sm-4">
+                        <input type="text" id="catalogo" placeholder="Busqueda de productos" class="form-control" onkeypress="to_searchprod()"> 
+                    </div>                    
+                </div>
                 <div class="espacio1">
-                    <div class="col-lg-8 espas">
+                    <div class="col-lg-8 espas" id="get_catalogo">
                         <%
                             try {
                                 String nom="";
@@ -185,8 +220,11 @@ boolean estado;
                                 Statement smt;
                                 ResultSet rs;
                                 c = uDB.getConexion();
-                                String sentenciaSQL = "SELECT * FROM producto where status ='Y' and stock > 0 ORDER BY nombre";
-                                System.out.println(sentenciaSQL);
+                                String sentenciaSQL = "";
+                                    if(tipos.equals("ADMIN")){
+                                        sentenciaSQL="SELECT * FROM producto where stock != 0 and status='Y' and (tipo_producto='SISTEMAS' or tipo_producto='ETIQUETAS') ORDER BY nombre";
+                                    }else sentenciaSQL="SELECT * FROM producto where stock != 0 and status='Y' and tipo_producto='PLASTISOL'  ORDER BY nombre";
+                                //System.out.println(sentenciaSQL);
                                 smt = c.createStatement();
                                 rs = smt.executeQuery(sentenciaSQL);
                                     while(rs.next()){
@@ -220,12 +258,11 @@ boolean estado;
                                     <td>Borrar</td>
                                 </tr></thead>
                             <%
-                                ArrayList<Object> lista;
+                                
                                 float total = 0;
                                 int cont = 0;
                                 int aux = 1;
-                                Producto_comprat pc = new Producto_comprat();
-                                lista = pc.getProd();
+                                
                                 if (lista.isEmpty()) {
                                     System.out.print("no hay datos" + lista.size());
                                 } else {
@@ -264,6 +301,18 @@ boolean estado;
             </div>
         </div>
         <script>
+            function to_searchprod() {
+                var catalogo = $('#catalogo').val();
+                var uso = "catalogo";
+                $.ajax({
+                    type: 'post',
+                    data: {p: catalogo, uso: uso},
+                    url: '../Getregs',
+                    success: function (result) {
+                        $('#get_catalogo').html(result);
+                    }
+                });
+            }
             function erase(id)
             {
                 window.location.href = "../BorrarCarrot?eliminar="+id;
@@ -373,11 +422,16 @@ boolean estado;
                                 Statement smt;
                                 ResultSet rs;
                                 c = uDB.getConexion();
-                                String sentenciaSQL = "SELECT * from usuario where activo = 'Y' order by usuario";
-                                System.out.println(sentenciaSQL);
+                                String sentenciaSQL = "";
+                                if(tipos.equals("ADMIN")){
+                                sentenciaSQL="SELECT * from usuario where activo = 'Y' order by usuario";
+                                }else{ sentenciaSQL ="SELECT u.usuario as 'usuario' from usuario u join departamento d on d.ID_DEP = u.ID_DEP"
+                                        + "  where u.activo = 'Y' and d.nombre ='ALMACEN GENERAL'  order by usuario ";
+                                }
+                                //System.out.println(sentenciaSQL);
                                 smt = c.createStatement();
                                 rs = smt.executeQuery(sentenciaSQL);
-                                //AQUI ME QUEDE!!!!!! :3
+                                out.println("<option></option>");
                                     while(rs.next()){
                                     usuarios=rs.getObject("usuario").toString();
                                     out.println("<option Onchange=ru()>"+rs.getObject("usuario")+"</option>");
