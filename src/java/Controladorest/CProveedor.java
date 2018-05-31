@@ -47,7 +47,7 @@ productot p = new productot();
                 try {
             PrintWriter out = response.getWriter();
             response.setContentType("text/html;charset=UTF-8");
-            HttpSession objSesion = request.getSession(true);
+            HttpSession objSesion = request.getSession(false);
              DBt bd = new DBt();
             id = request.getParameter("ids").toUpperCase();
             cant = request.getParameter("cant");

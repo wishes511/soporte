@@ -9,7 +9,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="Modelo.usuariot"%>
 <%@page import="Persistencia.DBt"%>
-<% HttpSession objSesion = request.getSession(true);
+<% HttpSession objSesion = request.getSession(false);
 //i_d
     String usuario = (String) objSesion.getAttribute("usuario");
     String tipos = (String) objSesion.getAttribute("tipo");
@@ -83,9 +83,9 @@
                                     rs = smt.executeQuery(sentenciaSQL);
                                     while (rs.next()) {
                                         if (us.getActivo().equals(rs.getString("nombre"))) {
-                                            out.println("<option selected value=" + rs.getObject("Nombre") + ">" + rs.getObject("Nombre") + "</option>");
+                                            out.println("<option selected value=" + rs.getObject("ID_DEP") + ">" + rs.getObject("Nombre") + "</option>");
                                         }
-                                        out.println("<option value=" + rs.getObject("Nombre") + ">" + rs.getObject("Nombre") + "</option>");
+                                        out.println("<option value=" + rs.getObject("ID_DEP") + ">" + rs.getObject("Nombre") + "</option>");
                                     }
                                 } catch (Exception a) {
                                 }

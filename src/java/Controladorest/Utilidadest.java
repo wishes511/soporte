@@ -47,7 +47,7 @@ public class Utilidadest extends HttpServlet {
         try {
             PrintWriter out = response.getWriter();
             response.setContentType("text/html;charset=UTF-8");
-            HttpSession objSesion = request.getSession(true);
+            HttpSession objSesion = request.getSession(false);
             ArrayList<Object> lista;
             lista = (ArrayList<Object>) objSesion.getAttribute("carrosalida");
             id = request.getParameter("ids").toUpperCase();

@@ -127,13 +127,13 @@ public class Getregs extends HttpServlet {
         float total =0;
         int  totalp=0;
         for(int i =0;i<lista.size();i++){
-         out.println("e.e");
+         
         if(cont == 4){
         out.print("<tr onclick=mostrarVentanas("+lista.get(i-4)+") ><a>");
         out.print("<td align=center>"+lista.get(i-4)+"</td>");
         out.print("<td>"+lista.get(i-3)+"</td>");
         out.print("<td>"+lista.get(i-2)+"</td>");
-        out.print("<td>"+lista.get(i-1)+"</td>");
+        out.print("<td>"+Float.parseFloat(lista.get(i-1).toString())+"</td>");
         out.print("<td>"+lista.get(i)+"</td>");
         out.print("</a></tr>");
          totalp+=Integer.parseInt(lista.get(i-2).toString());
@@ -205,7 +205,7 @@ public class Getregs extends HttpServlet {
         out.print("<td>"+lista.get(i-4)+"</td>");
         out.print("<td>"+lista.get(i-3)+"</td>");
         out.print("<td>"+lista.get(i-2)+"</td>");
-        out.print("<td>"+lista.get(i-1)+"</td>");
+        out.print("<td>"+Float.parseFloat(lista.get(i-1).toString())+"</td>");
         out.print("<td>"+lista.get(i)+"</td>");
         out.print("</a></tr>");
         totalp+=Integer.parseInt(lista.get(i-2).toString());

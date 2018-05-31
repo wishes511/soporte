@@ -43,13 +43,19 @@
                 omg += item.getString() + "[" + i + "]'";
             } else {
                 //C:\Users\gateway1\Documents\NetBeansProjects\soporte
-                valor = (new Date().getTime()) + item.getName();
+                String ite="";
+                for(int j=0;j<item.getName().length();j++){
+                    if(item.getName().charAt(j)==' '){
+                        ite+="_";
+                    }else{ ite+=item.getName().charAt(j);}
+                }
+                valor = (new Date().getTime()) + ite;
                 
                ruta= getServletContext().getRealPath("");
                // ruta = "C:/Users/gateway1/Documents/NetBeansProjects/soporte/web/imagesbd/" + valor;
                 
                 File archivo_server = new File(ruta+"/imagesbd/"+valor);
-               // System.out.println(rutabd);
+                System.out.println("valor : "+valor);
                 item.write(archivo_server);
                 
                 rutabd = "../imagesbd/" + valor;
@@ -67,7 +73,7 @@
         p.setTipo(arr[6].toUpperCase());
         p.setUrl(rutabd);
      //  out.println(nombre + "," + modelo + "," + marca + "," + costo + "," + stock + "," + ruta + "/" + rutabd);
-       udb.agregarprodt(p);
+  udb.agregarprodt(p);
         // udb.agregarproducto(p);
         request.setAttribute("oka", "Producto guardado exitosamente");
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/admin/productos_admint.jsp");

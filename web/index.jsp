@@ -55,7 +55,6 @@
                     out.println("<input type=submit value=" + usuario + " class=btn btn-default>");
                     out.println("</form>");
                     out.println("</div>");
-
                     out.println("</div>");
 
                 } else {

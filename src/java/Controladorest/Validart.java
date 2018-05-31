@@ -61,7 +61,7 @@ public class Validart extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
 
-        HttpSession objSesion = request.getSession(true);
+        HttpSession objSesion = request.getSession(false);
 
         // definir una pagina de respuesta localhost:8080/Dmorales/Validar?nombrelog=&contrasenalog=' OR 1 =1--
         // Recibir los valores desde el formulario
@@ -99,7 +99,6 @@ public class Validart extends HttpServlet {
         String tipo = "";
         // Definir variable de referencia a un objeto de tipo Usuario
         usuariot u = null;
-
         // Consultar Base de datos
         DBt uDB = new DBt();
         try {
@@ -112,9 +111,7 @@ public class Validart extends HttpServlet {
             } else {
                 tipo = u.getTipo();
 //                System.out.println(tipo);
-
                 if (tipo.equals("ADMIN")) {
-
                     ArrayList<Object> lista = new ArrayList<>();
                     ArrayList<Object> lista1 = new ArrayList<>();
                     objSesion.setAttribute("usuario", nombre);
@@ -124,7 +121,6 @@ public class Validart extends HttpServlet {
                     objSesion.setAttribute("carrosalida", lista1);
                     request.setAttribute("usuario1", u);
                     response.sendRedirect("admin/home_admin.jsp");
-
                 } else if (tipo.equals("USUARIO")) {
                     objSesion.setAttribute("usuario", nombre);
                     objSesion.setAttribute("tipo", tipo);

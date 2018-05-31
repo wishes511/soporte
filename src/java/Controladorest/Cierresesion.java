@@ -33,8 +33,9 @@ public class Cierresesion extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-HttpSession objSesion = request.getSession(true);
+HttpSession objSesion = request.getSession(false);
 objSesion.invalidate();
+response.setHeader("JSESSIONID", "no-store");
 response.sendRedirect("index.jsp");
     }
 

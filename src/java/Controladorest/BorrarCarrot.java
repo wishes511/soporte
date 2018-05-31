@@ -38,7 +38,7 @@ public class BorrarCarrot extends HttpServlet {
        try{
        String id = request.getParameter("eliminar").toUpperCase();
        ArrayList<Object> lista;
-       HttpSession objSesion = request.getSession(true);
+       HttpSession objSesion = request.getSession(false);
         lista =(ArrayList<Object>) objSesion.getAttribute("carrosalida");
         Producto_comprat pc =new Producto_comprat();
             

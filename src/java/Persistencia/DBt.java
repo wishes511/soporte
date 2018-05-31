@@ -156,7 +156,7 @@ public class DBt {
         String query = "select distinct f.ID_FACTURA,u.usuario,f.cantidad,f.total,f.fecha\n"
                 + "from factura f join usuario u on f.ID_USUARIOC=u.ID_USUARIO "
                 + "join detalle_fact df on df.id_factura=f.id_factura join producto pr on pr.id_producto = df.id_producto join departamento dep on dep.ID_DEP=u.ID_DEP\n"
-                + "where f.fecha between '" + f1 + "' and '" + f2 + "' and (pr.nombre like '" + prod + "%' or pr.modelo like '" + prod + "%' or dep.nombre like '" + prod + "%') and pr.tipo_producto='"+tipo_p+"' order by f.id_factura";
+                + "where f.fecha between '" + f1 + "' and '" + f2 + "' and (pr.nombre like '" + prod + "%' or pr.modelo like '" + prod + "%' or dep.nombre like '%" + prod + "%' or pr.marca like '%"+prod+"%' or pr.descripcion like '%"+prod+"%') and pr.tipo_producto='"+tipo_p+"' order by f.id_factura";
         smt = conexion.createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
@@ -177,7 +177,7 @@ public class DBt {
         ResultSet rs;
         Usuario u = null;
         abrir();
-        String query = "select * from producto where stock !=0 and status ='Y' and ( nombre like '%" + prod + "%' or modelo like '%" + prod + "%') and tipo_producto='"+tipo_p+"' order by nombre";        
+        String query = "select * from producto where status ='Y' and ( nombre like '%" + prod + "%' or modelo like '%" + prod + "%') and tipo_producto='"+tipo_p+"' order by nombre";        
         smt = conexion.createStatement();
         rs = smt.executeQuery(query);
         while (rs.next()) {
@@ -806,6 +806,7 @@ public class DBt {
         abrir();
         int id = 0;
         String sentenciaSQL = "insert into producto values(" + id + ",'" + p.getNombre() + "','" + p.getModelo() + "','" + p.getMarca() + "'," + p.getStock() + "," + p.getCosto() + ",'" + p.getStatus() + "','" + p.getDescripcion() + "','" + p.getUrl() + "','" + p.getTipo() + "')";
+        System.out.println(sentenciaSQL);
         smt = conexion.createStatement();
         smt.executeUpdate(sentenciaSQL);
         smt.close();

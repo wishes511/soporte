@@ -44,7 +44,7 @@ public class Nuevavtat_prov extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
    
-              HttpSession objSesion = request.getSession(true);
+              HttpSession objSesion = request.getSession(false);
 //i_d
     String usuario = (String) objSesion.getAttribute("usuario");
     String tipos = (String) objSesion.getAttribute("tipo");
@@ -100,7 +100,7 @@ public class Nuevavtat_prov extends HttpServlet {
             fac.setID_PROVEEDOR(Integer.parseInt(usuarioc));
             db.agregarfacturat(fac);
             db.agregardetallefact_prov(db.buscarfacturat_prov(),lista);
-//            db.modificarstock_prov(lista);
+            db.modificarstock_prov(lista);
             lista.clear();
             objSesion.setAttribute("carro", lista);
 

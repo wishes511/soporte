@@ -73,7 +73,7 @@ public class Virtuales extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        HttpSession objSesion = request.getSession(true);
+        HttpSession objSesion = request.getSession(false);
         String usuario = (String) objSesion.getAttribute("usuario");
         String tipos = (String) objSesion.getAttribute("tipo");
         String ids = String.valueOf(objSesion.getAttribute("i_d"));

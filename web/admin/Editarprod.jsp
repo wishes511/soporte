@@ -19,7 +19,7 @@
     String tipo = "";
     int stoc = 0;
 
-    if (usuario != null && tipos != null && tipos.equals("ADMIN")) {
+    if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("APLASTISOL"))) {
 
     } else {
         response.sendRedirect("../index.jsp");

@@ -56,7 +56,7 @@ public class Modificarprodut extends HttpServlet {
     
     int stoc=0;
 
-    if (usuario != null && tiposs != null && tiposs.equals("ADMIN")) {
+    if (usuario != null && tiposs != null && (tiposs.equals("ADMIN") || tiposs.equals("APLASTISOL"))) {
        
     } else {
         response.sendRedirect("../index.jsp");

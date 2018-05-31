@@ -16,7 +16,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%int id_produc = 0;
     String usuarios = "";
-    HttpSession objSesion = request.getSession(true);
+    HttpSession objSesion = request.getSession(false);
     boolean estado;
     String usuario = (String) objSesion.getAttribute("usuario");
     String tipos = (String) objSesion.getAttribute("tipo");
@@ -183,7 +183,10 @@
                                 Statement smt;
                                 ResultSet rs;
                                 c = uDB.getConexion();
-                                String sentenciaSQL = "SELECT * FROM producto where status ='Y' and stock > 0 ORDER BY nombre";
+                                String sentenciaSQL = "";
+                                    if(tipos.equals("ADMIN")){
+                                        sentenciaSQL="SELECT * FROM producto where stock != 0 and status='Y' and (tipo_producto='SISTEMAS' or tipo_producto='ETIQUETAS') ORDER BY nombre";
+                                    }else sentenciaSQL="SELECT * FROM producto where stock != 0 and status='Y' and tipo_producto='PLASTISOL'  ORDER BY nombre";
                                 smt = c.createStatement();
                                 rs = smt.executeQuery(sentenciaSQL);
                                 while (rs.next()) {

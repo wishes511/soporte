@@ -12,7 +12,7 @@
 <%@page import="Persistencia.DB"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="Controladorest.Nuevodep"%>
-<% HttpSession objSesion = request.getSession(true);
+<% HttpSession objSesion = request.getSession(false);
 //i_d
     boolean estado;
     String usuario = (String) objSesion.getAttribute("usuario");
@@ -25,6 +25,7 @@
             response.sendRedirect("productos_admint.jsp");
         }
     } else {
+    
         response.sendRedirect("../index.jsp");
     }
     try {
