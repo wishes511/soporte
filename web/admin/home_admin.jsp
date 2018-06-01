@@ -20,8 +20,8 @@
     ArrayList<Object> carrito;
     carrito = (ArrayList<Object>) objSesion.getAttribute("carro");
     //out.print(carrito.size());
-    if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("APLASTISOL"))) {
-        if (tipos.equals("APLASTISOL")) {
+    if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("APLASTISOL") || tipos.equals("AMECANICA"))) {
+        if (tipos.equals("APLASTISOL") || tipos.equals("AMECANICA")) {
             response.sendRedirect("productos_admint.jsp");
         }
     } else {
@@ -155,6 +155,7 @@
                         <ul class="dropdown-menu" id="#80" role="menu">
 
                             <li><a href="Ver_ventast.jsp">Ver ventas</a></li>
+                            <li active><a href="Ver_entradast.jsp">Ver Entradas</a></li>
                             <li><a href="reporte.jsp">reporte</a></li>
                         </ul>
                     </li>
@@ -187,6 +188,7 @@
                                 <label>Tipo de usuario :</label> <select name="tipos" >
                                     <option>USUARIO</option>
                                     <option>APLASTISOL</option>
+                                    <option>AMECANICA</option>
                                     <option>ADMIN</option>
                                 </select><br><br>
                                 <label>Departamento : </label> <select name="tips" id="tips">
@@ -195,7 +197,6 @@
                                         try {
                                             DBt uDB = new DBt();
                                             Connection c;
-
                                             uDB.abrir();
                                             Statement smt;
                                             ResultSet rs;

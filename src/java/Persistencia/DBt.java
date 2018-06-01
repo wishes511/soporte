@@ -147,6 +147,29 @@ public class DBt {
         smt.close();
         return lista;
     }
+        public ArrayList<Object> verventastp(String f1, String f2,String tipo_p,String extra,String extras) throws ClassNotFoundException, SQLException {
+        ArrayList<Object> lista = new ArrayList<>();
+        Connection c;
+        Statement smt;
+        ResultSet rs;
+        abrir();
+        String query = "select f.ID_FACT_IN,u.nombre,f.cantidad,f.total,f.fecha\n"
+                + "from fact_prov f join proveedor u on f.ID_PROVEEDOR=u.ID_PROVEEDOR join detalle_fact_prov df on df.ID_FACT_IN=f.ID_FACT_IN join PRODUCTO p ON df.ID_PRODUCTO =p.ID_PRODUCTO\n"
+                + "where f.fecha between '" + f1 + "' and '" + f2 + "' and p.tipo_producto='"+tipo_p+"' group by f.ID_FACT_IN";
+        //System.out.println(query);
+        smt = conexion.createStatement();
+        rs = smt.executeQuery(query);
+        while (rs.next()) {
+            //total=total+ Float.parseFloat(rs.getString("monto"));
+            lista.add(Integer.parseInt(rs.getString("f.ID_FACT_IN")));
+            lista.add((rs.getString("u.nombre")));
+            lista.add(Integer.parseInt(rs.getString("f.cantidad")));
+            lista.add(Double.parseDouble(rs.getString("f.total")));
+            lista.add((rs.getString("f.fecha")));
+        }
+        smt.close();
+        return lista;
+    }
     //consula del onkeypress para llenado de ventas por fechas
     public ArrayList<Object> verventast(String f1, String f2, String prod,String tipo_p) throws ClassNotFoundException, SQLException {
         ArrayList<Object> lista = new ArrayList<>();
@@ -285,6 +308,33 @@ public class DBt {
         smt.close();
         return lista;
     }
+    
+    public ArrayList<Object> verventastdp(int ids) throws ClassNotFoundException, SQLException {
+        ArrayList<Object> lista = new ArrayList<>();
+        Statement smt;
+        ResultSet rs;
+        abrir();
+        String query = "select f.ID_FACT_IN,u.nombre,d.cantidad,p.nombre,p.modelo,p.costo,f.fecha\n"
+                + "from fact_prov f join proveedor u on f.ID_PROVEEDOR=u.ID_PROVEEDOR\n"
+                + "join detalle_fact_prov d on d.ID_FACT_IN=f.ID_FACT_IN\n"
+                + "join producto p on p.ID_PRODUCTO=d.ID_PRODUCTO\n"
+                + "where d.ID_FACT_IN=" + ids;       
+        smt = conexion.createStatement();
+        rs = smt.executeQuery(query);
+        while (rs.next()) {
+            //total=total+ Float.parseFloat(rs.getString("monto"));
+            lista.add(Integer.parseInt(rs.getString("f.ID_FACT_IN")));
+            lista.add((rs.getString("u.nombre")));
+            lista.add(Integer.parseInt(rs.getString("d.cantidad")));
+            lista.add((rs.getString("p.nombre")));
+            lista.add((rs.getString("p.modelo")));
+            lista.add(Float.parseFloat(rs.getString("p.costo")) * Integer.parseInt(rs.getString("d.cantidad")));
+            lista.add((rs.getString("f.fecha")));
+        }
+        smt.close();
+        return lista;
+    }
+    
 
     public ArrayList<Object> retornodatos(String fecha) throws ClassNotFoundException, SQLException {
         ArrayList<Object> lista = new ArrayList<Object>();

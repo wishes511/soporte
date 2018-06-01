@@ -113,8 +113,8 @@
                             Reportes <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" id="#80" role="menu">
-                            <li active><a href="Ver_ventast.jsp">Ver ventas</a></li>
-                            <li ><a href="Ver_entradast.jsp">Ver Entradas</a></li>
+                            <li><a href="Ver_ventast.jsp">Ver ventas</a></li>
+                            <li active><a href="Ver_entradast.jsp">Ver Entradas</a></li>
                             <%if(tipos.equals("ADMIN")){%>
                             <li><a href="reporte.jsp">reporte productos</a></li>
                             <%}%>
@@ -186,7 +186,7 @@
                     <thead class="redondeado" style="background-color:white">
                         <tr>
                             <td>venta</td>
-                            <td>usuario</td>
+                            <td>proveedor</td>
                             <td>Cantidad</td>                                                    
                             <td>costo</td>
                             <td>fecha</td>
@@ -201,7 +201,7 @@
             function okas() {
                 var pro = $('#f1').val();
                 var pro1 = $('#f2').val();
-                var uso = "fechas";
+                var uso = "fechasp";
                 $.ajax({
                     type: 'post',
                     data: {f1: pro, f2: pro1, uso: uso},
@@ -240,7 +240,7 @@
 
                 var pro = id;
                 var pro1 = "";
-                var uso = "detalle";
+                var uso = "detallep";
                 $.ajax({
                     type: 'post',
                     data: {f1: pro, f2: pro1, uso: uso},
@@ -271,7 +271,7 @@
                     <thead class="redondeado" style="background-color:white">
                         <tr>
                             <td>venta</td>
-                            <td>usuario</td>
+                            <td>proveedor</td>
                             <td>Cantidad</td>
                             <td>nombre</td>
                             <td>modelo</td>

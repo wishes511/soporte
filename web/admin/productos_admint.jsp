@@ -16,7 +16,7 @@
     String tipos = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
 
-    if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("APLASTISOL")) ) {
+    if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("APLASTISOL")) || tipos.equals("AMECANICA")) {
 
     } else {
         response.sendRedirect("../index.jsp");
@@ -145,14 +145,13 @@
                     %>
                     <li class="active"><a href="">Productos</a></li>
                     <%
-                    if(tipos.equals("ADMIN")){
+                    if(tipos.equals("ADMIN") || tipos.equals("AMECANICA")){
                     %>
                     <li class="dropdown">
                         <a  class="dropdown-toggle" data-toggle="dropdown" href="#80">
                             Proveedores<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" id="#90" role="menu">
-                            <li><a href="proveedores.jsp">Proveedores</a></li>
                             <li class=""><a href="Eprovedor.jsp">Entrada Proveedor</a></li>
                         </ul>
                     </li>
@@ -166,6 +165,7 @@
                         </a>
                         <ul class="dropdown-menu" id="#80" role="menu">
                             <li><a href="Ver_ventast.jsp">Ver ventas</a></li>
+                            <li active><a href="Ver_entradast.jsp">Ver Entradas</a></li>
                             <li><a href="reporte.jsp">reporte productos</a></li>
                         </ul>
                     </li>
@@ -201,11 +201,11 @@
                             <option>ETIQUETAS</option>
                             <option>SISTEMAS</option>
                     <%
-                    }else{
+                    }else if(tipos.equals("APLASTISOL")){
                     %>    
                             <option>PLASTISOL</option>
                     <%
-                        }
+                        }else out.print("<option>MECANICA</option>");
                     %>        
                         </select><br><br>
                         Archivo: <input type="file" name="imagen" /><br><br>
@@ -244,7 +244,9 @@
                                     String sentenciaSQL = "";
                                     if(tipos.equals("ADMIN")){
                                         sentenciaSQL="SELECT * FROM producto where tipo_producto='SISTEMAS' or tipo_producto='ETIQUETAS' ORDER BY nombre";
-                                    }else sentenciaSQL="SELECT * FROM producto where tipo_producto='PLASTISOL' ORDER BY nombre";
+                                    }else if(tipos.equals("APLASTISOL")){
+                                        sentenciaSQL="SELECT * FROM producto where tipo_producto='PLASTISOL' ORDER BY nombre";
+                                    }else sentenciaSQL="SELECT * FROM producto where tipo_producto='MECANICA' ORDER BY nombre";
                                     smt = c.createStatement();
                                     rs = smt.executeQuery(sentenciaSQL);
                                     while (rs.next()) {

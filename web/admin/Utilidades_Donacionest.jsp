@@ -24,7 +24,7 @@ boolean estado;
     String usuario = (String) objSesion.getAttribute("usuario");
     String tipos = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
-    if (usuario != null && tipos != null && (tipos.equals("ADMIN")) || tipos.equals("APLASTISOL")) {
+    if (usuario != null && tipos != null && (tipos.equals("ADMIN")) || tipos.equals("APLASTISOL") || tipos.equals("AMECANICA")) {
        
     } else {
         response.sendRedirect("../index.jsp");
@@ -159,14 +159,13 @@ boolean estado;
                     %>
                     <li class=""><a href="productos_admint.jsp">Productos</a></li>
                     <%
-                    if(tipos.equals("ADMIN")){
+                    if(tipos.equals("ADMIN") || tipos.equals("AMECANICA")){
                     %>
                     <li class="dropdown">
                         <a  class="dropdown-toggle" data-toggle="dropdown" href="#80">
                             Proveedores<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" id="#90" role="menu">
-                            <li><a href="proveedores.jsp">Proveedores</a></li>
                             <li class=""><a href="Eprovedor.jsp">Entrada Proveedor</a></li>
                         </ul>
                     </li>
@@ -180,6 +179,7 @@ boolean estado;
                         </a>
                         <ul class="dropdown-menu" id="#80" role="menu">
                             <li ><a href="Ver_ventast.jsp">Ver ventas</a></li>
+                            <li ><a href="Ver_entradast.jsp">Ver Entradas</a></li>
                             <%if(tipos.equals("ADMIN")){%>
                             <li><a href="reporte.jsp">reporte productos</a></li>
                             <%}%>
@@ -223,7 +223,8 @@ boolean estado;
                                 String sentenciaSQL = "";
                                     if(tipos.equals("ADMIN")){
                                         sentenciaSQL="SELECT * FROM producto where stock != 0 and status='Y' and (tipo_producto='SISTEMAS' or tipo_producto='ETIQUETAS') ORDER BY nombre";
-                                    }else sentenciaSQL="SELECT * FROM producto where stock != 0 and status='Y' and tipo_producto='PLASTISOL'  ORDER BY nombre";
+                                    }else if(tipos.equals("APLASTISOL")){ sentenciaSQL="SELECT * FROM producto where stock != 0 and status='Y' and tipo_producto='PLASTISOL'  ORDER BY nombre";
+                                    }else sentenciaSQL="SELECT * FROM producto where stock != 0 and status='Y' and tipo_producto='MECANICA'  ORDER BY nombre";
                                 //System.out.println(sentenciaSQL);
                                 smt = c.createStatement();
                                 rs = smt.executeQuery(sentenciaSQL);
@@ -275,7 +276,7 @@ boolean estado;
                                             out.println("<td><a class=btn name=erase value=" + lista.get(i - 3) + " onclick=erase("+aux+")><img src=../images/delete.png class=img-responsive width=30 height=30></a></td>");
                                             //out.println("<td><input type=submit class=form-control name=erase value=" + lista.get(i - 3) + " onclick=eliminar(" + aux + ") ></td>");
                                             out.println("</tr>");
-                                            System.out.println(lista.get(i - 3) + "-" +lista.get(i - 2) + "-" + lista.get(i - 1) + "-" + lista.get(i));
+                                            //System.out.println(lista.get(i - 3) + "-" +lista.get(i - 2) + "-" + lista.get(i - 1) + "-" + lista.get(i));
                                             total = total + Float.parseFloat(lista.get(i).toString());
                                             cont = 0;
                                             aux++;
@@ -425,9 +426,10 @@ boolean estado;
                                 String sentenciaSQL = "";
                                 if(tipos.equals("ADMIN")){
                                 sentenciaSQL="SELECT * from usuario where activo = 'Y' order by usuario";
-                                }else{ sentenciaSQL ="SELECT u.usuario as 'usuario' from usuario u join departamento d on d.ID_DEP = u.ID_DEP"
+                                }else if(tipos.equals("APLASTISOL")){ sentenciaSQL ="SELECT u.usuario as 'usuario' from usuario u join departamento d on d.ID_DEP = u.ID_DEP"
                                         + "  where u.activo = 'Y' and d.nombre ='ALMACEN GENERAL'  order by usuario ";
-                                }
+                                }else sentenciaSQL ="SELECT u.usuario as 'usuario' from usuario u join departamento d on d.ID_DEP = u.ID_DEP"
+                                        + "  where u.activo = 'Y' and d.nombre ='MECANICA'  order by usuario ";
                                 //System.out.println(sentenciaSQL);
                                 smt = c.createStatement();
                                 rs = smt.executeQuery(sentenciaSQL);

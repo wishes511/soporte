@@ -23,7 +23,7 @@
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
     ArrayList<Object> lista;
     lista = (ArrayList<Object>) objSesion.getAttribute("carro");
-    if (usuario != null && tipos != null && tipos.equals("ADMIN")) {
+    if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("AMECANICA"))) {
 
     } else {
         response.sendRedirect("../index.jsp");
@@ -130,40 +130,71 @@
     <body>
         <div class="container-fluid">
             <!--<button onclick="nuevomostrar()">lolo</button>--> 
-            <nav class="navbar navbar-default">
+             <nav class="navbar navbar-default">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="../index.jsp"><img src="../images/home.png" class="" width="25"></a>
                 </div>
-                <ul class="nav navbar-nav nav-pills">
-                    <li ><a href="home_admin.jsp">Usuarios</a></li>
-                    <li ><a href="productos_admint.jsp">Productos</a></li>
+                <ul class="nav navbar-nav">
+                    <%
+                    if(tipos.equals("ADMIN")){
+                    %>
+                    <li class="dropdown">
+                        <a  class="dropdown-toggle" data-toggle="dropdown" href="#80">
+                            Usuarios<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" id="#90" role="menu">
+                            <li class=""><a href="home_admin.jsp">Usuarios</a></li>
+                            <li><a href="virtuales.jsp">Vista de direcciones IP</a></li>
+                            <li><a href="reporteusuarios.jsp">Reporte de usuarios</a></li>
+                        </ul>
+                    </li>
+                    <%
+                    }
+                    %>
+                    <li class=""><a href="productos_admint.jsp">Productos</a></li>
+                    <%
+                    if(tipos.equals("ADMIN") || tipos.equals("AMECANICA")){
+                    %>
                     <li class="dropdown active">
                         <a  class="dropdown-toggle" data-toggle="dropdown" href="#80">
                             Proveedores<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" id="#90" role="menu">
-                            <li><a href="proveedores.jsp">Proveedores</a></li>
                             <li class="active"><a href="Eprovedor.jsp">Entrada Proveedor</a></li>
                         </ul>
                     </li>
-                    <li class=""><a href="Utilidades_Donacionest.jsp">Nueva Compra Interna</a></li>
+                    <%
+                    }
+                    %>
+                    <li><a href="Utilidades_Donacionest.jsp">Nueva Compra Interna</a></li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#80">
                             Reportes <span class="caret"></span>
                         </a>
-                        <ul class="dropdown-menu" id="#80" role="menu">   
+                        <ul class="dropdown-menu" id="#80" role="menu">
                             <li><a href="Ver_ventast.jsp">Ver ventas</a></li>
+                            <li><a href="Ver_entradast.jsp">Ver Entradas</a></li>
+                            <%if(tipos.equals("ADMIN")){%>
+                            <li><a href="reporte.jsp">reporte productos</a></li>
+                            <%}%>
+                            
                         </ul>
                     </li>
                     <li class="">
-                        <%if (estado) {
+                        <%
+                            if(tipos.equals("ADMIN")){
+                            if (estado) {
                                 out.println("<a href=tareas.jsp STYLE=background-color:rgb(255,89,89);color:white >Tareas</a></li>");
                             } else {
                                 out.println("<a href=tareas.jsp>Tareas</a></li>");
                             }
+                            }
+                            
+
                         %>
                     <li><a href="../Cierresesion">Salir</a></li>
                 </ul>
+
             </nav>
             <hr> <br>
             <div class="row" >
@@ -186,8 +217,9 @@
                                 String sentenciaSQL = "";
                                     if(tipos.equals("ADMIN")){
                                         sentenciaSQL="SELECT * FROM producto where stock != 0 and status='Y' and (tipo_producto='SISTEMAS' or tipo_producto='ETIQUETAS') ORDER BY nombre";
-                                    }else sentenciaSQL="SELECT * FROM producto where stock != 0 and status='Y' and tipo_producto='PLASTISOL'  ORDER BY nombre";
-                                smt = c.createStatement();
+                                    }else if(tipos.equals("APLASTISOL")) sentenciaSQL="SELECT * FROM producto where stock != 0 and status='Y' and tipo_producto='PLASTISOL'  ORDER BY nombre";
+                                    else sentenciaSQL="SELECT * FROM producto where stock != 0 and status='Y' and tipo_producto='MECANICA'  ORDER BY nombre";
+                                    smt = c.createStatement();
                                 rs = smt.executeQuery(sentenciaSQL);
                                 while (rs.next()) {
                                     out.println("<div class=col-md-4>");

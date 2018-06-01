@@ -33,7 +33,7 @@
     String tipos = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
 
-    if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("APLASTISOL"))) {
+    if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("APLASTISOL") || tipos.equals("AMECANICA"))) {
 
     } else {
         response.sendRedirect("../index.jsp");
@@ -49,7 +49,8 @@ try{
         String valor = "";
         if(tipos.equals("ADMIN")){
             valor="SISTEMAS";
-        }else valor="PLASTISOL";
+        }else if(tipos.equals("APLASTISOL")) valor="PLASTISOL";
+        else valor="MECANICA";
         parameter.put("tipo",new String(valor));
         
         byte[] bytes = JasperRunManager.runReportToPdf(reportfile.getPath(), parameter, db.getConexion());

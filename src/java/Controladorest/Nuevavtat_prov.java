@@ -51,7 +51,7 @@ public class Nuevavtat_prov extends HttpServlet {
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
 
 
-    if (usuario != null && tipos != null && tipos.equals("ADMIN")) {
+    if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("AMECANICA"))) {
        
     } else {
         response.sendRedirect("../index.jsp");

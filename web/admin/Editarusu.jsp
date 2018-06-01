@@ -67,6 +67,8 @@
                         Ip<input class="form-control input-sm chat-input" type="text" name="ip" id="ip" value="<%=us.getIp()%>" required /><br>
                         Tipo de usuario : <select name="tipos" >
                             <option>USUARIO</option>
+                            <option>APLASTISOL</option>
+                            <option>AMECANICA</option>
                             <option>ADMIN</option>
                         </select><br><br><br>
                         Departamento : <select name="departamento" >

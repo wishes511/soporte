@@ -40,7 +40,7 @@ public class Getregs extends HttpServlet {
     String usuario = (String) objSesion.getAttribute("usuario");
     String tiposs = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
-    if (usuario != null && tiposs != null && (tiposs.equals("ADMIN") || tiposs.equals("APLASTISOL"))) {
+    if (usuario != null && tiposs != null && (tiposs.equals("ADMIN") || tiposs.equals("APLASTISOL") || tiposs.equals("AMECANICA"))) {
        
     } else {
         response.sendRedirect("../index.jsp");
@@ -52,12 +52,13 @@ public class Getregs extends HttpServlet {
         String produ =request.getParameter("p");
         String uso =request.getParameter("uso");
         // ver ventas general
-        //System.out.println(uso);
+        System.out.println(uso);
         if(uso.equals("catalago_general")){
              String tipo_p="";
             if(tiposs.equals("ADMIN")){
             tipo_p="SISTEMAS";
-        }else tipo_p="PLASTISOL"; 
+        }else if(tiposs.equals("APLASTISOL")) tipo_p="PLASTISOL"; 
+        else tipo_p="MECANICA";
         DBt db = new DBt();
         int cont =0;
         ArrayList<Object> lista;
@@ -191,7 +192,8 @@ public class Getregs extends HttpServlet {
         String tipo_p="";
         if(tiposs.equals("ADMIN")){
             tipo_p="SISTEMAS";
-        }else tipo_p="PLASTISOL";
+        }else if(tiposs.equals("APLASTISOL")) tipo_p="PLASTISOL";
+        else tipo_p="MECANICA";
         ArrayList<Object> lista;    
         DBt db = new DBt();
         lista=db.verventast(f1, f2,tipo_p,"","");
@@ -281,7 +283,136 @@ public class Getregs extends HttpServlet {
         }
        
         }
+        }else if(uso.equals("fechasp")){
+        String tipo_p="";
+        if(tiposs.equals("ADMIN")){
+            tipo_p="SISTEMAS";
+        }else if(tiposs.equals("APLASTISOL")) tipo_p="PLASTISOL";
+        else tipo_p="MECANICA";
+        ArrayList<Object> lista;    
+        DBt db = new DBt();
+        lista=db.verventastp(f1, f2,tipo_p,"","");
+        int cont =0;
+        float total =0;
+        int totalp =0;
+        for(int i =0;i<lista.size();i++){
+         out.println("e.e");
+        if(cont == 4){
+        out.print("<tr onclick=mostrarVentanas("+lista.get(i-4)+") ><a>");
+        out.print("<td>"+lista.get(i-4)+"</td>");
+        out.print("<td>"+lista.get(i-3)+"</td>");
+        out.print("<td>"+lista.get(i-2)+"</td>");
+        out.print("<td>"+Float.parseFloat(lista.get(i-1).toString())+"</td>");
+        out.print("<td>"+lista.get(i)+"</td>");
+        out.print("</a></tr>");
+        totalp+=Integer.parseInt(lista.get(i-2).toString());
+        total+=Double.parseDouble(lista.get(i-1).toString());
+        cont=0;
         }else{
+        cont++;
+        }
+        }
+        if(lista.isEmpty()){
+        }else{
+        out.print("<tr>");
+        
+        out.print("<td></td>");
+        out.print("<td><h4>Total:</h4></td>");
+        out.print("<td><h4><a href=>"+totalp+"</a></h4></td>");
+        out.print("<td><h4><a href=>"+total+"</a></h4></td>");
+        out.print("<td></td>");
+        out.print("</tr>");
+        if(tiposs.equals("ADMIN")){
+         ArrayList<Object> lista1;    
+        
+        lista1=db.verventastdep(f1, f2,produ);
+        int cont1 =0;
+        float total1 =0;
+        for(int i =0;i<lista1.size();i++){
+         out.println("e.e");
+        if(cont1 == 1){
+        out.print("<tr>");
+        out.print("<td>"+lista1.get(i-1)+"</td>");
+        out.print("<td>"+lista1.get(i)+"</td>");
+        out.print("</tr>");
+        total1+=Float.parseFloat(lista1.get(i).toString());
+        cont1=0;
+        }else{
+        cont1++;
+        }
+        }       
+        out.print("<tr>");
+        out.print("<td>");
+        out.print("</tr>");
+        
+        out.print("<tr>");
+        out.print("<td colspan=2 align=center><h3>Costo por departamento</h3></td>");
+        out.print("</tr>");
+        
+        // llenado depas clic boton
+        ArrayList<Object> lista2;    
+        
+        lista2=db.verventastdep(f1, f2);
+        int cont2 =0;
+        float total2 =0;
+        for(int i =0;i<lista2.size();i++){
+         out.println("e.e");
+        if(cont2 == 1){
+        out.print("<tr><a>");
+        out.print("<td>"+lista2.get(i-1)+"</td>");
+        out.print("<td>"+lista2.get(i)+"</td>");
+        out.print("</a></tr>");
+        total2+=Float.parseFloat(lista2.get(i).toString());
+        cont2=0;
+        }else{
+        cont2++;
+        }
+        }       
+        out.print("<tr>");
+        out.print("<td>");
+        out.print("</tr>");
+        out.print("<tr>");
+        out.print("<td><h3>Total</h3></td>");
+        out.print("<td><h3><a href=>"+total+"</a></h4></td>");
+        out.print("</tr>");
+        }
+       
+        }
+        }else if(uso.equals("detallep")){
+            // detalle de la vta
+        ArrayList<Object> listas;    
+        DBt db = new DBt();
+        listas=db.verventastdp(Integer.parseInt(f1));
+        int cont =0;
+        float total =0;
+        for(int i =0;i<listas.size();i++){
+         out.println("e.e");
+        if(cont == 6){
+        out.print("<tr><a>");
+        out.print("<td>"+listas.get(i-6)+"</td>");
+        out.print("<td>"+listas.get(i-5)+"</td>");
+        out.print("<td>"+listas.get(i-4)+"</td>");
+        out.print("<td>"+listas.get(i-3)+"</td>");
+        out.print("<td>"+listas.get(i-2)+"</td>");
+        out.print("<td>"+listas.get(i-1)+"</td>");
+        out.print("<td>"+listas.get(i)+"</td>");
+        out.print("</a></tr>");
+        total+=Double.parseDouble(listas.get(i-1).toString());
+        cont=0;
+        }else{
+        cont++;
+        }
+        }
+        out.print("<tr>");
+        out.print("<td></td>");
+        out.print("<td></td>");
+        out.print("<td></td>");
+        out.print("<td></td>");
+        out.print("<td><h4>Total:</h4></td>");
+        out.print("<td><h4><a>"+total+"</a></h4></td>");
+        out.print("<td></td>");
+        out.print("</tr>");
+        } else{
             // detalle de la vta
         ArrayList<Object> listas;    
         DBt db = new DBt();
@@ -315,8 +446,6 @@ public class Getregs extends HttpServlet {
         out.print("<td><h4><a>"+total+"</a></h4></td>");
         out.print("<td></td>");
         out.print("</tr>");
-       
-        
         }
        }catch(Exception e){
         System.out.println(e);

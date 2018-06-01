@@ -139,6 +139,17 @@ public class Validart extends HttpServlet {
                     objSesion.setAttribute("carrosalida", lista1);
                     request.setAttribute("usuario1", u);
                     out.print("<script>window.location.href = \"admin/home_admin.jsp\"</script>");
+                }else if (tipo.equals("AMECANICA")) {
+                    PrintWriter out = response.getWriter();
+                    ArrayList<Object> lista = new ArrayList<>();
+                    ArrayList<Object> lista1 = new ArrayList<>();
+                    objSesion.setAttribute("usuario", nombre);
+                    objSesion.setAttribute("tipo", tipo);
+                    objSesion.setAttribute("i_d", u.getID_USUARIO());
+                    objSesion.setAttribute("carro", lista);
+                    objSesion.setAttribute("carrosalida", lista1);
+                    request.setAttribute("usuario1", u);
+                    out.print("<script>window.location.href = \"admin/home_admin.jsp\"</script>");
                 }
             }
         } catch (ClassNotFoundException | SQLException ex) {
