@@ -52,7 +52,7 @@ public class Getregs extends HttpServlet {
         String produ =request.getParameter("p");
         String uso =request.getParameter("uso");
         // ver ventas general
-        System.out.println(uso);
+        //System.out.println(uso);
         if(uso.equals("catalago_general")){
              String tipo_p="";
             if(tiposs.equals("ADMIN")){
@@ -285,13 +285,21 @@ public class Getregs extends HttpServlet {
         }
         }else if(uso.equals("fechasp")){
         String tipo_p="";
+        String tipo_prov="";
         if(tiposs.equals("ADMIN")){
             tipo_p="SISTEMAS";
-        }else if(tiposs.equals("APLASTISOL")) tipo_p="PLASTISOL";
-        else tipo_p="MECANICA";
+            tipo_prov="SIS";
+        }else if(tiposs.equals("APLASTISOL")){ 
+            tipo_p="PLASTISOL";
+            tipo_prov="PLA";
+        }
+        else {
+            tipo_p="MECANICA";
+            tipo_prov="GEN";
+        }
         ArrayList<Object> lista;    
         DBt db = new DBt();
-        lista=db.verventastp(f1, f2,tipo_p,"","");
+        lista=db.verventastp(f1, f2,tipo_p,tipo_prov,"");
         int cont =0;
         float total =0;
         int totalp =0;
