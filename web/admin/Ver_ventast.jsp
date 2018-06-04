@@ -15,10 +15,11 @@
 <% HttpSession objSesion = request.getSession(false);
 //select p.modelo,SUM(d.cantidad),MONTH(f.fecha) from factura f join detalle_fact d on d.ID_FACTURA = f.ID_FACTURA join producto p on d.ID_PRODUCTO = p.ID_PRODUCTO where f.fecha > '2017-10-1' group by MONTH(f.fecha),p.modelo order by MONTH(f.fecha)
     boolean estado;
+    try{
     String usuario = (String) objSesion.getAttribute("usuario");
     String tipos = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
-try{
+
     if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("APLASTISOL") || tipos.equals("AMECANICA"))) {
 
     } else {
@@ -290,6 +291,6 @@ try{
 <%
 }catch(Exception e){
     System.out.println(e);
-response.sendRedirect("../index.jsp");
+out.print("location = ../index.");
 }
 %>

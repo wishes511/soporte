@@ -36,9 +36,14 @@ public class Cierresesion extends HttpServlet {
         try{
           HttpSession objSesion = request.getSession(false);
 objSesion.invalidate();
-response.setHeader("JSESSIONID", "no-store");
+response.setHeader("Cache-Control", "no-store");
+response.setHeader("Cache-Control", "no-cache");
+response.setDateHeader("Expires", 0);
+request.getSession().removeAttribute("");
 response.sendRedirect("index.jsp");  
-        }catch(Exception e){}
+        }catch(Exception e){
+            response.sendRedirect("index.jsp"); 
+        }
 
     }
 
