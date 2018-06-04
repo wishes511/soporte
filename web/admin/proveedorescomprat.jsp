@@ -15,7 +15,7 @@
     String usuario = (String) objSesion.getAttribute("usuario");
     String tipos = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
-
+try {
     if (usuario != null && tipos != null && tipos.equals("ADMIN")) {
 
     } else {
@@ -315,3 +315,9 @@
         </div>
     </body>
 </html>
+<%
+}catch(Exception e){
+    System.out.println(e);
+response.sendRedirect("../index.jsp");
+}
+%>

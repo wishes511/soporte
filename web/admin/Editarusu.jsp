@@ -103,7 +103,8 @@
     </body>
 </html>
 <%
-    } catch (Exception e) {
-        System.out.println("Try editar usuario\n " + e);
-    }
+}catch(Exception e){
+    System.out.println(e);
+response.sendRedirect("../index.jsp");
+}
 %>

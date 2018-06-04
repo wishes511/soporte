@@ -21,6 +21,7 @@ String usuarios="";
 HttpSession objSesion = request.getSession(false);
 //sesiones a usar
 boolean estado;
+try{
     String usuario = (String) objSesion.getAttribute("usuario");
     String tipos = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
@@ -452,3 +453,9 @@ boolean estado;
     </div>
 </body>
 </html>
+<%
+}catch(Exception e){
+    System.out.println(e);
+response.sendRedirect("../index.jsp");
+}
+%>

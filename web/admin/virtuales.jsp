@@ -18,6 +18,7 @@
     String tipos = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
     ArrayList<Object> carrito;
+    try {
     carrito = (ArrayList<Object>) objSesion.getAttribute("carro");
     //out.print(carrito.size());
     //out.println("" + tipos+"/"+ids);
@@ -26,7 +27,7 @@
     } else {
         response.sendRedirect("../index.jsp");
     }
-    try {
+    
         DBt bd = new DBt();
         estado = bd.alerta();
 %>

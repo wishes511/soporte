@@ -18,13 +18,13 @@
     String usuario = (String) objSesion.getAttribute("usuario");
     String tipos = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
-
+try{
     if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("APLASTISOL") || tipos.equals("AMECANICA"))) {
 
     } else {
         response.sendRedirect("../index.jsp");
     }
-    try{
+    
     Calendar fecha = Calendar.getInstance();
     int año = fecha.get(Calendar.YEAR);
     int mes = fecha.get(Calendar.MONTH) + 1;
@@ -289,6 +289,7 @@
 </html>
 <%
 }catch(Exception e){
-        response.sendRedirect("../index.jsp");
-    }
+    System.out.println(e);
+response.sendRedirect("../index.jsp");
+}
 %>

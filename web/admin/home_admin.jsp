@@ -20,7 +20,8 @@
     ArrayList<Object> carrito;
     carrito = (ArrayList<Object>) objSesion.getAttribute("carro");
     //out.print(carrito.size());
-    if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("APLASTISOL") || tipos.equals("AMECANICA"))) {
+    try {
+if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("APLASTISOL") || tipos.equals("AMECANICA"))) {
         if (tipos.equals("APLASTISOL") || tipos.equals("AMECANICA")) {
             response.sendRedirect("productos_admint.jsp");
         }
@@ -28,8 +29,7 @@
     
         response.sendRedirect("../index.jsp");
     }
-    try {
-
+    
         DBt bd = new DBt();
         estado = bd.alerta();
 %>

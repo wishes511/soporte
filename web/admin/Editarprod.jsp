@@ -12,18 +12,13 @@
     String tipos = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
     String id_modi = request.getParameter("modi").toUpperCase();
-
-    // out.println("" + tipos+"/"+ids);
-    int idprodu = 0;
-    int idprodu1 = 0;
-    String tipo = "";
-    int stoc = 0;
-
+try{
     if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("APLASTISOL")) || tipos.equals("AMECANICA")) {
 
     } else {
         response.sendRedirect("../index.jsp");
     }
+    
     DBt bd = new DBt();
     productot us = new productot();
     us = bd.buscarprod(Integer.parseInt(id_modi));
@@ -81,3 +76,6 @@
         </div>
     </body>
 </html>
+<%
+}catch(Exception e){}
+%>
