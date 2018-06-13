@@ -225,7 +225,7 @@ public class DBt {
         while (rs.next()) {
             lista.add(rs.getString("ID_PRODUCTO"));
             //lista.add(rs.getString("nombre"));
-            lista.add(rs.getString("modelo"));
+            lista.add(rs.getString("nombre")+"-"+rs.getString("modelo"));
             lista.add(rs.getString("marca"));
             lista.add(rs.getString("stock"));
             lista.add(rs.getString("costo"));

@@ -53,12 +53,7 @@ try {
                     var cprodu = $("#cprodu").val();
                     var desc = $("#desc").val();
                     var stock = $("#stock").val();
-                    //var passs = $("#passs").val();
-                    if (!(/^([A-Z\a-z\ \ñ]+)$/.test(nombres))) {
-                        document.form2.name.focus();
-                        alert("Nombre invalido solo puedes utilizar letras y guion bajo");
-                        return false;
-                    }
+                   
                     if (!(/^([0-9]+)\.([0-9\s]*)|([0-9]+)$/.test(cmenu))) {
                         document.form2.cmenu.focus();
                         alert("Coloca solo numeros");
@@ -93,11 +88,7 @@ try {
                 var cmayo = $("#cmay").val();
                 var cprodu = $("#cprod").val();
                 var stock = $("#stockk").val();
-                if (!(/^([A-Z\a-z\_]+)$/.test(nombres))) {
-                    document.form1.n.focus();
-                    alert("Nombre invalido solo puedes utilizar letras y guion bajo");
-                    return false;
-                }
+               
                 if (!(/^([0-9]+)\.([0-9\s]*)|([0-9]+)$/.test(cmenu))) {
                     document.form1.cmin.focus();
                     alert("Coloca solo numeros");
@@ -189,8 +180,8 @@ try {
                 <div class="col-sm-4 ">
                     <h3 class="h3" align="center">Nuevo producto</h3>
                     <form name="form2" action="proceso.jsp" method="post" class="form-login esp1" enctype="multipart/form-data" style="overflow: hidden">
-                        Nombre<input class="form-control input-sm chat-input" type="text" name="name" id="name" value="" maxlength="12"  required/><br>
-                        Modelo<input class="form-control input-sm chat-input" type="text" name="modelo" id="modelo" value="" maxlength="13"  required/><br>
+                        Nombre<input class="form-control input-sm chat-input" type="text" name="name" id="name" value="" maxlength="20"  required/><br>
+                        Modelo<input class="form-control input-sm chat-input" type="text" name="modelo" id="modelo" value="" maxlength="20"  required/><br>
                         Marca<input class="form-control input-sm chat-input" type="text" name="marca" id="marca" value=""  required/><br>
                         Costo<input class="form-control input-sm chat-input   " type="text" name="costo" id="costo" value=""  required/><br>   
                         Stock<input class="form-control input-sm chat-input" type="text" name="stock" id="stock" value=""  required/><br>   
@@ -254,7 +245,7 @@ try {
                                         int lol = Integer.parseInt(rs.getObject("ID_PRODUCTO").toString());
                                         out.println("<tr>");
                                         // out.println("<td>"+rs.getObject("nombre")+"</td>");
-                                        out.println("<td>" + rs.getObject("modelo") + "</td>");
+                                        out.println("<td>"+rs.getObject("nombre") +" - "+ rs.getObject("modelo") + "</td>");
                                         out.println("<td>" + rs.getObject("marca") + "</td>");
                                         out.println("<td>" + rs.getObject("stock") + "</td>");
                                         out.println("<td>" + rs.getObject("costo") + "</td>");

@@ -61,7 +61,7 @@ public class Validart extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
 
-        HttpSession objSesion = request.getSession(false);
+        HttpSession objSesion = request.getSession(true);
 
         // definir una pagina de respuesta localhost:8080/Dmorales/Validar?nombrelog=&contrasenalog=' OR 1 =1--
         // Recibir los valores desde el formulario
@@ -75,7 +75,6 @@ public class Validart extends HttpServlet {
             //    System.out.println("nulos");
             response.sendRedirect("index.jsp");
         } else {
-
             arr = nombre.toCharArray();
             arr1 = contrasena.toCharArray();
 
@@ -93,7 +92,6 @@ public class Validart extends HttpServlet {
                     response.sendRedirect("index.jsp");
                 }
             }
-
         }
 
         String tipo = "";
@@ -153,6 +151,7 @@ public class Validart extends HttpServlet {
                 }
             }
         } catch (ClassNotFoundException | SQLException ex) {
+            System.out.println(ex);
             request.setAttribute("error", "Mensaje del servidor: " + ex.getMessage());
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
             rd.include(request, response);
@@ -160,6 +159,7 @@ public class Validart extends HttpServlet {
 //            request.setAttribute("error", ex);
 //            paginaRespuesta = "error.jsp";        
         } catch (Exception ex) {
+            System.out.println(ex);
             request.setAttribute("error", "Mensaje del servidor: " + ex.getMessage());
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
             rd.include(request, response);

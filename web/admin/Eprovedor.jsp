@@ -468,7 +468,11 @@
                                 Statement smt;
                                 ResultSet rs;
                                 c = uDB.getConexion();
-                                String sentenciaSQL = "SELECT * from proveedor order by nombre";
+                                String sentenciaSQL = "";
+                                if(tipos.equals("ADMIN")){
+                                        sentenciaSQL="SELECT p.ID_PROVEEDOR,p.nombre FROM proveedor p join tipo_proveedor t on p.ID_TIPO_PROV =t.ID_TIPO_PROV where p.activo='Y' and t.nombre='SIS' ORDER BY p.nombre";
+                                    }else if(tipos.equals("APLASTISOL")) sentenciaSQL="SELECT p.ID_PROVEEDOR,p.nombre FROM proveedor p join tipo_proveedor t on p.ID_TIPO_PROV =t.ID_TIPO_PROV where p.activo='Y' and t.nombre='PLA' ORDER BY p.nombre";
+                                    else sentenciaSQL="SELECT p.ID_PROVEEDOR,p.nombre FROM proveedor p join tipo_proveedor t on p.ID_TIPO_PROV =t.ID_TIPO_PROV where p.activo='Y' and t.nombre='GEN' ORDER BY p.nombre";
                                 smt = c.createStatement();
                                 rs = smt.executeQuery(sentenciaSQL);
                                 out.println("<option></option>");
