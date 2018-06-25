@@ -78,7 +78,7 @@ WHERE
             estado = true;
             ip1++;
         }
-        query = "select ip from usuario where ip="+ip;
+        query = "select ip from usuario where activo='Y' and ip="+ip;
         //System.out.println(query);
         smt = conexion.createStatement();
         rs = smt.executeQuery(query);
