@@ -168,6 +168,7 @@ if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("
                             }
                         %>
 
+                    <li><a onclick="mostrarVentana()">Cierre Inv. fin de mes</a></li>
                     <li><a href="../Cierresesion">Salir</a></li>
                 </ul>
             </nav>
@@ -343,28 +344,17 @@ if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("
                             </div>
 
 
-                            <div id="miVentana1" class="modal-scrollbar-measure" style="position: fixed; width: 50%; height: 80%; top: 0; left: 0; font-family:Verdana, Arial, Helvetica, sans-serif; font-size: 5px; font-weight: normal; background-color: white; color: white; display:none;">
+                            <div id="miVentana1" class="modal-scrollbar-measure" style="position: fixed; width: 50%; height: 32%; top: 0; left: 0; font-family:Verdana, Arial, Helvetica, sans-serif; font-size: 5px; font-weight: normal; background-color: white; color: white; display:none;">
                                 <div class="">      
                                     <div class="" style="background-color: #616185;padding-left: 2%;padding-right: 2%;border-radius: 10px;">
                                         <a onclick="ocultarVentana1()"><img src="../images/der.png"></a>        
-                                        <form action="../Modificarusu" onsubmit="" name="form10"  style="">
+                                        <form action="" onsubmit="mostrarVentana()" name="form10"  style="">
                                             <div class=" modal fade modal-content "></div>
-                                            <h5 class="h5" align="center">ID del Empleado</h5>
-                                            <input type="text" name="id" id="id" class="form-control input-sm chat-input" placeholder=""  disabled="disabled" required> <br>
-                                            <h5 class="h5" align="center">Nombre</h5>
-                                            <input type="text" name="n" id="n"  class="form-control input-sm chat-input" placeholder="" required> <br>
-                                            <h5 class="h5" align="center">Contraseña</h5>
-                                            <input type=text name=p id="p" class="form-control input-sm chat-input" placeholder="" required> <br>
-                                            <h5 class="h5" align="center">Calle</h5>
-                                            <input type=text name=calle id="calle" class="form-control input-sm chat-input" placeholder="" required> <br>
-                                            <h5 class="h5" align="center">Telefono</h5>
-                                            <input type=text name=t id="t" class="form-control input-sm chat-input" placeholder="" required> <br>
-                                            <h4 class="h4">  Tipo de usuario : <select name="tipos" style="color: gray" id="tipos">
-                                                    <option>PANADERO</option>
-                                                    <option>USUARIO</option>
-                                                    <option>ADMIN</option>
-                                                </select></h4>
-                                            <div align="center"><a class=" btn alert-success" name="benviar1" id="benviar1" onclick="agregarmodificacion()" value=""><img src="../images/modificar.png" class="img-responsive" width=30 height=30></a><br><br></div>
+                                            <h5 class="h5" align="center">Mes</h5>
+                                            <input type="text" name="mes" id="mes" class="form-control input-sm chat-input" placeholder=""  required> <br>
+                                            <h5 class="h5" align="center">Año</h5>
+                                            <input type="text" name="year" id="year"  class="form-control input-sm chat-input" placeholder="" required> <br>
+                                            <div align="center"><a class=" btn alert-success" name="benviar1" id="benviar1" onclick="finmes()" value=""><img src="../images/modificar.png" class="img-responsive" width=30 height=30></a><br><br></div>
 
                                         </form>
                                     </div>
@@ -382,6 +372,12 @@ if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("
 
                                 window.location.href = "../Bajausut?baji=" + id + "&uso=alta";
                                 }
+                                function finmes(){
+                                year=$('#year').val();    
+                                mes = $('#mes').val();
+                                window.location.href = "../Finmes?mes=" + mes + "&year="+year;
+                                }
+
 
                                 function modi(id){
                                 window.location.href = "Editarusu.jsp?modis=" + id;
@@ -404,11 +400,11 @@ if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("
                                 function mostrarVentana()
                                 {
 
-                                var ventana = document.getElementById("miVentana");
+                                var ventana = document.getElementById("miVentana1");
                                 ventana.style.marginTop = "200px";
                                 //ventana.style.left = ((document.body.clientWidth) / 2) +  "px";
                                 ventana.style.display = "block";
-                                ventana.style.left = 40 + "%";
+                                ventana.style.left = 25 + "%";
                                 document.form5.pos.focus();
                                 }
                                 function ocultarVentana()

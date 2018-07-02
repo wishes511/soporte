@@ -19,11 +19,14 @@ import Modelo.usuariot;
 import Modelo.venta;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -544,7 +547,55 @@ public class DBt {
         smt.close();
     }
 
-    public void agregargasto(String m, float monto, String fecha) throws ClassNotFoundException, SQLException {
+    public String findemes(int mes,int year,String tipo) throws ClassNotFoundException, SQLException{
+            PreparedStatement st = null;
+            
+            String mensaje="";
+        try{    
+            
+        String query="select ID_INV from inventario_mensual where mes="+mes+" and year="+year+" and tipo='"+tipo+"'";
+        boolean flag=false;
+        Statement smt;
+        ResultSet df;
+        abrir();
+        smt = getConexion().createStatement();
+        df = smt.executeQuery(query);
+        while (df.next()) {
+            flag=true;
+        }
+        df.close();
+        if(flag){
+            mensaje="Ya esta completo este Inventario !";
+        }else{
+        abrir();
+        getConexion().setAutoCommit(false);
+        query = "select ID_PRODUCTO,modelo,stock,costo from producto where tipo_producto='"+tipo+"' and status='Y'";
+        smt.getConnection().createStatement();
+        df=smt.executeQuery(query);
+        while(df.next()){
+        String query1 = "insert into inventario_mensual values(0,"+df.getInt("ID_PRODUCTO")+",'"+df.getString("modelo")+"',"
+                +df.getInt("stock")+","+df.getFloat("costo")+","+mes+","+year+",'"+tipo+"')"; 
+        smt = getConexion().createStatement();
+        smt.executeUpdate(query1);
+        //System.out.println(query1);
+        }
+        df.close();
+        getConexion().commit(); 
+        mensaje="Inventario completo";
+        }
+        } catch (Exception e) {
+            Logger.getLogger(DBt.class.getName()).log(Level.SEVERE, null, e);
+            try {
+                getConexion().rollback();
+            } catch (Exception o) {
+                System.out.println(o.getMessage());
+
+            }
+        }
+        return mensaje;
+    }    
+    
+   public void agregargasto(String m, float monto, String fecha) throws ClassNotFoundException, SQLException {
         Statement smt;
         abrir();
         int id = 0;
