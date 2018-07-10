@@ -99,70 +99,77 @@ public class Validart extends HttpServlet {
         usuariot u = null;
         // Consultar Base de datos
         DBt uDB = new DBt();
+        PrintWriter out = response.getWriter();
         try {
             u = uDB.buscar(nombre, contrasena);
             if (u == null) {
-
-                request.setAttribute("error", "usuario o contraseña incorrectos.");
-                RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
-                rd.include(request, response);
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('Usuario o contrasena incorrectos');");
+                out.println("location='index.jsp';");
+                out.println("</script>");
             } else {
                 tipo = u.getTipo();
 //                System.out.println(tipo);
-                if (tipo.equals("ADMIN")) {
-                    ArrayList<Object> lista = new ArrayList<>();
-                    ArrayList<Object> lista1 = new ArrayList<>();
-                    objSesion.setAttribute("usuario", nombre);
-                    objSesion.setAttribute("tipo", tipo);
-                    objSesion.setAttribute("i_d", u.getID_USUARIO());
-                    objSesion.setAttribute("carro", lista);
-                    objSesion.setAttribute("carrosalida", lista1);
-                    request.setAttribute("usuario1", u);
-                    response.sendRedirect("admin/home_admin.jsp");
-                } else if (tipo.equals("USUARIO")) {
-                    objSesion.setAttribute("usuario", nombre);
-                    objSesion.setAttribute("tipo", tipo);
-                    objSesion.setAttribute("i_d", u.getID_USUARIO());
-                    request.setAttribute("usuario1", u);
-                    response.sendRedirect("usuario/home_usuario.jsp");
+                switch (tipo) {
+                    case "ADMIN": {
+                        ArrayList<Object> lista = new ArrayList<>();
+                        ArrayList<Object> lista1 = new ArrayList<>();
+                        objSesion.setAttribute("usuario", nombre);
+                        objSesion.setAttribute("tipo", tipo);
+                        objSesion.setAttribute("i_d", u.getID_USUARIO());
+                        objSesion.setAttribute("carro", lista);
+                        objSesion.setAttribute("carrosalida", lista1);
+                        out.print("<script>location = \"admin/home_admin.jsp\"</script>");
+                        break;
+                    }
+                    case "USUARIO":
+                        objSesion.setAttribute("usuario", nombre);
+                        objSesion.setAttribute("tipo", tipo);
+                        objSesion.setAttribute("i_d", u.getID_USUARIO());
+                        response.sendRedirect("usuario/home_usuario.jsp");
+                        break;
+                    case "APLASTISOL": {
 
-                } else if (tipo.equals("APLASTISOL")) {
-                    PrintWriter out = response.getWriter();
-                    ArrayList<Object> lista = new ArrayList<>();
-                    ArrayList<Object> lista1 = new ArrayList<>();
-                    objSesion.setAttribute("usuario", nombre);
-                    objSesion.setAttribute("tipo", tipo);
-                    objSesion.setAttribute("i_d", u.getID_USUARIO());
-                    objSesion.setAttribute("carro", lista);
-                    objSesion.setAttribute("carrosalida", lista1);
-                    request.setAttribute("usuario1", u);
-                    out.print("<script>window.location.href = \"admin/home_admin.jsp\"</script>");
-                }else if (tipo.equals("AMECANICA")) {
-                    PrintWriter out = response.getWriter();
-                    ArrayList<Object> lista = new ArrayList<>();
-                    ArrayList<Object> lista1 = new ArrayList<>();
-                    objSesion.setAttribute("usuario", nombre);
-                    objSesion.setAttribute("tipo", tipo);
-                    objSesion.setAttribute("i_d", u.getID_USUARIO());
-                    objSesion.setAttribute("carro", lista);
-                    objSesion.setAttribute("carrosalida", lista1);
-                    request.setAttribute("usuario1", u);
-                    out.print("<script>window.location.href = \"admin/home_admin.jsp\"</script>");
+                        ArrayList<Object> lista = new ArrayList<>();
+                        ArrayList<Object> lista1 = new ArrayList<>();
+                        objSesion.setAttribute("usuario", nombre);
+                        objSesion.setAttribute("tipo", tipo);
+                        objSesion.setAttribute("i_d", u.getID_USUARIO());
+                        objSesion.setAttribute("carro", lista);
+                        objSesion.setAttribute("carrosalida", lista1);
+                        out.print("<script>window.location.href = \"admin/home_admin.jsp\"</script>");
+                        break;
+                    }
+                    case "AMECANICA": {
+                        ArrayList<Object> lista = new ArrayList<>();
+                        ArrayList<Object> lista1 = new ArrayList<>();
+                        objSesion.setAttribute("usuario", nombre);
+                        objSesion.setAttribute("tipo", tipo);
+                        objSesion.setAttribute("i_d", u.getID_USUARIO());
+                        objSesion.setAttribute("carro", lista);
+                        objSesion.setAttribute("carrosalida", lista1);
+                        out.print("<script>window.location.href = \"admin/home_admin.jsp\"</script>");
+                        break;
+                    }
+                    default:
+                        break;
                 }
             }
         } catch (ClassNotFoundException | SQLException ex) {
             System.out.println(ex);
-            request.setAttribute("error", "Mensaje del servidor: " + ex.getMessage());
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
-            rd.include(request, response);
+            out.println("<script type=\"text/javascript\">");
+            out.println("alert('"+ex+"');");
+            out.println("location='index.jsp';");
+            out.println("</script>");
 
 //            request.setAttribute("error", ex);
 //            paginaRespuesta = "error.jsp";        
         } catch (Exception ex) {
             System.out.println(ex);
-            request.setAttribute("error", "Mensaje del servidor: " + ex.getMessage());
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/index.jsp");
-            rd.include(request, response);
+            out.println("<script type=\"text/javascript\">");
+            out.println("alert('"+ex+"');");
+            out.println("location='index.jsp';");
+            out.println("</script>");
         }
     }
 

@@ -959,6 +959,7 @@ abrir();
             u.setTipo(rs.getString("TIPO"));
             u.setActivo("ACTIVO");
         }
+        System.out.println(u.getNombre());
         rs.close();
         return u;
 

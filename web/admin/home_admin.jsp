@@ -12,7 +12,7 @@
 <%@page import="Persistencia.DB"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="Controladorest.Nuevodep"%>
-<% HttpSession objSesion = request.getSession(false);
+<% HttpSession objSesion = request.getSession(true);
 //i_d
     boolean estado;
     String usuario = (String) objSesion.getAttribute("usuario");
@@ -21,6 +21,7 @@
     carrito = (ArrayList<Object>) objSesion.getAttribute("carro");
     //out.print(carrito.size());
     try {
+        System.out.println(usuario+"-"+tipos);
 if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("APLASTISOL") || tipos.equals("AMECANICA"))) {
         if (tipos.equals("APLASTISOL") || tipos.equals("AMECANICA")) {
             response.sendRedirect("productos_admint.jsp");
