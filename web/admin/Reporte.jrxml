@@ -45,7 +45,7 @@ order by nombre]]>
 			</staticText>
 			<image>
 				<reportElement x="0" y="0" width="150" height="30" uuid="6772e934-80d9-4c96-9d8e-f46c2739a058"/>
-				<imageExpression><![CDATA["C:\\Users\\gateway1\\Documents\\NetBeansProjects\\soporte\\web\\images\\AF.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["C:\\af\\soporte\\images\\AF.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="50" y="46" width="475" height="33" uuid="2d52ecff-f8d8-4e8f-9991-37a88d858f11"/>

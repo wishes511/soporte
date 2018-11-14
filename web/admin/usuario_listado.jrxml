@@ -54,7 +54,7 @@ departamento.Nombre]]>
 			</textField>
 			<image>
 				<reportElement x="0" y="0" width="116" height="25" uuid="ee4c8f0a-9ced-43b1-a6ca-f9b3592613e8"/>
-				<imageExpression><![CDATA["C:\\Users\\gateway1\\Documents\\NetBeansProjects\\soportes\\web\\images\\AF.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["C:\\af\\soporte\\images\\AF.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</title>

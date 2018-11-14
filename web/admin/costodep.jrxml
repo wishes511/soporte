@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e9f1758f-e691-4a77-b71d-96d6bae7ce18">
 	<property name="ireport.zoom" value="1.3310000000000004"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="128"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="f1" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -34,7 +34,7 @@
 		<band height="88" splitType="Stretch">
 			<image>
 				<reportElement x="0" y="0" width="150" height="30" uuid="72be5690-ff50-47bc-aaae-919d1176f930"/>
-				<imageExpression><![CDATA["C:\\Users\\gateway1\\Documents\\NetBeansProjects\\soporte\\web\\images\\AF.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["C:\\af\\soporte\\images\\AF.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="355" y="0" width="100" height="20" uuid="ab001ff4-9e3f-4029-aa5e-721a0360f240"/>
@@ -128,7 +128,7 @@
 					<subreportParameterExpression><![CDATA[$P{f2}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["C:\\Users\\gateway1\\Documents\\NetBeansProjects\\soporte\\web\\admin\\subreportc.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:\\af\\soporte\\rep\\subreportc.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</summary>
