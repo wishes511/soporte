@@ -1,15 +1,15 @@
 <%-- 
-    Document   : Log
-    Created on : 19-ago-2016, 12:51:49
     Author     : mich
+    Querido ayudante: Recuerda que este proyecto es personal y de forma autonoma
+    Si quieres ayudar a remover los bugs y mejorar la implementacion del mismo,
+    te invito que uses Git y actualices el contador con el total de horas invertidas.
+    26 hrs
 --%>
 <%
     HttpSession objSesion = request.getSession(false);
     String usuario = (String) objSesion.getAttribute("usuario");
     String tipos = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
-
-    // out.println("" + tipos+"/"+ids);
     int idprodu = 0;
     int idprodu1 = 0;
     String tipo = "";
@@ -29,8 +29,6 @@
         <link rel="stylesheet" type="text/css" href="css/opcional.css">
         <script type="text/javascript">
             function valida_envia() {
-                
-
                 valor = document.form.contrasenalog.value;
                 if (!(/^([A-Z\a-z]+)$/i.test(valor))) {
                     alert("Contraseña invalida! ");
@@ -41,14 +39,12 @@
         </script>
     </head>
     <body class="" style="background-image: linear-gradient(rgb(255, 255, 255), rgb(153, 153, 255)); background-repeat: no-repeat">
-        <div align="middle"><img src="images/AF.png" class="img-responsive"/></div>
+        <div align="middle"><img src="images/AF.png" style="max-width: 150px" class="img-responsive"/></div>
         <br>
-
         <div align="center">
             <%
                 if (usuario != null && tipos != null && (tipos.equals("ADMIN")||tipos.equals("AATH"))) {
                     out.println("<div class=container-fluid align=left> ");
-
                     out.println("<div class=row>");
                     out.println("<form action=admin/home_admin.jsp> ");
                     out.println("<label>Conectado como:</label>");
@@ -56,26 +52,20 @@
                     out.println("</form>");
                     out.println("</div>");
                     out.println("</div>");
-
                 } else {
-
                 }
             %>
             <div class="container-fluid" align="center">
                 <div class="container" style="padding-bottom: 50px">
                     <div class="row" >
                         <div class="col-lg-offset-4 col-lg-4" >
-                            <div style="padding-top: 20%">
-
-
+                            <div style="padding-top: 40%">
                                 <div class="form-login" >
-
-                                    <h3 class="h3" >Login</h3>
-
+                                    <h3 class="h3" >Acceso</h3>
                                     <form name="logiing" action="Validart" method="POST" class="form-login ">
-                                        <input  type="text" id="nombrelog" class="form-control input-sm chat-input" name="nombrelog" placeholder="username" onsubmit="valida_envia()" required/>
+                                        <input  type="text" id="nombrelog" class="form-control input-sm chat-input" name="nombrelog" placeholder="Usuario" onsubmit="valida_envia()" required/>
                                         <br>
-                                        <input type="password" id="contrasenalog" class="form-control input-sm chat-input" name="contrasenalog" placeholder="password" onsubmit="valida_envia()" required/>
+                                        <input type="password" id="contrasenalog" class="form-control input-sm chat-input" name="contrasenalog" placeholder="Contraseña" onsubmit="valida_envia()" required/>
                                         <br>
                                         <div class="wrapper">
                                             <span class="group-btn">     
@@ -91,7 +81,7 @@
                         </div>
                     </div>    
                 </div>   
-                <div class="row">
+                <div class="row" style="padding-top:30%">
                     <div style="background-color:#F0F0F0;" >
                         <ul class="nav navbar-nav" style="background-color:#F0F0F0;" >
                             <li class="active"><a href="cotizacion.htm">Cotizacion Etiq</a></li>
