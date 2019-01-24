@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="ec9ec4ce-2532-42d1-ae1a-2b9f52f0c012">
+	<property name="ireport.zoom" value="2.5937424601000028"/>
+	<property name="ireport.x" value="19"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="f1" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="f2" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\GATEWAY1-\\Documents\\NetBeansProjects\\soportes\\web\\admin\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="mes" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select p.nombre,p.modelo
+from factura f 
+join detalle_fact df on df.ID_FACTURA=f.ID_FACTURA
+join producto p on df.id_producto=p.id_producto
+where month(fecha)=$P{mes} and fecha BETWEEN $P{f1} and $P{f2}
+group by p.modelo,p.nombre
+order by p.modelo;]]>
+	</queryString>
+	<field name="nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="modelo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="cant" class="java.math.BigDecimal" resetType="Column"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField>
+				<reportElement x="36" y="0" width="37" height="8" uuid="32f6cf1f-b4c7-4fff-917c-4098e72e2199"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="73" y="0" width="100" height="8" uuid="7f4d1a74-8d9e-4ec6-8904-1945ff0bc93a"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{modelo}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="51" y="8" width="504" height="8" uuid="27a92ed6-13b8-49be-b232-2f51966da2d1"/>
+				<subreportParameter name="f1">
+					<subreportParameterExpression><![CDATA[$P{f1}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="f2">
+					<subreportParameterExpression><![CDATA[$P{f2}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="modelo">
+					<subreportParameterExpression><![CDATA[$F{modelo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="mes">
+					<subreportParameterExpression><![CDATA[$P{mes}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<returnValue subreportVariable="cant" toVariable="cant" calculation="Sum"/>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "body_proddep.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="8">
+			<textField>
+				<reportElement x="110" y="0" width="44" height="8" uuid="d3eca821-c666-4b16-a53a-5bf09054cb6a"/>
+				<textElement textAlignment="Right">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{cant}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="51" y="0" width="103" height="1" uuid="cd16b974-e14f-43df-ab80-d615d5cda991"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>

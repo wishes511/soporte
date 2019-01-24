@@ -25,7 +25,7 @@ try{
     String usuario = (String) objSesion.getAttribute("usuario");
     String tipos = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
-    if (usuario != null && tipos != null && (tipos.equals("ADMIN")) || tipos.equals("APLASTISOL") || tipos.equals("AMECANICA")) {
+    if (usuario != null && tipos != null && (tipos.equals("ADMIN")) || tipos.equals("APLASTISOL") || tipos.equals("AMECANICA")|| tipos.equals("AATH")) {
        
     } else {
         response.sendRedirect("../index.jsp");
@@ -124,14 +124,6 @@ try{
                 } else
                     return true;
             }
-            function validacion() {
-                if (valida_nom() == true && valida_calle() == true) {
-
-                    return true;
-                } else
-                    response.sendRedirect("../index.jsp");
-                return false;
-            }
 
         </script>
     </head>
@@ -160,7 +152,7 @@ try{
                     %>
                     <li class=""><a href="productos_admint.jsp">Productos</a></li>
                     <%
-                    if(tipos.equals("ADMIN") || tipos.equals("AMECANICA")){
+                    if(tipos.equals("ADMIN") || tipos.equals("AMECANICA") || tipos.equals("AATH")){
                     %>
                     <li class="dropdown">
                         <a  class="dropdown-toggle" data-toggle="dropdown" href="#80">
@@ -196,12 +188,9 @@ try{
                                 out.println("<a href=tareas.jsp>Tareas</a></li>");
                             }
                             }
-                            
-
                         %>
                     <li><a href="../Cierresesion">Salir</a></li>
                 </ul>
-
             </nav>
             <hr> <br>
             <div class="row" >
@@ -225,7 +214,9 @@ try{
                                     if(tipos.equals("ADMIN")){
                                         sentenciaSQL="SELECT * FROM producto where stock != 0 and status='Y' and (tipo_producto='SISTEMAS' or tipo_producto='ETIQUETAS') ORDER BY nombre";
                                     }else if(tipos.equals("APLASTISOL")){ sentenciaSQL="SELECT * FROM producto where stock != 0 and status='Y' and tipo_producto='PLASTISOL'  ORDER BY nombre";
-                                    }else sentenciaSQL="SELECT * FROM producto where stock != 0 and status='Y' and tipo_producto='MECANICA'  ORDER BY nombre";
+                                    } else if  (tipos.equals("AMECANICA")){
+                                        sentenciaSQL = "SELECT * FROM producto where tipo_producto='MECANICA' ORDER BY nombre";
+                                    }else sentenciaSQL = "SELECT * FROM producto where tipo_producto='ATH' and stock != 0 and status='Y' ORDER BY nombre";
                                 //System.out.println(sentenciaSQL);
                                 smt = c.createStatement();
                                 rs = smt.executeQuery(sentenciaSQL);
@@ -425,7 +416,7 @@ try{
                                 ResultSet rs;
                                 c = uDB.getConexion();
                                 String sentenciaSQL = "";
-                                if(tipos.equals("ADMIN")){
+                                if(tipos.equals("ADMIN")||tipos.equals("AATH")){
                                 sentenciaSQL="SELECT * from usuario where activo = 'Y' order by usuario";
                                 }else if(tipos.equals("APLASTISOL")){ sentenciaSQL ="SELECT u.usuario as 'usuario' from usuario u join departamento d on d.ID_DEP = u.ID_DEP"
                                         + "  where u.activo = 'Y' and d.nombre ='ALMACEN GENERAL'  order by usuario ";

@@ -24,7 +24,7 @@
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
     ArrayList<Object> lista;
     lista = (ArrayList<Object>) objSesion.getAttribute("carro");
-    if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("AMECANICA"))) {
+    if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("AMECANICA")|| tipos.equals("AATH"))) {
 
     } else {
         response.sendRedirect("../index.jsp");
@@ -154,14 +154,14 @@
                     %>
                     <li class=""><a href="productos_admint.jsp">Productos</a></li>
                     <%
-                    if(tipos.equals("ADMIN") || tipos.equals("AMECANICA")){
+                    if(tipos.equals("ADMIN") || tipos.equals("AMECANICA")|| tipos.equals("AATH")){
                     %>
                     <li class="dropdown active">
                         <a  class="dropdown-toggle" data-toggle="dropdown" href="#80">
                             Proveedores<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" id="#90" role="menu">
-                            <li class="active"><a href="Eprovedor.jsp">Entrada Proveedor</a></li>
+                            <li class="active"><a href="">Entrada Proveedor</a></li>
                         </ul>
                     </li>
                     <%
@@ -217,9 +217,10 @@
                                 c = uDB.getConexion();
                                 String sentenciaSQL = "";
                                     if(tipos.equals("ADMIN")){
-                                        sentenciaSQL="SELECT * FROM producto where stock != 0 and status='Y' and (tipo_producto='SISTEMAS' or tipo_producto='ETIQUETAS') ORDER BY nombre";
+                                        sentenciaSQL="SELECT * FROM producto where stock >= 0 and status='Y' and (tipo_producto='SISTEMAS' or tipo_producto='ETIQUETAS') ORDER BY nombre";
                                     }else if(tipos.equals("APLASTISOL")) sentenciaSQL="SELECT * FROM producto where stock != 0 and status='Y' and tipo_producto='PLASTISOL'  ORDER BY nombre";
-                                    else sentenciaSQL="SELECT * FROM producto where stock != 0 and status='Y' and tipo_producto='MECANICA'  ORDER BY nombre";
+                                    else if(tipos.equals("AMECANICA")) sentenciaSQL="SELECT * FROM producto where stock != 0 and status='Y' and tipo_producto='MECANICA'  ORDER BY nombre";
+                                    else sentenciaSQL="SELECT * FROM producto where stock >= 0 and status='Y' and tipo_producto='ATH'  ORDER BY nombre";
                                     smt = c.createStatement();
                                 rs = smt.executeQuery(sentenciaSQL);
                                 while (rs.next()) {
@@ -469,10 +470,11 @@
                                 ResultSet rs;
                                 c = uDB.getConexion();
                                 String sentenciaSQL = "";
-                                if(tipos.equals("ADMIN")){
+                                if(tipos.equals("ADMIN") || tipos.equals("AATH")){
                                         sentenciaSQL="SELECT p.ID_PROVEEDOR,p.nombre FROM proveedor p join tipo_proveedor t on p.ID_TIPO_PROV =t.ID_TIPO_PROV where p.activo='Y' and t.nombre='SIS' ORDER BY p.nombre";
                                     }else if(tipos.equals("APLASTISOL")) sentenciaSQL="SELECT p.ID_PROVEEDOR,p.nombre FROM proveedor p join tipo_proveedor t on p.ID_TIPO_PROV =t.ID_TIPO_PROV where p.activo='Y' and t.nombre='PLA' ORDER BY p.nombre";
-                                    else sentenciaSQL="SELECT p.ID_PROVEEDOR,p.nombre FROM proveedor p join tipo_proveedor t on p.ID_TIPO_PROV =t.ID_TIPO_PROV where p.activo='Y' and t.nombre='GEN' ORDER BY p.nombre";
+                                    else if(tipos.equals("AMECANICA")) sentenciaSQL="SELECT p.ID_PROVEEDOR,p.nombre FROM proveedor p join tipo_proveedor t on p.ID_TIPO_PROV =t.ID_TIPO_PROV where p.activo='Y' and t.nombre='GEN' ORDER BY p.nombre";
+                                    
                                 smt = c.createStatement();
                                 rs = smt.executeQuery(sentenciaSQL);
                                 out.println("<option></option>");

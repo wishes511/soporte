@@ -140,6 +140,17 @@ public class Validart extends HttpServlet {
                         out.print("<script>window.location.href = \"admin/home_admin.jsp\"</script>");
                         break;
                     }
+                    case "AATH": {
+                        ArrayList<Object> lista = new ArrayList<>();
+                        ArrayList<Object> lista1 = new ArrayList<>();
+                        objSesion.setAttribute("usuario", nombre);
+                        objSesion.setAttribute("tipo", tipo);
+                        objSesion.setAttribute("i_d", u.getID_USUARIO());
+                        objSesion.setAttribute("carro", lista);
+                        objSesion.setAttribute("carrosalida", lista1);
+                        out.print("<script>window.location.href = \"admin/home_admin.jsp\"</script>");
+                        break;
+                    }
                     case "AMECANICA": {
                         ArrayList<Object> lista = new ArrayList<>();
                         ArrayList<Object> lista1 = new ArrayList<>();

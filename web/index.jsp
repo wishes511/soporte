@@ -46,7 +46,7 @@
 
         <div align="center">
             <%
-                if (usuario != null && tipos != null && tipos.equals("ADMIN")) {
+                if (usuario != null && tipos != null && (tipos.equals("ADMIN")||tipos.equals("AATH"))) {
                     out.println("<div class=container-fluid align=left> ");
 
                     out.println("<div class=row>");

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="555" pageHeight="802" columnWidth="535" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="4e392dc6-90ae-40ca-9519-84e5c493184a">
+	<property name="ireport.zoom" value="1.4641000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="f1" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="f2" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="modelo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="mes" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select d.nombre,sum(df.cantidad)
+from factura f 
+join detalle_fact df on df.ID_FACTURA=f.ID_FACTURA
+join producto p on df.id_producto=p.id_producto
+join usuario u on f.id_usuarioc =u.id_usuario
+join departamento d on u.id_dep=d.id_dep
+where month(fecha)=$P{mes} and p.modelo=$P{modelo} and fecha BETWEEN $P{f1} and $P{f2}
+group by d.nombre
+order by d.nombre;]]>
+	</queryString>
+	<field name="nombre" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="sum(df.cantidad)" class="java.math.BigDecimal"/>
+	<variable name="cant" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{sum(df.cantidad)}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="10" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="9" uuid="8a9d6c01-6146-41aa-9c2a-d2e3406243e0"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="100" height="9" uuid="f83a7fd5-988c-4078-97a8-dbcdd386c1bd"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sum(df.cantidad)}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

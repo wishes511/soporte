@@ -21,16 +21,16 @@
     carrito = (ArrayList<Object>) objSesion.getAttribute("carro");
     //out.print(carrito.size());
     try {
-        System.out.println(usuario+"-"+tipos);
-if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("APLASTISOL") || tipos.equals("AMECANICA"))) {
-        if (tipos.equals("APLASTISOL") || tipos.equals("AMECANICA")) {
-            response.sendRedirect("productos_admint.jsp");
+        System.out.println(usuario + "-" + tipos);
+        if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("APLASTISOL") || tipos.equals("AMECANICA") || tipos.equals("AATH"))) {
+            if (tipos.equals("APLASTISOL") || tipos.equals("AMECANICA") || tipos.equals("AATH")) {
+                response.sendRedirect("productos_admint.jsp");
+            }
+        } else {
+
+            response.sendRedirect("../index.jsp");
         }
-    } else {
-    
-        response.sendRedirect("../index.jsp");
-    }
-    
+
         DBt bd = new DBt();
         estado = bd.alerta();
 %>
@@ -116,7 +116,7 @@ if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("
 
                 <ul class="nav navbar-nav">
                     <%
-                    if(tipos.equals("ADMIN")){
+                        if (tipos.equals("ADMIN")) {
                     %>
                     <li class="dropdown active">
                         <a  class="dropdown-toggle" data-toggle="dropdown" href="#80">
@@ -129,9 +129,9 @@ if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("
                         </ul>
                     </li>
                     <%
-                    }
+                        }
                     %>
-                    
+
 
                     <li ><a href="productos_admint.jsp">Productos</a></li>
 
@@ -191,6 +191,7 @@ if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("
                                     <option>USUARIO</option>
                                     <option>APLASTISOL</option>
                                     <option>AMECANICA</option>
+                                    <option>AATH</option>
                                     <option>ADMIN</option>
                                 </select><br><br>
                                 <label>Departamento : </label> <select name="tips" id="tips">
@@ -374,9 +375,9 @@ if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("
                                 window.location.href = "../Bajausut?baji=" + id + "&uso=alta";
                                 }
                                 function finmes(){
-                                year=$('#year').val();    
+                                year = $('#year').val();
                                 mes = $('#mes').val();
-                                window.location.href = "../Finmes?mes=" + mes + "&year="+year;
+                                window.location.href = "../Finmes?mes=" + mes + "&year=" + year;
                                 }
 
 
@@ -462,5 +463,8 @@ if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("
                             <%
                                 } catch (Exception e) {
                                     System.out.println(e);
+                                    out.println("<script type=\"text/javascript\">");
+                                    out.println("location='../index.jsp';");
+                                    out.println("</script>");
                                 }
                             %>

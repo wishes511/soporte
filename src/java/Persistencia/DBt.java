@@ -907,7 +907,7 @@ public class DBt {
         abrir();
         int id = 0;
         String sentenciaSQL = "insert into producto values(" + id + ",'" + p.getNombre() + "','" + p.getModelo() + "','" + p.getMarca() + "'," + p.getStock() + "," + p.getCosto() + ",'" + p.getStatus() + "','" + p.getDescripcion() + "','" + p.getUrl() + "','" + p.getTipo() + "')";
-        System.out.println(sentenciaSQL);
+//        System.out.println(sentenciaSQL);
         smt = conexion.createStatement();
         smt.executeUpdate(sentenciaSQL);
         smt.close();
@@ -946,9 +946,10 @@ public class DBt {
         Statement smt;
         ResultSet rs;
         usuariot u = null;
-abrir();
+        abrir();
         String sentenciaSQL = "SELECT * FROM usuario WHERE usuario=" + "'" + nombre + "'"
                 + " AND contrasena = " + "'" + contrasena + "'";
+        System.out.println(sentenciaSQL);
         smt = conexion.createStatement();
         rs = smt.executeQuery(sentenciaSQL);
         while (rs.next()) {
@@ -959,7 +960,6 @@ abrir();
             u.setTipo(rs.getString("TIPO"));
             u.setActivo("ACTIVO");
         }
-        System.out.println(u.getNombre());
         rs.close();
         return u;
 

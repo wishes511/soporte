@@ -19,7 +19,7 @@
     String tipos = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
 try{
-    if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("APLASTISOL") || tipos.equals("AMECANICA"))) {
+    if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("APLASTISOL") || tipos.equals("AMECANICA")|| tipos.equals("AATH"))) {
 
     } else {
         response.sendRedirect("../index.jsp");
@@ -94,7 +94,7 @@ try{
                     %>
                     <li class=""><a href="productos_admint.jsp">Productos</a></li>
                     <%
-                    if(tipos.equals("ADMIN") || tipos.equals("AMECANICA")){
+                    if(tipos.equals("ADMIN") || tipos.equals("AMECANICA")|| tipos.equals("AATH")){
                     %>
                     <li class="dropdown">
                         <a  class="dropdown-toggle" data-toggle="dropdown" href="#80">
@@ -115,7 +115,7 @@ try{
                         <ul class="dropdown-menu" id="#80" role="menu">
                             <li><a href="Ver_ventast.jsp">Ver ventas</a></li>
                             <li active><a href="Ver_entradast.jsp">Ver Entradas</a></li>
-                            <%if(tipos.equals("ADMIN")){%>
+                            <%if(tipos.equals("ADMIN")|| tipos.equals("AATH") ){%>
                             <li><a href="reporte.jsp">reporte productos</a></li>
                             <%}%>
                             
@@ -149,7 +149,7 @@ try{
 
                         <form >
                             <div class="col-md-2" >
-                                fecha de inicio<input class="form-control input-sm chat-input" type="text" name="f1" id="f1" value="<%=fechaca%>"  />
+                                fecha de inicio<input class="form-control input-sm chat-input" type="text" name="f1" id="f1" value="<%=fechac%>"  />
                             </div>
                             <div class="col-md-3">
                                 <br>
@@ -213,7 +213,6 @@ try{
             }
 
             function buscaprod() {
-
                 var pro = $('#f1').val();
                 var pro1 = $('#f2').val();
                 var prod = $('#buscaprodd').val();
@@ -237,7 +236,6 @@ try{
                 //ventana.style.left = ((document.body.clientWidth) / 2) +  "px";
                 ventana.style.display = "block";
                 ventana.style.left = 10 + "%";
-
                 var pro = id;
                 var pro1 = "";
                 var uso = "detallep";
@@ -259,7 +257,6 @@ try{
                 var f1 = $('#f1').val();
                 var f2 = $('#f2').val();
                 window.location.href = "depcosto.jsp?f1=" + f1 + "&f2=" + f2;
-
             }
 
         </script>
@@ -289,6 +286,8 @@ try{
 </html>
 <%
 }catch(Exception e){
-        response.sendRedirect("../index.jsp");
+        out.println("<script type=\"text/javascript\">");
+        out.println("location='../index.jsp';");
+        out.println("</script>");
     }
 %>

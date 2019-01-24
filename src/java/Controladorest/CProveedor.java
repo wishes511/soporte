@@ -53,7 +53,7 @@ productot p = new productot();
             cant = request.getParameter("cant");
             uso = request.getParameter("uso");
   //acccion del carrito
-  System.out.print(uso);
+  //System.out.print(uso);
           if(uso.equals("NUEVO")){
             p=bd.buscarproducto(Integer.parseInt(id));
                 ArrayList<Object> lista;

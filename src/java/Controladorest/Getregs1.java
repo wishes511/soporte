@@ -40,7 +40,7 @@ public class Getregs1 extends HttpServlet {
     String usuario = (String) objSesion.getAttribute("usuario");
     String tiposs = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
-    if (usuario != null && tiposs != null && (tiposs.equals("ADMIN")) || tiposs.equals("APLASTISOL") || tiposs.equals("AMECANICA")) {
+    if (usuario != null && tiposs != null && (tiposs.equals("ADMIN")) || tiposs.equals("APLASTISOL") || tiposs.equals("AMECANICA")|| tiposs.equals("AATH")) {
        
     } else {
         response.sendRedirect("../index.jsp");

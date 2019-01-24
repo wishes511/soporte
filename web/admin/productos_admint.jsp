@@ -15,15 +15,13 @@
     String usuario = (String) objSesion.getAttribute("usuario");
     String tipos = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
-try {
-
-    if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("APLASTISOL")) || tipos.equals("AMECANICA")) {
-
-    } else {
-        response.sendRedirect("../index.jsp");
-    }
-    DBt bd = new DBt();
-    estado = bd.alerta();
+    try {
+        if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("APLASTISOL")) || tipos.equals("AMECANICA") || tipos.equals("AATH")) {
+        } else {
+            response.sendRedirect("../index.jsp");
+        }
+        DBt bd = new DBt();
+        estado = bd.alerta();
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
@@ -42,7 +40,7 @@ try {
         <script type="text/javascript" src="../js/bootstrap.min.js"></script>
         <script>
             // /^[a-zAZ0-9_\.\-]+@[a-zA-Z0-9\-]+
-            $(document).ready(function(){
+            $(document).ready(function () {
                 document.getElementById('catalogo').focus();
             });
             $(document).ready(function () {
@@ -53,7 +51,7 @@ try {
                     var cprodu = $("#cprodu").val();
                     var desc = $("#desc").val();
                     var stock = $("#stock").val();
-                   
+
                     if (!(/^([0-9]+)\.([0-9\s]*)|([0-9]+)$/.test(cmenu))) {
                         document.form2.cmenu.focus();
                         alert("Coloca solo numeros");
@@ -88,7 +86,7 @@ try {
                 var cmayo = $("#cmay").val();
                 var cprodu = $("#cprod").val();
                 var stock = $("#stockk").val();
-               
+
                 if (!(/^([0-9]+)\.([0-9\s]*)|([0-9]+)$/.test(cmenu))) {
                     document.form1.cmin.focus();
                     alert("Coloca solo numeros");
@@ -120,25 +118,25 @@ try {
                 </div>
                 <ul class="nav navbar-nav">
                     <%
-                    if(tipos.equals("ADMIN")){
+                        if (tipos.equals("ADMIN")) {
                     %>
                     <li class="dropdown">
                         <a  class="dropdown-toggle" data-toggle="dropdown" href="#80">
                             Usuarios<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" id="#90" role="menu">
-                            <li class=""><a href="">Usuarios</a></li>
+                            <li class="home_admin.jsp"><a href="">Usuarios</a></li>
                             <li><a href="virtuales.jsp">Vista de direcciones IP</a></li>
                             <li><a href="reporteusuarios.jsp">Reporte de usuarios</a></li>
                         </ul>
                     </li>
                     <%
-                    }
+                        }
                     %>
                     <li class="active"><a href="">Productos</a></li>
-                    <%
-                    if(tipos.equals("ADMIN") || tipos.equals("AMECANICA")){
-                    %>
+                        <%
+                            if (tipos.equals("ADMIN") || tipos.equals("AMECANICA") || tipos.equals("AATH")) {
+                        %>
                     <li class="dropdown">
                         <a  class="dropdown-toggle" data-toggle="dropdown" href="#80">
                             Proveedores<span class="caret"></span>
@@ -148,7 +146,7 @@ try {
                         </ul>
                     </li>
                     <%
-                    }
+                        }
                     %>
                     <li><a href="Utilidades_Donacionest.jsp">Nueva Compra Interna</a></li>
                     <li class="dropdown">
@@ -163,15 +161,13 @@ try {
                     </li>
                     <li class="">
                         <%
-                            if(tipos.equals("ADMIN")){
-                            if (estado) {
-                                out.println("<a href=tareas.jsp STYLE=background-color:rgb(255,89,89);color:white >Tareas</a></li>");
-                            } else {
-                                out.println("<a href=tareas.jsp>Tareas</a></li>");
+                            if (tipos.equals("ADMIN")) {
+                                if (estado) {
+                                    out.println("<a href=tareas.jsp STYLE=background-color:rgb(255,89,89);color:white >Tareas</a></li>");
+                                } else {
+                                    out.println("<a href=tareas.jsp>Tareas</a></li>");
+                                }
                             }
-                            }
-                            
-
                         %>
                     <li><a href="../Cierresesion">Salir</a></li>
                 </ul>
@@ -187,18 +183,21 @@ try {
                         Stock<input class="form-control input-sm chat-input" type="text" name="stock" id="stock" value=""  required/><br>   
                         Descripcion<textarea class="form-control input-sm chat-input" type="text" name="descripcion" id="descripcion" value="" required rows="7" maxlength="500" draggable=""/></textarea><br>
                         Tipo producto: <select name="tipos" >
-                        <%
-                    if(tipos.equals("ADMIN")){
-                    %>    
+                            <% if (tipos.equals("ADMIN")) {
+                            %>    
                             <option>ETIQUETAS</option>
                             <option>SISTEMAS</option>
-                    <%
-                    }else if(tipos.equals("APLASTISOL")){
-                    %>    
+                            <%
+                            } else if (tipos.equals("APLASTISOL")) {
+                            %>    
                             <option>PLASTISOL</option>
-                    <%
-                        }else out.print("<option>MECANICA</option>");
-                    %>        
+                            <%
+                                } else if (tipos.equals("AMECANICA")) {
+                                    out.print("<option>MECANICA</option>");
+                                } else {
+                                    out.print("<option>ATH</option>");
+                                }
+                            %>        
                         </select><br><br>
                         Archivo: <input type="file" name="imagen" /><br><br>
                         <input type="submit" class="btn btn-success" value="Aceptar" name="benviar" id="benviar" />
@@ -209,10 +208,10 @@ try {
                 <div class="col-sm-8">
                     <h3 class="h3" align="center">Vista general de productos</h3>
                     <div class="row espas-search-prods">
-                    <div class="col-sm-4">
-                        <input type="text" id="catalogo" placeholder="Busqueda de productos" class="form-control" onkeypress="to_searchprod()"> 
-                    </div>                    
-                </div>
+                        <div class="col-sm-4">
+                            <input type="text" id="catalogo" placeholder="Busqueda de productos" class="form-control" onkeypress="to_searchprod()"> 
+                        </div>                    
+                    </div>
                     <div class="col-sm-offset-1z esp1"  style="overflow: auto" >
                         <table class="table table-responsive mapa" id="tabla-prods">
                             <tr>
@@ -222,7 +221,7 @@ try {
                                 <td>costo</td>
                                 <td>descripcion</td>
                                 <td>Vista</td>
-                               <!--<td>Borrar</td>--> 
+                                <!--<td>Borrar</td>--> 
                                 <td>Modificar</td>
                             </tr>
                             <%       try {
@@ -232,20 +231,22 @@ try {
                                     Statement smt;
                                     ResultSet rs;
                                     c = uDB.getConexion();
-                                    
+
                                     String sentenciaSQL = "";
-                                    if(tipos.equals("ADMIN")){
-                                        sentenciaSQL="SELECT * FROM producto where tipo_producto='SISTEMAS' or tipo_producto='ETIQUETAS' ORDER BY nombre";
-                                    }else if(tipos.equals("APLASTISOL")){
-                                        sentenciaSQL="SELECT * FROM producto where tipo_producto='PLASTISOL' ORDER BY nombre";
-                                    }else sentenciaSQL="SELECT * FROM producto where tipo_producto='MECANICA' ORDER BY nombre";
+                                    if (tipos.equals("ADMIN")) {
+                                        sentenciaSQL = "SELECT * FROM producto where tipo_producto='SISTEMAS' or tipo_producto='ETIQUETAS' ORDER BY nombre";
+                                    } else if (tipos.equals("APLASTISOL")) {
+                                        sentenciaSQL = "SELECT * FROM producto where tipo_producto='PLASTISOL' ORDER BY nombre";
+                                    } else if  (tipos.equals("AMECANICA")){
+                                        sentenciaSQL = "SELECT * FROM producto where tipo_producto='MECANICA' ORDER BY nombre";
+                                    }else sentenciaSQL = "SELECT * FROM producto where tipo_producto='ATH' ORDER BY nombre";
                                     smt = c.createStatement();
                                     rs = smt.executeQuery(sentenciaSQL);
                                     while (rs.next()) {
                                         int lol = Integer.parseInt(rs.getObject("ID_PRODUCTO").toString());
                                         out.println("<tr>");
                                         // out.println("<td>"+rs.getObject("nombre")+"</td>");
-                                        out.println("<td>"+rs.getObject("nombre") +" - "+ rs.getObject("modelo") + "</td>");
+                                        out.println("<td>" + rs.getObject("nombre") + " - " + rs.getObject("modelo") + "</td>");
                                         out.println("<td>" + rs.getObject("marca") + "</td>");
                                         out.println("<td>" + rs.getObject("stock") + "</td>");
                                         out.println("<td>" + rs.getObject("costo") + "</td>");
@@ -254,7 +255,7 @@ try {
                             %>
                             <form action="../Borrarproductot"> 
                                 <%
-                                //    out.println("<td><a name=borrar  value=" + rs.getObject("id_producto") + " onclick=eliminar(" + rs.getObject("id_producto") + ") class=btn><img src=../images/delete.png  width=30 height=30></a></td>");
+                                    //    out.println("<td><a name=borrar  value=" + rs.getObject("id_producto") + " onclick=eliminar(" + rs.getObject("id_producto") + ") class=btn><img src=../images/delete.png  width=30 height=30></a></td>");
 
                                 %>   
                             </form>
@@ -274,17 +275,17 @@ try {
             </div>
             <script>
                 function to_searchprod() {
-                var catalogo = $('#catalogo').val();
-                var uso = "catalago_general";
-                $.ajax({
-                    type: 'post',
-                    data: {p: catalogo, uso: uso},
-                    url: '../Getregs',
-                    success: function (result) {
-                        $('#tabla-prods').html(result);
-                    }
-                });
-            }
+                    var catalogo = $('#catalogo').val();
+                    var uso = "catalago_general";
+                    $.ajax({
+                        type: 'post',
+                        data: {p: catalogo, uso: uso},
+                        url: '../Getregs',
+                        success: function (result) {
+                            $('#tabla-prods').html(result);
+                        }
+                    });
+                }
                 function mostrarVentana1(id, n, cmay, cmin, st, cprod)
                 {
                     document.getElementById("cprod").value = cprod;
@@ -367,8 +368,10 @@ try {
     </body>
 </html>
 <%
-}catch(Exception e){
-    System.out.println(e);
-response.sendRedirect("../index.jsp");
-}
+    } catch (Exception e) {
+        System.out.println(e);
+        out.println("<script type=\"text/javascript\">");
+        out.println("location='../index.jsp';");
+        out.println("</script>");
+    }
 %>

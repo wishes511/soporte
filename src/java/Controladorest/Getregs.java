@@ -40,7 +40,7 @@ public class Getregs extends HttpServlet {
     String usuario = (String) objSesion.getAttribute("usuario");
     String tiposs = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
-    if (usuario != null && tiposs != null && (tiposs.equals("ADMIN") || tiposs.equals("APLASTISOL") || tiposs.equals("AMECANICA"))) {
+    if (usuario != null && tiposs != null && (tiposs.equals("ADMIN") || tiposs.equals("APLASTISOL") || tiposs.equals("AMECANICA")|| tiposs.equals("AATH"))) {
        
     } else {
         response.sendRedirect("../index.jsp");
@@ -52,13 +52,14 @@ public class Getregs extends HttpServlet {
         String produ =request.getParameter("p");
         String uso =request.getParameter("uso");
         // ver ventas general
-        //System.out.println(uso);
+        System.out.println(uso);
         if(uso.equals("catalago_general")){
              String tipo_p="";
             if(tiposs.equals("ADMIN")){
             tipo_p="SISTEMAS";
         }else if(tiposs.equals("APLASTISOL")) tipo_p="PLASTISOL"; 
-        else tipo_p="MECANICA";
+        else if(tiposs.equals("AMECANICA")) tipo_p="MECANICA";
+            else if(tiposs.equals("AATH")) tipo_p="ATH";
         DBt db = new DBt();
         int cont =0;
         ArrayList<Object> lista;
@@ -120,7 +121,8 @@ public class Getregs extends HttpServlet {
         String tipo_p="";
             if(tiposs.equals("ADMIN")){
             tipo_p="SISTEMAS";
-        }else tipo_p="PLASTISOL"; 
+        }else if(tiposs.equals("PLASTISOL")) tipo_p="PLASTISOL"; 
+         else if(tiposs.equals("AATH")) tipo_p="ATH";    
         ArrayList<Object> lista;    
         DBt db = new DBt();
         lista=db.verventast(f1, f2,produ,tipo_p);
@@ -154,11 +156,12 @@ public class Getregs extends HttpServlet {
         out.print("<td><h4><a href=>"+total+"</a></h4></td>");
         out.print("<td></td>");
         out.print("</tr>");
-        out.print("<tr>");
-        out.print("<td colspan=2 align=center><h3>Costo por departamento</h3></td>");
-        out.print("</tr>");
+        
          // llenado de vta de departamento por onkey press
          if(tiposs.equals("ADMIN")){
+             out.print("<tr>");
+        out.print("<td colspan=2 align=center><h3>Costo por departamento</h3></td>");
+        out.print("</tr>");
          ArrayList<Object> lista1;            
         lista1=db.verventastdep(f1, f2,produ);
         int cont1 =0;
@@ -193,7 +196,8 @@ public class Getregs extends HttpServlet {
         if(tiposs.equals("ADMIN")){
             tipo_p="SISTEMAS";
         }else if(tiposs.equals("APLASTISOL")) tipo_p="PLASTISOL";
-        else tipo_p="MECANICA";
+        else if(tiposs.equals("AMECANICA")) tipo_p="MECANICA";
+        else if(tiposs.equals("AATH")) tipo_p="ATH";
         ArrayList<Object> lista;    
         DBt db = new DBt();
         lista=db.verventast(f1, f2,tipo_p,"","");
@@ -227,9 +231,8 @@ public class Getregs extends HttpServlet {
         out.print("<td><h4><a href=>"+total+"</a></h4></td>");
         out.print("<td></td>");
         out.print("</tr>");
-        if(tiposs.equals("ADMIN")){
+        if(tiposs.equals("ADMIN") ){
          ArrayList<Object> lista1;    
-        
         lista1=db.verventastdep(f1, f2,produ);
         int cont1 =0;
         float total1 =0;
@@ -256,7 +259,6 @@ public class Getregs extends HttpServlet {
         
         // llenado depas clic boton
         ArrayList<Object> lista2;    
-        
         lista2=db.verventastdep(f1, f2);
         int cont2 =0;
         float total2 =0;
@@ -292,10 +294,12 @@ public class Getregs extends HttpServlet {
         }else if(tiposs.equals("APLASTISOL")){ 
             tipo_p="PLASTISOL";
             tipo_prov="PLA";
-        }
-        else {
+        }else if(tiposs.equals("AMECANICA")){
             tipo_p="MECANICA";
             tipo_prov="GEN";
+        }else if(tiposs.equals("AATH")){
+            tipo_p="ATH";
+            tipo_prov="SIS";
         }
         ArrayList<Object> lista;    
         DBt db = new DBt();

@@ -17,7 +17,7 @@
     String tipos = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
 
-    if (usuario != null && tipos != null && (tipos.equals("ADMIN")) || tipos.equals("APLASTISOL") || tipos.equals("AMECANICA")) {
+    if (usuario != null && tipos != null && (tipos.equals("ADMIN")) || tipos.equals("APLASTISOL") || tipos.equals("AMECANICA")|| tipos.equals("AATH")) {
 
     } else {
         response.sendRedirect("../index.jsp");
@@ -55,7 +55,7 @@
                // ruta = "C:/Users/gateway1/Documents/NetBeansProjects/soporte/web/imagesbd/" + valor;
                 
                 File archivo_server = new File(ruta+"/imagesbd/"+valor);
-                System.out.println("valor : "+valor);
+                //System.out.println("valor : "+valor);
                 item.write(archivo_server);
                 
                 rutabd = "../imagesbd/" + valor;

@@ -20,7 +20,7 @@
     String tipos = (String) objSesion.getAttribute("tipo");
     String ids = String.valueOf(objSesion.getAttribute("i_d"));
 
-    if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("APLASTISOL") || tipos.equals("AMECANICA"))) {
+    if (usuario != null && tipos != null && (tipos.equals("ADMIN") || tipos.equals("APLASTISOL") || tipos.equals("AMECANICA")|| tipos.equals("AATH"))) {
 
     } else {
         response.sendRedirect("../index.jsp");
@@ -95,7 +95,7 @@
                     %>
                     <li class=""><a href="productos_admint.jsp">Productos</a></li>
                     <%
-                    if(tipos.equals("ADMIN") || tipos.equals("AMECANICA")){
+                    if(tipos.equals("ADMIN") || tipos.equals("AMECANICA")|| tipos.equals("AATH")){
                     %>
                     <li class="dropdown">
                         <a  class="dropdown-toggle" data-toggle="dropdown" href="#80">
@@ -116,7 +116,7 @@
                         <ul class="dropdown-menu" id="#80" role="menu">
                             <li active><a href="Ver_ventast.jsp">Ver ventas</a></li>
                             <li ><a href="Ver_entradast.jsp">Ver Entradas</a></li>
-                            <%if(tipos.equals("ADMIN")){%>
+                            <%if(tipos.equals("ADMIN")|| tipos.equals("AATH")){%>
                             <li><a href="reporte.jsp">reporte productos</a></li>
                             <%}%>
                             
@@ -131,16 +131,13 @@
                                 out.println("<a href=tareas.jsp>Tareas</a></li>");
                             }
                             }
-                            
-
                         %>
                     <li><a href="../Cierresesion">Salir</a></li>
                 </ul>
 
             </nav>
             <div class="row">
-                <%
-                    if(tipos.equals("ADMIN")){
+                <%if(tipos.equals("ADMIN")){
                     %>
                 <a><input type="submit" target="costodep.jsp" style="position:relative;float: right" onclick="costo()"  class="btn btn-primary" value="Costo por departamento"></a>
                 
@@ -150,7 +147,7 @@
 
                         <form >
                             <div class="col-md-2" >
-                                fecha de inicio<input class="form-control input-sm chat-input" type="text" name="f1" id="f1" value="<%=fechaca%>"  />
+                                fecha de inicio<input class="form-control input-sm chat-input" type="text" name="f1" id="f1" value="<%=fechac%>"  />
                             </div>
                             <div class="col-md-3">
                                 <br>
@@ -291,6 +288,9 @@
 <%
 }catch(Exception e){
     System.out.println(e);
-out.print("location = ../index.");
+out.println("<script type=\"text/javascript\">");
+        out.println("location='../index.jsp';");
+        out.println("</script>");
+
 }
 %>
