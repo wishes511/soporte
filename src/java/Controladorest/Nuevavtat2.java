@@ -112,6 +112,7 @@ public class Nuevavtat2 extends HttpServlet {
             objSesion.setAttribute("carrosalida", lista);
             total=0;
             totalprod=0;
+            fechac ="";  
             PrintWriter out = response.getWriter();
                 out.println("<script type=\"text/javascript\">");
                 out.println("alert('Venta interna realizada !!');");
