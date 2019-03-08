@@ -6,11 +6,7 @@
 package Controladorest;
 
 
-import Modelo.Cliente;
-import Modelo.Producto_compra;import Modelo.Producto_comprat;
-import Modelo.Usuario;
 import Modelo.factura;
-import Modelo.venta;
 
 import Persistencia.DBt;
 import java.io.IOException;
@@ -33,15 +29,7 @@ public class Nuevavtat2 extends HttpServlet {
          ArrayList<Object> lista;
     float total=0;
     int totalprod=0;
-    Calendar fecha = Calendar.getInstance();
-        int año = fecha.get(Calendar.YEAR);
-        int mes = fecha.get(Calendar.MONTH) + 1;
-        int dia = fecha.get(Calendar.DAY_OF_MONTH);
-        int hora = fecha.get(Calendar.HOUR_OF_DAY);
-        int minuto = fecha.get(Calendar.MINUTE);
-        int segundo = fecha.get(Calendar.SECOND);
-        String fechac =año+"-"+mes+"-"+dia;
-        String horas =hora+":"+minuto;
+    
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -97,6 +85,15 @@ public class Nuevavtat2 extends HttpServlet {
 //         System.out.println("total: "+total+" /"+totalprod); 
            DBt db = new DBt();
            factura fac = new factura();
+           Calendar fecha = Calendar.getInstance();
+        int año = fecha.get(Calendar.YEAR);
+        int mes = fecha.get(Calendar.MONTH) + 1;
+        int dia = fecha.get(Calendar.DAY_OF_MONTH);
+        int hora = fecha.get(Calendar.HOUR_OF_DAY);
+        int minuto = fecha.get(Calendar.MINUTE);
+        int segundo = fecha.get(Calendar.SECOND);
+        String fechac =año+"-"+mes+"-"+dia;
+        String horas =hora+":"+minuto;
 //            System.out.print("Insertado hecho , total:"+total+" /"+totalprod+"/"+fechac);
             fac.setID_USUARIO_(Integer.parseInt(ids));
             fac.setID_USUARIOC(Integer.parseInt(usuarioc));
