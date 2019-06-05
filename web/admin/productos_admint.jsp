@@ -125,7 +125,7 @@
                             Usuarios<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" id="#90" role="menu">
-                            <li class="home_admin.jsp"><a href="">Usuarios</a></li>
+                            <li class=""><a href="home_admin.jsp">Usuarios</a></li>
                             <li><a href="virtuales.jsp">Vista de direcciones IP</a></li>
                             <li><a href="reporteusuarios.jsp">Reporte de usuarios</a></li>
                         </ul>

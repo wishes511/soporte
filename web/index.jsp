@@ -87,6 +87,7 @@
                             <li class="active"><a href="cotizacion.htm">Cotizacion Etiq</a></li>
                             <li ><a href="Vigilante/EntradaSalidaP.jsp">Entrada / Salidas</a></li>
                             <li ><a href="Pistola/">Pistola</a></li>
+                            <li ><a href="admin/utilerias.jsp">Utilerias</a></li>
                         </ul>
                     </div>  
                 </div>

@@ -23,3 +23,9 @@ and open the template in the editor.
 .footers{
     background-color: #6B6C6E; 
 }
+.maxtamaño{
+    max-width: 70%;
+    max-height: 70%;
+    width: 70%;
+    height: 70%
+}

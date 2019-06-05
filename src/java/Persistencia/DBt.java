@@ -11,6 +11,7 @@ import Modelo.Producion;
 import Modelo.Producto;
 import Modelo.Proveedor;
 import Modelo.Usuario;
+import Modelo.Utileria;
 import Modelo.entrada_prov;
 import Modelo.factura;
 import Modelo.productot;
@@ -61,6 +62,29 @@ public class DBt {
 
     }
 
+    public ArrayList<Utileria> getutileria(String articulo) throws ClassNotFoundException, SQLException {
+        ArrayList<Utileria> arr= new ArrayList<>();
+        abrir();
+        Statement smt;
+        ResultSet rs;
+        String sentenciaSQL = "SELECT * from utilerias where busquedabd like '%"+articulo+"%' or tipo like '%"+articulo+"%' and permiso=0 ORDER BY descripcion";
+        //System.out.println(sentenciaSQL);
+        smt = conexion.createStatement();
+        rs = smt.executeQuery(sentenciaSQL);
+        while (rs.next()) {
+            Utileria u = new Utileria();
+            u.setTipo(rs.getString("tipo"));
+            u.setModelo(rs.getString("modelo"));
+            u.setDescripcion(rs.getString("descripcion"));
+            u.setImagen(rs.getString("imagen"));
+            u.setArchivo(rs.getString("archivo"));
+            u.setPermiso(rs.getString("permiso"));
+            arr.add(u);
+        }
+        rs.close();
+        smt.close();
+        return arr;
+    }
     public ArrayList<Object> getdepa(ArrayList<Object> arr) throws ClassNotFoundException, SQLException {
         abrir();
         Statement smt;

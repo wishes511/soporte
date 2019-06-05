@@ -142,7 +142,7 @@ try{
                             Usuarios<span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" id="#90" role="menu">
-                            <li class=""><a href="">Usuarios</a></li>
+                            <li class="index.jsp"><a href="">Usuarios</a></li>
                             <li><a href="virtuales.jsp">Vista de direcciones IP</a></li>
                             <li><a href="reporteusuarios.jsp">Reporte de usuarios</a></li>
                         </ul>
